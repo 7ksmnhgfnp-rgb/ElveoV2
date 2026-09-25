@@ -5,12 +5,13 @@ const fs = require('fs');
 const path = require('path');
 
 // compact=true weggelassen: das entfernt sonst die OperatorInfo-Objekte
-// (Betreibername), die wir zum Zuordnen der cpo-ID brauchen.
+// (Betreibername), die wir zum Zuordnen brauchen.
 const OCM_URL =
-  'https://api.openchargemap.io/v3/poi/?output=json&countrycode=DE&maxresults=3000&verbose=false';
+  'https://api.openchargemap.io/v3/poi/?output=json&countrycode=DE&maxresults=6000&verbose=false';
 
-// Zuordnung: Betreibername bei Open Charge Map -> deine internen cpo-IDs
-// (aus dem "cpos"-Array in index.html). Bei Bedarf ergänzen/anpassen.
+// Betreiber, für die die App eigene Tarife/Preise kennt (siehe "cpos" in
+// index.html). Treffer dieser Betreiber bekommen die passende interne ID,
+// damit Tarifvergleich & Blockiergebühr weiter funktionieren.
 const OPERATOR_MAP = [
   { match: /ionity/i, cpo: 'ionity' },
   { match: /enbw/i, cpo: 'enbw' },
@@ -20,7 +21,7 @@ const OPERATOR_MAP = [
   { match: /ewe/i, cpo: 'ewe' }
 ];
 
-function mapOperator(name) {
+function mapKnownOperator(name) {
   if (!name) return null;
   for (const o of OPERATOR_MAP) {
     if (o.match.test(name)) return o.cpo;
@@ -28,8 +29,20 @@ function mapOperator(name) {
   return null;
 }
 
+// Für alle übrigen (unbekannten) Betreiber: stabile ID aus dem Namen bauen,
+// z.B. "E.ON Drive" -> "e-on-drive". Die App zeigt sie mit echtem Namen an,
+// aber ohne Tarifvergleich (dafür fehlen uns die Preisdaten).
+function slugify(name) {
+  return name
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Umlaute/Akzente entfernen
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 40);
+}
+
 async function main() {
-  // Optionaler kostenloser API-Key erhöht das Rate-Limit deutlich.
+  // Kostenloser API-Key nötig, sonst antwortet OCM mit 403.
   // Als Repo-Secret OCM_API_KEY hinterlegen (Settings -> Secrets -> Actions).
   const apiKey = process.env.OCM_API_KEY;
   const url = OCM_URL + (apiKey ? '&key=' + apiKey : '');
@@ -38,14 +51,19 @@ async function main() {
   if (!res.ok) throw new Error('OCM-Abruf fehlgeschlagen: ' + res.status);
   const raw = await res.json();
 
+  let knownCount = 0, otherCount = 0;
+
   const stations = raw
     .map(function (poi) {
-      const opName = poi.OperatorInfo && poi.OperatorInfo.Title;
-      const cpo = mapOperator(opName);
+      if (!poi.AddressInfo || poi.AddressInfo.Latitude == null || poi.AddressInfo.Longitude == null) return null;
+      const opName = (poi.OperatorInfo && poi.OperatorInfo.Title) || null;
+      const known = mapKnownOperator(opName);
+      const cpo = known || (opName ? 'x-' + slugify(opName) : 'x-unbekannt');
       const conn = (poi.Connections || [])[0];
-      if (!cpo || !poi.AddressInfo) return null;
+      if (known) knownCount++; else otherCount++;
       return {
         cpo: cpo,
+        name: opName || 'Unbekannter Anbieter',
         lat: poi.AddressInfo.Latitude,
         lng: poi.AddressInfo.Longitude,
         kw: conn && conn.PowerKW ? Math.round(conn.PowerKW) : null,
@@ -59,8 +77,8 @@ async function main() {
   fs.writeFileSync(path.join(outDir, 'stations.json'), JSON.stringify(stations, null, 2));
 
   console.log(
-    'Geschrieben: ' + stations.length + ' Ladesäulen von ' + raw.length +
-    ' Treffern (nur bekannte Betreiber ' + OPERATOR_MAP.map(function (o) { return o.cpo; }).join(', ') + ').'
+    'Geschrieben: ' + stations.length + ' Ladesäulen von ' + raw.length + ' Treffern (' +
+    knownCount + ' bei bekannten Anbietern mit Tarifdaten, ' + otherCount + ' bei weiteren Anbietern ohne Tarifdaten).'
   );
 }
 
