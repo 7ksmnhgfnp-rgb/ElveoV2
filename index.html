@@ -1984,6 +1984,36 @@
   }
 
   // ---- Unified tariff row (Home favorites + Tarife master list) ----
+  // Synchronisiert eigene Tarife mit den im Schnellfinder/Karte ausgewählten Betreibern.
+  function syncCposForOwnedTariffs() {
+    cpos.forEach(function (c) {
+      var supportedByOwnedTariff = tariffs.some(function (t) {
+        return !!state.owned[t.id] && t.prices[c.id] != null;
+      });
+      if (supportedByOwnedTariff) state.favCpos[c.id] = true;
+      else delete state.favCpos[c.id];
+    });
+  }
+
+  function renderSelectionDependentViews() {
+    renderSaeulen();
+    renderQuickFinder();
+    renderKarte();
+  }
+
+  function setOwnedTariff(tariffId, value) {
+    state.owned[tariffId] = !!value;
+    syncCposForOwnedTariffs();
+    renderHome();
+    renderTarife();
+    renderResults();
+    renderTips();
+    renderTrip();
+    renderAlltag();
+    renderKonto();
+    renderSelectionDependentViews();
+  }
+
   function makeTariffRow(t) {
     var row = document.createElement('div');
     row.className = 't-row';
@@ -2005,8 +2035,7 @@
     });
     row.querySelector('.own').addEventListener('click', function (e) {
       e.stopPropagation();
-      state.owned[t.id] = !state.owned[t.id];
-      renderHome(); renderTarife(); renderResults(); renderTips(); renderTrip(); renderAlltag(); renderKonto(); renderQuickFinder();
+      setOwnedTariff(t.id, !state.owned[t.id]);
     });
     row.addEventListener('click', function () { openModal(t.id); });
     return row;
@@ -2670,8 +2699,8 @@
   });
   document.getElementById('modalOwnToggle').addEventListener('click', function () {
     var id = state.modalTariffId; if (!id) return;
-    state.owned[id] = !state.owned[id];
-    updateModalToggles(); renderHome(); renderTarife(); renderResults(); renderTips(); renderTrip(); renderAlltag(); renderKonto(); renderQuickFinder();
+    setOwnedTariff(id, !state.owned[id]);
+    updateModalToggles();
   });
 
   // ---- Konto: Profilbild (nutzt dasselbe Maskottchen wie "Jetzt laden") ----
@@ -2824,6 +2853,9 @@
   }
 
   // ---- init ----
+  // Bestehende Tarifauswahl einmalig auf die Betreiber-Auswahl übertragen.
+  syncCposForOwnedTariffs();
+
   // Beim Öffnen: Anbieter in direkter Nähe im Schnellfinder vorauswählen
   var initialNearest = nearbyStations(1)[0];
   if (initialNearest) { state.quickCpo = initialNearest.cpo; state.cpo = initialNearest.cpo; cpoSelect.value = initialNearest.cpo; }
