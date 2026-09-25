@@ -1,0 +1,32 @@
+name: Ladesäulendaten aktualisieren
+
+on:
+  schedule:
+    - cron: '0 4 * * *'   # täglich 04:00 UTC (06:00 Sommerzeit)
+  workflow_dispatch: {}   # manuell über den "Actions"-Tab auslösbar
+
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repo auschecken
+        uses: actions/checkout@v4
+
+      - name: Node einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Ladesäulen von Open Charge Map abrufen
+        run: node scripts/fetch-stations.js
+        env:
+          OCM_API_KEY: ${{ secrets.OCM_API_KEY }}
+
+      - name: Änderungen committen (falls vorhanden)
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: Ladesäulendaten aktualisiert'
+          file_pattern: data/stations.json
