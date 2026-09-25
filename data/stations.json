@@ -1,1 +1,3152 @@
-[]
+[
+  {
+    "cpo": "enbw",
+    "lat": 48.01960285951412,
+    "lng": 7.791021419996241,
+    "kw": 300,
+    "title": "Aral pulse"
+  },
+  {
+    "cpo": "shell",
+    "lat": 51.779307706446474,
+    "lng": 6.129628809067839,
+    "kw": 22,
+    "title": "EDEKA"
+  },
+  {
+    "cpo": "shell",
+    "lat": 51.779208766232784,
+    "lng": 6.129471909728835,
+    "kw": 22,
+    "title": "EDEKA"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 47.63385111428212,
+    "lng": 9.524519675984266,
+    "kw": 150,
+    "title": "EnBW Charging Station"
+  },
+  {
+    "cpo": "shell",
+    "lat": 47.57650282047814,
+    "lng": 10.671842067043627,
+    "kw": 11,
+    "title": "FOC AC-Charger"
+  },
+  {
+    "cpo": "shell",
+    "lat": 47.57628797669855,
+    "lng": 10.672591175471098,
+    "kw": 150,
+    "title": "FOC DC-Charger"
+  },
+  {
+    "cpo": "shell",
+    "lat": 47.57938116761821,
+    "lng": 10.741054762802122,
+    "kw": 160,
+    "title": "Präg Express Ladestelle"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 49.88288465525264,
+    "lng": 10.922272238807636,
+    "kw": 150,
+    "title": "EWE Go"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.80541554058652,
+    "lng": 10.969904137093408,
+    "kw": 50,
+    "title": "ENBW"
+  },
+  {
+    "cpo": "shell",
+    "lat": 52.56571465910511,
+    "lng": 12.975012925314559,
+    "kw": 420,
+    "title": "Shell Recharge"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 54.78298959729591,
+    "lng": 9.449496053236317,
+    "kw": 200,
+    "title": "Adelbyer Straße"
+  },
+  {
+    "cpo": "shell",
+    "lat": 51.17954,
+    "lng": 13.825673,
+    "kw": 150,
+    "title": "Dresdner Straße 49"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.31383334128236,
+    "lng": 12.150074054414858,
+    "kw": 300,
+    "title": "Obi"
+  },
+  {
+    "cpo": "aral",
+    "lat": 49.3174050461119,
+    "lng": 7.122694835439233,
+    "kw": null,
+    "title": "Friedrichstraße"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 51.6983072,
+    "lng": 7.6681299,
+    "kw": 600,
+    "title": "Ionity Werne"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 53.0627086,
+    "lng": 8.767381,
+    "kw": 350,
+    "title": "Ionity Delmenhorst"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 51.576155060107,
+    "lng": 7.670305851018838,
+    "kw": 350,
+    "title": "Ionity Kamen"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 47.76536753088391,
+    "lng": 12.905386005739047,
+    "kw": 50,
+    "title": "EnBW Ladestation"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.08825484993574,
+    "lng": 11.505057212802399,
+    "kw": 150,
+    "title": "McDonald's"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.272815062006885,
+    "lng": 9.503863166378778,
+    "kw": 300,
+    "title": "EnBW Ladesation"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.767772421940805,
+    "lng": 11.484192961735516,
+    "kw": 300,
+    "title": "Hellweg Aschersleben"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 51.76725747621265,
+    "lng": 11.485684597363047,
+    "kw": 300,
+    "title": "EWE Go"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.039491797633104,
+    "lng": 8.29350464122831,
+    "kw": 150,
+    "title": "Maximilianstraße"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.57894774678729,
+    "lng": 9.6628813580611,
+    "kw": 400,
+    "title": "EnBW Ladepark"
+  },
+  {
+    "cpo": "shell",
+    "lat": 48.645833726332086,
+    "lng": 9.011656861883125,
+    "kw": 150,
+    "title": "Hohenzollernstraße 5"
+  },
+  {
+    "cpo": "aral",
+    "lat": 48.05824263086103,
+    "lng": 8.444356297770923,
+    "kw": 300,
+    "title": "Vöhrenbacher Straße 38"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.9978080716036,
+    "lng": 9.733945966671513,
+    "kw": 150,
+    "title": "EnBW"
+  },
+  {
+    "cpo": "aral",
+    "lat": 48.83898552676442,
+    "lng": 12.11882629077786,
+    "kw": 300,
+    "title": "Arale Pulse"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.028236482569554,
+    "lng": 8.441456962979828,
+    "kw": 22,
+    "title": "LitchBlick"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.02623880511706,
+    "lng": 8.445669838458628,
+    "kw": 22,
+    "title": "EnBW"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.49317327879544,
+    "lng": 9.711097035358193,
+    "kw": 300,
+    "title": "Lichtblick-Ladestation"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 51.839760133201196,
+    "lng": 6.882504376030738,
+    "kw": 400,
+    "title": "Heidener Straße"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 47.825045350803805,
+    "lng": 10.020964392338783,
+    "kw": 300,
+    "title": "Poststraße"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.644295,
+    "lng": 11.520099,
+    "kw": 300,
+    "title": "EweGo"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.820249910560364,
+    "lng": 6.296469228653905,
+    "kw": 200,
+    "title": "Enbw"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.237305124176544,
+    "lng": 11.352317707810471,
+    "kw": 300,
+    "title": "EnBW Ladestation"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.23682438059038,
+    "lng": 11.352050675780447,
+    "kw": 300,
+    "title": "EnBW Ladestation"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.30616296124225,
+    "lng": 11.634371126402698,
+    "kw": 300,
+    "title": "EnBW"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.273707019545384,
+    "lng": 10.97736238813502,
+    "kw": 150,
+    "title": "EWE Go Mering"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.638292672225504,
+    "lng": 12.489494178704717,
+    "kw": 150,
+    "title": "EWE Go Dingolfing"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.539126394633854,
+    "lng": 12.09565147871956,
+    "kw": 150,
+    "title": "EWE Go Landshut"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.48545324453332,
+    "lng": 12.01444163198687,
+    "kw": 300,
+    "title": "EWE Go Eching"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.38118302749544,
+    "lng": 11.753131482616368,
+    "kw": 150,
+    "title": "EWE Go Freising"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.28369178519526,
+    "lng": 11.563716690399588,
+    "kw": 150,
+    "title": "EWE Go Unterschleißheim"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.13885395655146,
+    "lng": 11.37116723767673,
+    "kw": 300,
+    "title": "EWE Go Germering"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.05677142785564,
+    "lng": 11.60248049515721,
+    "kw": 150,
+    "title": "EWE Go Unterhaching"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.0830279332356,
+    "lng": 11.854465118170083,
+    "kw": 150,
+    "title": "EWE Go Kirchseeon"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.0491489479073,
+    "lng": 12.2223202129519,
+    "kw": 150,
+    "title": "EWE Go Wasserburg am Inn"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 47.61891028207546,
+    "lng": 12.199600212665018,
+    "kw": 150,
+    "title": "EWE Go Kiefersfelden"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 47.84665029958512,
+    "lng": 12.125016426109198,
+    "kw": 150,
+    "title": "EWE Go Rosenheim"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 47.68542879388815,
+    "lng": 11.758487262377912,
+    "kw": 150,
+    "title": "EWE Go Kreuth"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 47.74834303692276,
+    "lng": 11.565828728420115,
+    "kw": 150,
+    "title": "EWE Go Bad Tölz"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 47.50239478589799,
+    "lng": 11.101597822189433,
+    "kw": 150,
+    "title": "EWE Go Garmisch-Partenkirchen"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 47.69144610267699,
+    "lng": 11.202505516800557,
+    "kw": 300,
+    "title": "EWE Go Murnau am Staffelsee"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 47.76570933538608,
+    "lng": 11.359319175330256,
+    "kw": 150,
+    "title": "EWE Go Penzberg"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 47.90048550901636,
+    "lng": 11.426643664917151,
+    "kw": 150,
+    "title": "EWE Go Wolfratshausen"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 47.773367909533306,
+    "lng": 10.604969513733295,
+    "kw": 150,
+    "title": "EWE Go Marktoberdorf"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 47.88321803748266,
+    "lng": 10.2483010724944,
+    "kw": 300,
+    "title": "EWE Go Bad Grönenbach"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 47.87930231485964,
+    "lng": 10.038626877953448,
+    "kw": 150,
+    "title": "EWE Go Aichstetten"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.000843575110196,
+    "lng": 10.167456545884164,
+    "kw": 300,
+    "title": "EWE Go Memmingen"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.01913454994943,
+    "lng": 10.273326123381366,
+    "kw": 400,
+    "title": "EWE Go Ungerhausen"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.04344101594015,
+    "lng": 10.622384698739097,
+    "kw": 300,
+    "title": "EWE Go Türkheim"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.22484124703465,
+    "lng": 11.333074677008426,
+    "kw": 150,
+    "title": "EWE Go Olching"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.91042887139869,
+    "lng": 8.716809819822629,
+    "kw": 300,
+    "title": "EWE Go Pforzheim"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.82423419763242,
+    "lng": 8.869434146408139,
+    "kw": 150,
+    "title": "EWE Go Heimsheim"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.67727163737317,
+    "lng": 9.195821077079245,
+    "kw": 150,
+    "title": "EWE Go Filderstadt"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.636350291626655,
+    "lng": 9.346200124822417,
+    "kw": 300,
+    "title": "EWE Go Nürtingen"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.67765720064739,
+    "lng": 9.365762397650315,
+    "kw": 150,
+    "title": "EWE Go Köngen"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.644480699872986,
+    "lng": 9.430834431223616,
+    "kw": 300,
+    "title": "EWE Go Kirchheim unter Teck"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.51454823485153,
+    "lng": 9.75832627318016,
+    "kw": 300,
+    "title": "EWE Go Hildesheim "
+  },
+  {
+    "cpo": "ionity",
+    "lat": 48.412269939659296,
+    "lng": 10.440200459951939,
+    "kw": 350,
+    "title": "IONITY-Ladestation"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 48.41190701019656,
+    "lng": 10.440271126885477,
+    "kw": 300,
+    "title": "EWE Go Jettingen-Scheppach"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 52.394972887669354,
+    "lng": 13.23844791610486,
+    "kw": 300,
+    "title": "McDonald's EWE Go"
+  },
+  {
+    "cpo": "shell",
+    "lat": 51.3333333333328,
+    "lng": 6.200296234162238,
+    "kw": 300,
+    "title": "Shell Nettetal"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.01789414783323,
+    "lng": 8.720516991036561,
+    "kw": 150,
+    "title": "Parkplatz Ostbaarhalle"
+  },
+  {
+    "cpo": "aral",
+    "lat": 50.95224496940645,
+    "lng": 6.961538010870754,
+    "kw": 150,
+    "title": "Aral pulse"
+  },
+  {
+    "cpo": "shell",
+    "lat": 48.723227236561755,
+    "lng": 9.126044422408622,
+    "kw": 360,
+    "title": "Shell Recharge Ladestation"
+  },
+  {
+    "cpo": "aral",
+    "lat": 48.25990842359421,
+    "lng": 11.469993439367697,
+    "kw": 300,
+    "title": "Aral Pulse Alte Römer Strasse 50"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.08626155599967,
+    "lng": 7.38280400041026,
+    "kw": 90,
+    "title": "Backcharge (Schmees)"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.08349774726591,
+    "lng": 7.381889076012726,
+    "kw": 150,
+    "title": "McDonald's"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.85101146914667,
+    "lng": 11.5977183129568,
+    "kw": 300,
+    "title": "An der Salzrinne 1 - ALDI"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.851352160251906,
+    "lng": 11.56069860810473,
+    "kw": 300,
+    "title": "Kaufland Hecklinger Str."
+  },
+  {
+    "cpo": "enbw",
+    "lat": 52.7241270868397,
+    "lng": 10.592863661258662,
+    "kw": 11,
+    "title": "Ladestation Handwerkerring 18"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.18561154560908,
+    "lng": 8.201782161000096,
+    "kw": 150,
+    "title": "Müller & Egerer Weißenmoorstraße 297"
+  },
+  {
+    "cpo": "shell",
+    "lat": 50.5300213971193,
+    "lng": 9.676745859492826,
+    "kw": 150,
+    "title": "Shell Tankstelle "
+  },
+  {
+    "cpo": "ewe",
+    "lat": 50.89670753753387,
+    "lng": 6.682314807828448,
+    "kw": 150,
+    "title": "McDonald's Sindorf"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 50.83334699999915,
+    "lng": 9.573252000001958,
+    "kw": 350,
+    "title": "Ionity Kirchheim (Tal) 2"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 54.083283,
+    "lng": 12.19232,
+    "kw": 350,
+    "title": "Ionity Rostock"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 50.64422400000052,
+    "lng": 10.685195000000135,
+    "kw": 350,
+    "title": "Ionity Zella-Mehlis"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 47.811904,
+    "lng": 10.302936,
+    "kw": 350,
+    "title": "Ionity Dietmannsried"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 49.456328,
+    "lng": 7.797371,
+    "kw": 350,
+    "title": "Ionity Kaiserslautern"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 50.562653,
+    "lng": 7.527566,
+    "kw": 350,
+    "title": "Ionity Oberhonnefeld"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 50.762035,
+    "lng": 7.029519,
+    "kw": 350,
+    "title": "Ionity Bornheim"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 53.742827,
+    "lng": 9.943171,
+    "kw": 350,
+    "title": "Ionity Quickborn"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 53.501867,
+    "lng": 11.087608,
+    "kw": 350,
+    "title": "Ionity Wittenburg"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 51.636519,
+    "lng": 12.200481,
+    "kw": 350,
+    "title": "Ionity Bitterfeld-Wolfen"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 50.840764,
+    "lng": 12.445016,
+    "kw": 350,
+    "title": "Ionity Meerane"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 47.67253,
+    "lng": 9.523016,
+    "kw": 350,
+    "title": "Ionity Friedrichshafen"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 47.880681,
+    "lng": 10.04109,
+    "kw": 350,
+    "title": "Ionity Aichstetten"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 48.262445,
+    "lng": 12.542657,
+    "kw": 350,
+    "title": "Ionity Mühldorf"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 48.249323,
+    "lng": 11.634365,
+    "kw": 350,
+    "title": "Ionity Garching"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 48.310848,
+    "lng": 11.646729,
+    "kw": 350,
+    "title": "Ionity Eching"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 48.516511,
+    "lng": 9.756944,
+    "kw": 350,
+    "title": "Ionity Merklingen"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 49.777979,
+    "lng": 10.068774,
+    "kw": 350,
+    "title": "Ionity Dettelbach"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 50.003327,
+    "lng": 10.117434,
+    "kw": 350,
+    "title": "Ionity Werneck"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 51.005311,
+    "lng": 9.48134,
+    "kw": 350,
+    "title": "Ionity Knüllwald"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 51.4020332,
+    "lng": 9.1842334,
+    "kw": 350,
+    "title": "Ionity Breuna"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 51.707123,
+    "lng": 8.722809,
+    "kw": 350,
+    "title": "Ionity Paderborn"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 51.811827,
+    "lng": 8.131947,
+    "kw": 350,
+    "title": "Ionity Oelde"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 51.566342,
+    "lng": 7.317542,
+    "kw": 350,
+    "title": "Ionity Castrop Rauxel"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 51.489858,
+    "lng": 6.887918,
+    "kw": 350,
+    "title": "Ionity Oberhausen"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 54.93455134647701,
+    "lng": 8.329846932244436,
+    "kw": 350,
+    "title": "Ionity Wenningstedt"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 53.89321900997024,
+    "lng": 11.51309015416291,
+    "kw": 350,
+    "title": "Ionity Wismar"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 52.7096726561667,
+    "lng": 13.107930490478566,
+    "kw": 350,
+    "title": "Ionity Oberkrämer"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 51.64455491399286,
+    "lng": 7.10222460574073,
+    "kw": 350,
+    "title": "Ionity Marl"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 51.390732726423295,
+    "lng": 10.342590571338974,
+    "kw": 350,
+    "title": "Ionity Leinefelde-Worbis"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 49.982293,
+    "lng": 10.555581,
+    "kw": 350,
+    "title": "Ionity Knetzgau"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 50.30689831371495,
+    "lng": 7.3059675792322025,
+    "kw": 350,
+    "title": "Ionity Polch"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 49.96687779597386,
+    "lng": 6.942711871580855,
+    "kw": 350,
+    "title": "Ionity Wittlich"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 52.21054297512302,
+    "lng": 8.871372689134887,
+    "kw": 350,
+    "title": "Ionity Autohof Porta Westfalica "
+  },
+  {
+    "cpo": "ewe",
+    "lat": 47.92313650224105,
+    "lng": 7.708291764794382,
+    "kw": 150,
+    "title": "McDonalds"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 52.49379418435427,
+    "lng": 10.520469296648287,
+    "kw": 100,
+    "title": "Penny BGS-Siedlung"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 52.4704383129818,
+    "lng": 10.543078944425247,
+    "kw": null,
+    "title": "EWE Go McDonald's Gifhorn"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 53.823860914821125,
+    "lng": 10.501908880630936,
+    "kw": 300,
+    "title": "EnBW Action Reinfeld"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.823393831540216,
+    "lng": 10.502196832853087,
+    "kw": 300,
+    "title": "EWE Go Reinfeld"
+  },
+  {
+    "cpo": "allego",
+    "lat": 50.67226194616873,
+    "lng": 9.769972460882911,
+    "kw": 22,
+    "title": "Großenbacher Tor 8"
+  },
+  {
+    "cpo": "allego",
+    "lat": 48.936535342747845,
+    "lng": 9.43664450397992,
+    "kw": 150,
+    "title": "ATU Backnang "
+  },
+  {
+    "cpo": "aral",
+    "lat": 48.95912733403782,
+    "lng": 9.422697355197101,
+    "kw": 300,
+    "title": "Aral Tankstelle Backnang "
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.47441755861104,
+    "lng": 6.372945637068369,
+    "kw": 300,
+    "title": "EnBW HPC - In der Dörrwiese 1-3"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.83239284088779,
+    "lng": 9.57314555866651,
+    "kw": 75,
+    "title": "Trigema EnBW HPC"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.017972457321804,
+    "lng": 8.354910612732738,
+    "kw": 150,
+    "title": "Bauhaus"
+  },
+  {
+    "cpo": "aral",
+    "lat": 49.66870520378191,
+    "lng": 8.020424244788131,
+    "kw": 300,
+    "title": "Aral Kirchheimbolanden"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.74918962406937,
+    "lng": 8.1394165986421,
+    "kw": 150,
+    "title": "Toom Baumarkt"
+  },
+  {
+    "cpo": "allego",
+    "lat": 49.74700050640266,
+    "lng": 8.137721503419016,
+    "kw": 300,
+    "title": "Rheinhessen Center"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 53.02921443476521,
+    "lng": 8.807458171604281,
+    "kw": 300,
+    "title": "EnBW Stuhr"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 52.525466769421826,
+    "lng": 7.342451023289527,
+    "kw": 300,
+    "title": "EnBW HPC Josefstraße Lingen"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 52.16079042255157,
+    "lng": 9.997711377015747,
+    "kw": 300,
+    "title": "EWE Go Hildesheim"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 52.41988539592819,
+    "lng": 10.632921329966962,
+    "kw": null,
+    "title": "REWE"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.82046570475228,
+    "lng": 9.979254128604907,
+    "kw": 350,
+    "title": "EnBW Homepark Würzburg"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 52.159415678896124,
+    "lng": 9.994379422744117,
+    "kw": 350,
+    "title": " EnBW HyperHub Hildesheim"
+  },
+  {
+    "cpo": "aral",
+    "lat": 52.16049966900985,
+    "lng": 9.997043361262058,
+    "kw": 350,
+    "title": "Aral Tankstelle Albert-Einstein-Straße"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.732069225140435,
+    "lng": 9.972606570238781,
+    "kw": 350,
+    "title": "EnBW Autohof Northeim"
+  },
+  {
+    "cpo": "aral",
+    "lat": 51.73103990886207,
+    "lng": 9.97316675713634,
+    "kw": 350,
+    "title": "Aral Autohof"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 50.22252332388672,
+    "lng": 6.664321273574046,
+    "kw": 150,
+    "title": "Brunnenstraße"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 52.33859896026286,
+    "lng": 9.832502088084965,
+    "kw": 22,
+    "title": "Supermarkt Rewe und Aldi"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.82273872046926,
+    "lng": 6.614104314055226,
+    "kw": 150,
+    "title": "EnBW (Hellweg Baumarkt)"
+  },
+  {
+    "cpo": "shell",
+    "lat": 52.505958579676786,
+    "lng": 13.459744887580058,
+    "kw": 150,
+    "title": "Shell Recharge"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.642146216535366,
+    "lng": 10.680640024022551,
+    "kw": 300,
+    "title": "Drei-Ähren-Bäckerei"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.84912015980606,
+    "lng": 10.95542283638153,
+    "kw": 150,
+    "title": "HPC Hellweg"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 50.85637133760255,
+    "lng": 10.957835061596711,
+    "kw": 150,
+    "title": "HPC McDonald's"
+  },
+  {
+    "cpo": "aral",
+    "lat": 50.860485049087,
+    "lng": 10.960109692746158,
+    "kw": 150,
+    "title": "HPC Burger King"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.16326503954562,
+    "lng": 12.093607028999827,
+    "kw": 150,
+    "title": "HPC REWE Wilhelm-Külz-Straße"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 51.849648422937435,
+    "lng": 13.90721656614599,
+    "kw": 300,
+    "title": "McDonald's"
+  },
+  {
+    "cpo": "aral",
+    "lat": 52.61674866337202,
+    "lng": 11.867910046049275,
+    "kw": 300,
+    "title": "Burger King Stendal"
+  },
+  {
+    "cpo": "aral",
+    "lat": 51.23983454287537,
+    "lng": 6.744053900098265,
+    "kw": 300,
+    "title": "Aral Pulse"
+  },
+  {
+    "cpo": "aral",
+    "lat": 51.241905809493346,
+    "lng": 6.743359536475964,
+    "kw": 300,
+    "title": "Aral Pulse"
+  },
+  {
+    "cpo": "allego",
+    "lat": 49.014490186013376,
+    "lng": 8.31077552976194,
+    "kw": 300,
+    "title": "enbw Hafen"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 52.43307066701297,
+    "lng": 12.53333510824396,
+    "kw": 150,
+    "title": "EWE Go McDonald's"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.899708484377044,
+    "lng": 8.66725118898512,
+    "kw": 300,
+    "title": "EnBW Charging Station Rastatter Straße"
+  },
+  {
+    "cpo": "shell",
+    "lat": 53.66298010298166,
+    "lng": 10.07891032526939,
+    "kw": 360,
+    "title": "Shell Poppenbuettel"
+  },
+  {
+    "cpo": "shell",
+    "lat": 51.326478309755174,
+    "lng": 6.177935716645607,
+    "kw": 360,
+    "title": "Shell Recharge Steyler Straße"
+  },
+  {
+    "cpo": "shell",
+    "lat": 53.621349870841954,
+    "lng": 10.009823412633523,
+    "kw": 360,
+    "title": "Alsterkrugchaussee"
+  },
+  {
+    "cpo": "allego",
+    "lat": 53.581890409510976,
+    "lng": 10.027562384665089,
+    "kw": 22,
+    "title": "Allego Hub"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.98734309067257,
+    "lng": 6.886045088763922,
+    "kw": 22,
+    "title": "CoCo Parkhaus"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 50.93804317332686,
+    "lng": 6.877949567881501,
+    "kw": 225,
+    "title": "EWEgo Mc Donalds Aachener Str. Köln"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.680580033444386,
+    "lng": 12.590737905733931,
+    "kw": 300,
+    "title": "Arno-Schmidt-Straße"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.45791396812038,
+    "lng": 11.09313021017715,
+    "kw": 300,
+    "title": "OMV Tankstelle Sulzbacher Straße"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.5932417,
+    "lng": 10.5582633,
+    "kw": 150,
+    "title": "Ringstraße"
+  },
+  {
+    "cpo": "aral",
+    "lat": 53.63875855937371,
+    "lng": 10.013162538049073,
+    "kw": 300,
+    "title": "53-61 Langenhorner Chaussee"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.91722582021552,
+    "lng": 6.833447005380663,
+    "kw": 300,
+    "title": "EnBW Hypercharger Frechen"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.25944529365347,
+    "lng": 12.157783048966394,
+    "kw": 300,
+    "title": "EnBW HyperHub Dorfen"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.52029070682843,
+    "lng": 13.709009916475907,
+    "kw": 22,
+    "title": "Haus am Strom"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.96900232968872,
+    "lng": 11.854957286885565,
+    "kw": 300,
+    "title": "EnBW Ladepark Eisenberg / Petersberg"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.96958975901126,
+    "lng": 11.855034681824463,
+    "kw": 300,
+    "title": "McDonald's / Petersberg"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 53.35755590526142,
+    "lng": 12.730216932480744,
+    "kw": 22,
+    "title": "Müritz Ferienpark"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 53.355171315299884,
+    "lng": 12.733556943470376,
+    "kw": 22,
+    "title": "Parkplatz Gewerbegebiet Hafendorf / Rechlin"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 53.32929902148339,
+    "lng": 12.721991344310368,
+    "kw": 22,
+    "title": "Haus des Gastes / Am Stadion"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.576172,
+    "lng": 13.666804,
+    "kw": 150,
+    "title": "Edeka Buchbauer / Untergriesbach"
+  },
+  {
+    "cpo": "aral",
+    "lat": 53.4304444576251,
+    "lng": 9.934659576888151,
+    "kw": 300,
+    "title": "City Watt / Maldfeldstraße 2a / Hamburg"
+  },
+  {
+    "cpo": "aral",
+    "lat": 52.31149815715216,
+    "lng": 10.823523845558384,
+    "kw": 300,
+    "title": "Aral Tankstelle Königslutter"
+  },
+  {
+    "cpo": "aral",
+    "lat": 51.89611921902818,
+    "lng": 11.692157508221442,
+    "kw": 300,
+    "title": "Aral Tankstelle Autohof Brumby / Staßfurt"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.312064684182616,
+    "lng": 12.15978886508185,
+    "kw": 300,
+    "title": "Maschek Automobile VolkswagenWackersdorf"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.31357,
+    "lng": 12.158276999999998,
+    "kw": 300,
+    "title": "OMV Tankstelle / Wackersdorf"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 49.00217107951215,
+    "lng": 12.364925842834396,
+    "kw": 150,
+    "title": "McDonald's / Wörth an der Donau"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.00130722268045,
+    "lng": 12.365070307748283,
+    "kw": 300,
+    "title": "EnBW HyperHub / Wörth an der Donau"
+  },
+  {
+    "cpo": "allego",
+    "lat": 50.550138631825604,
+    "lng": 11.788026709476753,
+    "kw": 300,
+    "title": "HPC HEM Tankstelle"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 50.299926,
+    "lng": 8.2347,
+    "kw": 350,
+    "title": "IONITY Bad Camberg West"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 48.411614,
+    "lng": 10.914898,
+    "kw": 350,
+    "title": "IONITY Augsburg Ost"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 50.440471,
+    "lng": 7.225629,
+    "kw": 350,
+    "title": "IONITY Brohltal Ost"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 50.688524,
+    "lng": 8.295916,
+    "kw": 350,
+    "title": "IONITY Dollenberg Ost"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 48.69253,
+    "lng": 12.672979,
+    "kw": 350,
+    "title": "IONITY Pilsting"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 49.532356,
+    "lng": 12.13491,
+    "kw": 350,
+    "title": "IONITY Wernberg-Köblitz"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 48.406431,
+    "lng": 10.952255,
+    "kw": 350,
+    "title": "IONITY Friedberg"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 51.739103,
+    "lng": 6.59518,
+    "kw": 350,
+    "title": "IONITY Hamminkeln"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 52.160118,
+    "lng": 12.779906,
+    "kw": 350,
+    "title": "IONITY Linthe"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 52.445204,
+    "lng": 10.78523,
+    "kw": 350,
+    "title": "IONITY Wolfsburg Bürozentrum Nord"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 53.147243,
+    "lng": 12.398704,
+    "kw": 350,
+    "title": "IONITY Heiligengrabe"
+  },
+  {
+    "cpo": "shell",
+    "lat": 53.59205948628414,
+    "lng": 9.921573564969663,
+    "kw": 175,
+    "title": "Shell Station"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.957038939389264,
+    "lng": 7.124446770589429,
+    "kw": 150,
+    "title": "LIDL Parkplatz"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.797548,
+    "lng": 6.476749,
+    "kw": 300,
+    "title": "Shell"
+  },
+  {
+    "cpo": "aral",
+    "lat": 53.718072385061106,
+    "lng": 9.759548612790809,
+    "kw": 300,
+    "title": "Aral pulse Ladesation"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 51.91310155196419,
+    "lng": 10.445188307169815,
+    "kw": 150,
+    "title": "Peter-Henlein-Straße"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.38474148133881,
+    "lng": 8.577743584465395,
+    "kw": 22,
+    "title": "Bahnhofanlage"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.287056,
+    "lng": 7.812458,
+    "kw": 22,
+    "title": "Rathausplatz"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 48.58933953622295,
+    "lng": 13.365342692383592,
+    "kw": 350,
+    "title": "IONITY Donautal West"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 48.588065,
+    "lng": 13.366667,
+    "kw": 350,
+    "title": "IONITY Donautal Ost"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 48.058328,
+    "lng": 10.847694,
+    "kw": 350,
+    "title": "IONITY Lechwiesen Süd"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 48.059266,
+    "lng": 10.846791,
+    "kw": 350,
+    "title": "IONITY Lechwiesen Nord"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 51.467751,
+    "lng": 7.596959,
+    "kw": 350,
+    "title": "IONITY Lichtendorf Süd"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 50.817306,
+    "lng": 6.216629,
+    "kw": 350,
+    "title": "IONITY Aachener Land Süd"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 51.1579,
+    "lng": 6.961815,
+    "kw": 350,
+    "title": "IONITY Ohligser Heide West"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 51.156807,
+    "lng": 6.964803,
+    "kw": 350,
+    "title": "IONITY Ohligser Heide Ost"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 52.226977,
+    "lng": 9.232545,
+    "kw": 350,
+    "title": "IONITY Auetal Süd"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 52.223703,
+    "lng": 9.221469,
+    "kw": 350,
+    "title": "IONITY Auetal Nord"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 51.158407,
+    "lng": 7.230332,
+    "kw": 350,
+    "title": "IONITY Remscheid Ost"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 49.241155,
+    "lng": 10.356121,
+    "kw": 350,
+    "title": "IONITY Frankenhöhe Süd"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 49.242629,
+    "lng": 10.352944,
+    "kw": 350,
+    "title": "IONITY Frankenhöhe Nord"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 48.931044,
+    "lng": 12.705416,
+    "kw": 350,
+    "title": "IONITY Bayerischer Wald Süd"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 53.299087,
+    "lng": 9.53517,
+    "kw": 350,
+    "title": "IONITY Ostetal Süd"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 53.299981,
+    "lng": 9.532557,
+    "kw": 350,
+    "title": "IONITY Ostetal Nord"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 52.998531,
+    "lng": 9.181213,
+    "kw": 350,
+    "title": "IONITY Goldbach Süd"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 49.484491,
+    "lng": 10.211978,
+    "kw": 350,
+    "title": "IONITY Ohrenbach West"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 50.620347,
+    "lng": 8.362918,
+    "kw": 350,
+    "title": "IONITY Katzenfurt Süd"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 49.779352,
+    "lng": 10.246493,
+    "kw": 350,
+    "title": "IONITY Haidt Süd"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 50.724708,
+    "lng": 10.847168,
+    "kw": 350,
+    "title": "IONITY Thüringer Wald Süd"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 50.726454,
+    "lng": 10.841634,
+    "kw": 350,
+    "title": "IONITY Thüringer Wald Nord"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 49.485555,
+    "lng": 10.213267,
+    "kw": 350,
+    "title": "IONITY Ohrenbach Ost"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 47.801229,
+    "lng": 12.177198,
+    "kw": 350,
+    "title": "IONITY Samerberg Süd"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 49.898302,
+    "lng": 9.394346,
+    "kw": 350,
+    "title": "IONITY Spessart Nord"
+  },
+  {
+    "cpo": "ionity",
+    "lat": 49.780852,
+    "lng": 10.244797,
+    "kw": 350,
+    "title": "IONITY Haidt Nord"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.88446269985124,
+    "lng": 8.509594888297784,
+    "kw": 22,
+    "title": "P&R Ittersbach Industrie"
+  },
+  {
+    "cpo": "allego",
+    "lat": 49.6272266,
+    "lng": 10.9227839,
+    "kw": 350,
+    "title": "Im Gewerbepark"
+  },
+  {
+    "cpo": "aral",
+    "lat": 52.14664568814959,
+    "lng": 7.735748024239001,
+    "kw": 300,
+    "title": "Aral Pulse"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 49.4108036,
+    "lng": 8.5437649,
+    "kw": 150,
+    "title": "Mc Donalds"
+  },
+  {
+    "cpo": "shell",
+    "lat": 54.30955544152826,
+    "lng": 13.683248065176713,
+    "kw": 11,
+    "title": "mönchgut living & spa"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 52.37834459969659,
+    "lng": 13.106825126550802,
+    "kw": 300,
+    "title": "Hellweg"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.48147,
+    "lng": 6.89415,
+    "kw": 150,
+    "title": "Essener Str. 345"
+  },
+  {
+    "cpo": "allego",
+    "lat": 54.13767,
+    "lng": 12.114583,
+    "kw": 50,
+    "title": "Zum Südtor 6"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 54.02267759,
+    "lng": 12.23143637,
+    "kw": 75,
+    "title": "Manfred-Roth-Straße 4"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 53.90075,
+    "lng": 9.12262,
+    "kw": 150,
+    "title": "Emil-von-Behring-Str. 3"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 53.852412,
+    "lng": 8.712688,
+    "kw": 75,
+    "title": "Grodener Chaussee 56"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.703742,
+    "lng": 8.023442,
+    "kw": 22,
+    "title": "Mellumweg 4"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.686688006837,
+    "lng": 8.005444407463,
+    "kw": 22,
+    "title": "Andelweg 1"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.643597957883,
+    "lng": 7.609920501709,
+    "kw": 22,
+    "title": "Bürgermeister-Becker-Straße 11"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.634724655733,
+    "lng": 8.017439246178,
+    "kw": 22,
+    "title": "Bäderstraße 3"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.62611,
+    "lng": 8.81565,
+    "kw": 22,
+    "title": "Handelspark 3"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.591893493555,
+    "lng": 8.617959022522,
+    "kw": 22,
+    "title": "Wilhelm- Leuschner- Straße"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.589815,
+    "lng": 7.456935,
+    "kw": 22,
+    "title": "Nordener Straße 1"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.58495826,
+    "lng": 8.138841391,
+    "kw": 22,
+    "title": "Ladestraße 2"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.579722654278,
+    "lng": 7.90302157402,
+    "kw": 22,
+    "title": "Am Hillernsen Hamm 9"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.568678,
+    "lng": 7.895131,
+    "kw": 22,
+    "title": "Ladestraße 4"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.560712,
+    "lng": 9.606977,
+    "kw": 22,
+    "title": "Carl-Holst-Str. 3"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.557068941951,
+    "lng": 8.580392003059,
+    "kw": 22,
+    "title": "Goethestraße 45"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.54838461665,
+    "lng": 8.593448996544,
+    "kw": 22,
+    "title": "Stresemannstraße 37"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.547759913902,
+    "lng": 8.595492839813,
+    "kw": 22,
+    "title": "Stresemannstraße 46"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.534511495026,
+    "lng": 8.598513007164,
+    "kw": 43,
+    "title": "Friedrich-Ebert-Straße 73"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.533099063394,
+    "lng": 8.131969571114,
+    "kw": 22,
+    "title": "Mühlenweg 67"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.53140280784,
+    "lng": 8.591399788857,
+    "kw": 22,
+    "title": "Konrad- Adenauer- Platz"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 53.52326,
+    "lng": 8.4119,
+    "kw": 150,
+    "title": "Strichweg 50"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.522451702798,
+    "lng": 7.272031903267,
+    "kw": 22,
+    "title": "Am Markt 25"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.508782,
+    "lng": 8.118578,
+    "kw": 22,
+    "title": "Südstrand 1"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.505493,
+    "lng": 8.0126,
+    "kw": 22,
+    "title": "Am Maddick 4a"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.50354836,
+    "lng": 8.474058509,
+    "kw": 43,
+    "title": "Eutiner Straße 59"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.487241200441,
+    "lng": 7.497010231018,
+    "kw": 22,
+    "title": "Esenser Straße 140"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.441822,
+    "lng": 8.58741,
+    "kw": 22,
+    "title": "Nelly Sachs Straße 4"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.42181,
+    "lng": 7.747335,
+    "kw": 22,
+    "title": "Hauptstraße 117"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.406682622149,
+    "lng": 8.166494965553,
+    "kw": 22,
+    "title": "Am Hafen 8"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.400097642345,
+    "lng": 7.209627628326,
+    "kw": 22,
+    "title": "Hans-Böckler-Allee 1"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.398444041484,
+    "lng": 8.123359680176,
+    "kw": 43,
+    "title": "Gertrud-Barthel-Straße 5"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.398266,
+    "lng": 8.149688,
+    "kw": 22,
+    "title": "Am Bahnhof 3"
+  },
+  {
+    "cpo": "allego",
+    "lat": 53.396638,
+    "lng": 10.042415,
+    "kw": 50,
+    "title": "Schulstr. 61"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.3961959,
+    "lng": 8.13682419999997,
+    "kw": 11,
+    "title": "Neue Straße 19"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.395472,
+    "lng": 7.7022,
+    "kw": 22,
+    "title": "Kanalstr II 1a"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.364816,
+    "lng": 7.201776,
+    "kw": 22,
+    "title": "Frickensteinplatz"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.36017,
+    "lng": 7.21582,
+    "kw": 22,
+    "title": "Am Südbahnhof 40"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.344692,
+    "lng": 8.183732,
+    "kw": 22,
+    "title": "Georgstraße 2"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.31548014555,
+    "lng": 7.281081676483,
+    "kw": 22,
+    "title": "Am Tief"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 53.27713,
+    "lng": 9.293374,
+    "kw": 43,
+    "title": "Zum Hochkamp 4"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.267853,
+    "lng": 7.457712,
+    "kw": 22,
+    "title": "Benzstraße 8"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.237996008558,
+    "lng": 7.443414330482,
+    "kw": 22,
+    "title": "Burfehner Straße 98"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.234249116702,
+    "lng": 7.476384043694,
+    "kw": 22,
+    "title": "Papenburger Straße 5"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.231710162336,
+    "lng": 7.492604541621,
+    "kw": 22,
+    "title": "Am Schloßpark 22"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.22784,
+    "lng": 9.07842000000005,
+    "kw": 22,
+    "title": "Hepstedter Straße 9"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.227398199141,
+    "lng": 7.441463881914,
+    "kw": 22,
+    "title": "Blinke 41"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.216996983514,
+    "lng": 8.780227303505,
+    "kw": 22,
+    "title": "Ritterhuder Straße 56"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.184233496975,
+    "lng": 8.47744345665,
+    "kw": 22,
+    "title": "Am Breithof 6"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.182674390118,
+    "lng": 8.015116453171,
+    "kw": 22,
+    "title": "Am Hogen Hagen"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.1816520996,
+    "lng": 8.623296618462,
+    "kw": 22,
+    "title": "Am Rabenfeld 7"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.174109543,
+    "lng": 8.653384619938,
+    "kw": 22,
+    "title": "Vegesacker Heerstraße 78"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.173961636477,
+    "lng": 7.419306635857,
+    "kw": 22,
+    "title": "Deichstraße 7"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.168527325915,
+    "lng": 8.69365632534,
+    "kw": 22,
+    "title": "Hindenburgstraße 24"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.1246,
+    "lng": 8.1715,
+    "kw": 22,
+    "title": "Ammerländer Heerstr. 243"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.1240471,
+    "lng": 8.10013589999994,
+    "kw": 22,
+    "title": "Friedrichsfehner Straße 3"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.111104,
+    "lng": 9.142009,
+    "kw": 22,
+    "title": "Grüne Straße 24"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.086433879233,
+    "lng": 8.715537786484,
+    "kw": 43,
+    "title": "Ludwig-Erhard-Straße 17"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.083733824988,
+    "lng": 7.432460188866,
+    "kw": 22,
+    "title": "Flachsmeerstraße 20"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.065560439309,
+    "lng": 8.950107693672,
+    "kw": 22,
+    "title": "Walliser Straße 15"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.060634675576,
+    "lng": 9.17095541954,
+    "kw": 75,
+    "title": "Posthausen 11"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.058086,
+    "lng": 8.757193,
+    "kw": 43,
+    "title": "Oldenburgerstraße"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.052548,
+    "lng": 8.635783,
+    "kw": 22,
+    "title": "Fischstraße 32"
+  },
+  {
+    "cpo": "allego",
+    "lat": 53.04742,
+    "lng": 8.743892,
+    "kw": 50,
+    "title": "Alter Dorfweg 30-50"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.849737,
+    "lng": 13.68662,
+    "kw": 50,
+    "title": "An der B167"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 52.739383710337,
+    "lng": 8.192093968391,
+    "kw": 22,
+    "title": "Bahnhofstr. 18"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 52.68172,
+    "lng": 7.28998,
+    "kw": 43,
+    "title": "Auf der Herrschwiese 5-9"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 52.63355,
+    "lng": 7.9931,
+    "kw": 43,
+    "title": "Sudermannstr. 2"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.606974,
+    "lng": 13.425336,
+    "kw": 11,
+    "title": "Arnouxstr. 13"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.588954,
+    "lng": 13.429102,
+    "kw": 50,
+    "title": "Zimbelstr. 4"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.570511,
+    "lng": 13.41644,
+    "kw": 11,
+    "title": "Hadlichstr. 33"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.55747,
+    "lng": 13.421816,
+    "kw": 4,
+    "title": "Hallandstr. 59"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.548833327865225,
+    "lng": 13.599062914966112,
+    "kw": 22,
+    "title": "Landsberger Chaussee 17"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.548121,
+    "lng": 13.374454,
+    "kw": 11,
+    "title": "Pankstr. 72"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.54711,
+    "lng": 13.389803,
+    "kw": 11,
+    "title": "Ramlerstr. 1"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.546174,
+    "lng": 13.441678,
+    "kw": 11,
+    "title": "Mandelstraße 12"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.542808,
+    "lng": 13.238754,
+    "kw": 11,
+    "title": "Gartenfelder Str. 104"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.53906,
+    "lng": 13.348699,
+    "kw": 11,
+    "title": "Buchstraße 1"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.532219,
+    "lng": 13.416585,
+    "kw": 11,
+    "title": "Straßburger Str. 26"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.531075,
+    "lng": 13.445023,
+    "kw": 11,
+    "title": "Ernst-Fürstenberg-Str. 19"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.530867,
+    "lng": 13.39438,
+    "kw": 11,
+    "title": "Schröderstr. 9"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.512212,
+    "lng": 13.393597,
+    "kw": 11,
+    "title": "Markgrafenstr. 33"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.511092,
+    "lng": 13.31831,
+    "kw": 11,
+    "title": "Schillerstr. 10"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.509991,
+    "lng": 13.289279,
+    "kw": 11,
+    "title": "Sophie-Charlotten-Str. 55"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.505621,
+    "lng": 13.419379,
+    "kw": 11,
+    "title": "Leuschnerdamm 1"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 52.505337,
+    "lng": 13.607021,
+    "kw": 300,
+    "title": "Neuenhagener Str. 48"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.501334,
+    "lng": 13.388511,
+    "kw": 11,
+    "title": "Wilhelmstr. 138"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 52.500327,
+    "lng": 13.735027,
+    "kw": 300,
+    "title": "Frankfurter Chaussee 37"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.496013,
+    "lng": 13.319607,
+    "kw": 11,
+    "title": "Düsseldorfer Str. ggü. 17"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.494967,
+    "lng": 13.336286,
+    "kw": 11,
+    "title": "Nachodstr. 2"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.494299,
+    "lng": 13.30161,
+    "kw": 11,
+    "title": "Cicerostr. 13"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.491327,
+    "lng": 13.326757,
+    "kw": 11,
+    "title": "Trautenaustr. 13"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.491206,
+    "lng": 13.324974,
+    "kw": 11,
+    "title": "Holsteinische Str. 19"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 52.485599492073,
+    "lng": 9.844651222229,
+    "kw": 75,
+    "title": "McDonald's Burgwedel"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.484759,
+    "lng": 13.519582,
+    "kw": 11,
+    "title": "Dönhoffstr. 12"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.480255,
+    "lng": 13.387296,
+    "kw": 11,
+    "title": "Tempelhofer Damm 45"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.479501,
+    "lng": 13.445771,
+    "kw": 11,
+    "title": "Roseggerstr. 14"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.473556,
+    "lng": 13.326978,
+    "kw": 4,
+    "title": "Taunusstraße 1"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.472636,
+    "lng": 13.738215,
+    "kw": 50,
+    "title": "Kalkberger Str. 189"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.470673,
+    "lng": 13.435103,
+    "kw": 11,
+    "title": "Ilsestr. 7"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 52.427361093327,
+    "lng": 10.811239957875,
+    "kw": 150,
+    "title": "Lerchenweg 24"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.425428,
+    "lng": 13.366102,
+    "kw": 11,
+    "title": "Friedrichrodaer Str. 66"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.412375,
+    "lng": 13.348558,
+    "kw": 4,
+    "title": "Lichterfelder Ring 90"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 52.408941,
+    "lng": 13.370285,
+    "kw": 75,
+    "title": "Nahmitzer Damm"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.382725,
+    "lng": 13.101931,
+    "kw": 50,
+    "title": "Fritz-Zubeil-Str. 51"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 52.32914,
+    "lng": 9.22471,
+    "kw": 100,
+    "title": "Vornhäger Straße 63"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 52.280536,
+    "lng": 11.432801,
+    "kw": 43,
+    "title": "Johann-Gottlob-Nathusius-Str. 1"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 52.206117488832,
+    "lng": 8.058750629425,
+    "kw": 43,
+    "title": "Klöcknerstraße 14"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.202145,
+    "lng": 8.578691,
+    "kw": 50,
+    "title": "Wasserbreite 31"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 52.14017,
+    "lng": 11.616655,
+    "kw": 22,
+    "title": "Albert-Vater-Straße 70"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 52.131444,
+    "lng": 8.658378,
+    "kw": 75,
+    "title": "Füllenbruchstr. 50"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.123445,
+    "lng": 13.638079,
+    "kw": 50,
+    "title": "Buchholzer Str. 1"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.996258,
+    "lng": 8.594841,
+    "kw": 300,
+    "title": "Detmolder Str. 485"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.84980846686352,
+    "lng": 13.907031886742317,
+    "kw": 300,
+    "title": "LPG-Straße"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.579043,
+    "lng": 8.585,
+    "kw": 50,
+    "title": "Schützenstraße 67"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.572152,
+    "lng": 7.61455,
+    "kw": 22,
+    "title": "Jakob - Koenen - Straße 2"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.569111,
+    "lng": 7.079642,
+    "kw": 50,
+    "title": "Cranger Straße 160"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.531049,
+    "lng": 7.671075,
+    "kw": 300,
+    "title": "Feldstrasse 11"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.5259379,
+    "lng": 7.0079641,
+    "kw": 75,
+    "title": "Karnaper Straße 141"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.496698,
+    "lng": 6.934499,
+    "kw": 22,
+    "title": "Scheppmannskamp 5"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.496278,
+    "lng": 7.007754,
+    "kw": 22,
+    "title": "Winkhausstraße 1"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.484766,
+    "lng": 6.85798,
+    "kw": 50,
+    "title": "Max-Planck-Ring 70"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.480102,
+    "lng": 7.002194,
+    "kw": 22,
+    "title": "Nobermanns Hude 2"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.467516,
+    "lng": 7.080705,
+    "kw": 22,
+    "title": "Krayer Straße 244"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.467163,
+    "lng": 11.279433,
+    "kw": 22,
+    "title": "An der Stollenmühle 39"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.444145,
+    "lng": 6.975282,
+    "kw": 22,
+    "title": "Raffelberger Straße 19"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.4441,
+    "lng": 7.069513,
+    "kw": 22,
+    "title": "Westfalenstraße 246"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.441593,
+    "lng": 6.982319,
+    "kw": 22,
+    "title": "Veitstraße 3"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.439657,
+    "lng": 7.023669,
+    "kw": 22,
+    "title": "Rellinghauser Straße (Bhf) 177"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.433175,
+    "lng": 6.993269,
+    "kw": 22,
+    "title": "Virchowstraße 130"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.430163,
+    "lng": 7.076708,
+    "kw": 22,
+    "title": "Neptunstraße 16"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.416963,
+    "lng": 7.121662,
+    "kw": 22,
+    "title": "Alte Hauptstraße/Am Kieskamp 4"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.380487,
+    "lng": 6.936136,
+    "kw": 150,
+    "title": "Im Teelbruch 105"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.374814,
+    "lng": 7.015815,
+    "kw": 22,
+    "title": "Heidhauser Straße 257"
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.363145,
+    "lng": 6.940264,
+    "kw": 22,
+    "title": "Kringsgat 15"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.288867,
+    "lng": 7.5718,
+    "kw": 43,
+    "title": "A45; Autobahnraststätte Kaltenborn"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.22646,
+    "lng": 6.80023,
+    "kw": 43,
+    "title": "Gustav Heinemann Str. 9"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.2145,
+    "lng": 7.333,
+    "kw": 43,
+    "title": "Elseyerstr. 12-14"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.183933,
+    "lng": 6.44039,
+    "kw": 300,
+    "title": "Rheydter Str. 180 "
+  },
+  {
+    "cpo": "allego",
+    "lat": 51.168498,
+    "lng": 6.88081,
+    "kw": 50,
+    "title": "Kleinstraße 1"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.137042,
+    "lng": 14.184928,
+    "kw": 43,
+    "title": "Carl-Maria-von-Weber-Str. 7"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.9291834,
+    "lng": 6.3385009,
+    "kw": 300,
+    "title": "BAB A44"
+  },
+  {
+    "cpo": "allego",
+    "lat": 50.898667,
+    "lng": 6.682723,
+    "kw": 50,
+    "title": "Kerpener Straße 175"
+  },
+  {
+    "cpo": "allego",
+    "lat": 50.811504,
+    "lng": 12.881038,
+    "kw": 50,
+    "title": "Carl-Hamel-Straße 21"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.763184,
+    "lng": 8.15571,
+    "kw": 300,
+    "title": "Herrenrain 1"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.6415537,
+    "lng": 9.3923888,
+    "kw": 43,
+    "title": "Umgehungsstraße 45"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.54117,
+    "lng": 12.394837,
+    "kw": 150,
+    "title": "Lengenfelder Straße 35"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.522865,
+    "lng": 7.67526,
+    "kw": 43,
+    "title": "A3 Raststätte Sessenhausen West"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.442068,
+    "lng": 7.665504,
+    "kw": 300,
+    "title": "Westerwaldstrasse 12-14"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.412984,
+    "lng": 7.407906,
+    "kw": 43,
+    "title": "Orensteinstr. 2"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.04758,
+    "lng": 9.047158,
+    "kw": 300,
+    "title": "Industriegebiet Süd A5 0"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 50.013547,
+    "lng": 8.345563,
+    "kw": 300,
+    "title": "Königsberger Ring 7"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.909245,
+    "lng": 8.849164,
+    "kw": 300,
+    "title": "Frankfurter Str. 105"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.907988,
+    "lng": 9.897554,
+    "kw": 22,
+    "title": "Bürgerstraße 11"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.85294,
+    "lng": 9.61032,
+    "kw": 150,
+    "title": "Udo-Lermann-Str. 2"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.649472,
+    "lng": 8.2935173,
+    "kw": 43,
+    "title": "A61 Raststätte Wonnegau Ost"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.549386,
+    "lng": 8.646601,
+    "kw": 22,
+    "title": "Röntgenstr. 3"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.50469,
+    "lng": 10.89338,
+    "kw": 300,
+    "title": "Fürther Str. 60"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.442809,
+    "lng": 9.33517,
+    "kw": 22,
+    "title": "Eicholzheimer Str. 5"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.418804,
+    "lng": 7.61268,
+    "kw": 22,
+    "title": "Marktstraße 17"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.298984,
+    "lng": 9.971058,
+    "kw": 22,
+    "title": "Schulstraße 13 (Rückseite Markthalle)"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.293108,
+    "lng": 8.524654,
+    "kw": 22,
+    "title": "St. Leoner Straße 14"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.292833,
+    "lng": 8.528565,
+    "kw": 22,
+    "title": "Bahnhofstraße 1"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.28515,
+    "lng": 9.159708,
+    "kw": 22,
+    "title": "Tiefenbacher Straße 99"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.24989,
+    "lng": 9.928617,
+    "kw": 22,
+    "title": "Jahnstr. 8"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.238144,
+    "lng": 9.331072,
+    "kw": 22,
+    "title": "Bahnweg 3"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.2371205,
+    "lng": 9.3306769,
+    "kw": 22,
+    "title": "Lindenplatz 2"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.225891,
+    "lng": 8.517717,
+    "kw": 22,
+    "title": "Phillipsburgerstraße 1"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.146833,
+    "lng": 9.201062,
+    "kw": 22,
+    "title": "Georg-Vogel-Straße 10"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.108442,
+    "lng": 9.1282,
+    "kw": 22,
+    "title": "Hauptstr. 26"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.106901,
+    "lng": 9.208775,
+    "kw": 11,
+    "title": "Sandberhohle 1"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.089517,
+    "lng": 9.275304,
+    "kw": 22,
+    "title": "Hauptstr. 6"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.076479,
+    "lng": 9.156592,
+    "kw": 22,
+    "title": "Rathausstraße 10"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 49.0048,
+    "lng": 8.4324,
+    "kw": 150,
+    "title": "Schlachthausstraße 3"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.94303,
+    "lng": 9.4285658,
+    "kw": 22,
+    "title": "Bahnhofstraße 59 "
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.939363,
+    "lng": 8.378597,
+    "kw": 22,
+    "title": "EnBW Energie Baden-Württemberg AG"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.931741,
+    "lng": 9.179059,
+    "kw": 22,
+    "title": "Gründelbachstraße 10"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.930394,
+    "lng": 10.069418,
+    "kw": 22,
+    "title": "Ellwanger Straße / Keuperweg 5"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.897703,
+    "lng": 8.46993,
+    "kw": 22,
+    "title": "Rathausplatz 1"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.886346,
+    "lng": 9.812667,
+    "kw": 22,
+    "title": "Erlenstraße 13"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.883019,
+    "lng": 12.614794,
+    "kw": 11,
+    "title": "Dresdner Str. 9"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.85017,
+    "lng": 9.11293,
+    "kw": 22,
+    "title": "Stuttgarter Str. 121"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.849052,
+    "lng": 9.877031,
+    "kw": 22,
+    "title": "bei Kirchgasse 1"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.822859,
+    "lng": 9.797262,
+    "kw": 22,
+    "title": "Lammplatz"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.803839,
+    "lng": 9.063077,
+    "kw": 22,
+    "title": "Hofwiesenstr. 38"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.730677,
+    "lng": 9.317071,
+    "kw": 22,
+    "title": "Kurt-Schumacher-Str. 37"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.714952,
+    "lng": 9.523914,
+    "kw": 50,
+    "title": "Fritz-Kauffmann-Str. 1"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.7133453,
+    "lng": 9.3842966,
+    "kw": 22,
+    "title": "Olgastr. 14"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.7109,
+    "lng": 9.4573,
+    "kw": 22,
+    "title": "Karlstr. 30"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.692593,
+    "lng": 9.013739,
+    "kw": 22,
+    "title": "Vaihinger Str. 29"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.6656765,
+    "lng": 7.9382709,
+    "kw": 50,
+    "title": "Freiburger Str. 11"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.652921,
+    "lng": 8.32294,
+    "kw": 22,
+    "title": "Landstraße 83"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.552305,
+    "lng": 9.996752,
+    "kw": 22,
+    "title": "Dorfplatz bei Hausnr. 1; Fl. 32"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.511376,
+    "lng": 8.374392,
+    "kw": 150,
+    "title": "Murgtalstraße 25"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.500374,
+    "lng": 10.117366,
+    "kw": 22,
+    "title": "Karlstr. 45"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.491137,
+    "lng": 9.397532,
+    "kw": 22,
+    "title": "Beim Tiergarten 18"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.416483,
+    "lng": 9.221382,
+    "kw": 22,
+    "title": "Lichtensteinstr. 1"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.399779,
+    "lng": 12.750649,
+    "kw": 43,
+    "title": "Schellenbruckplatz 15"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.3081795,
+    "lng": 8.8741216,
+    "kw": 43,
+    "title": "Mühlsteigstraße 1"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.228507,
+    "lng": 7.736573,
+    "kw": 22,
+    "title": "Herbolzheimer Str. 36"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.16291,
+    "lng": 8.860409,
+    "kw": 22,
+    "title": "Hauptstraße 8"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.156968,
+    "lng": 7.745885,
+    "kw": 50,
+    "title": "Im Kleinfeldele 4"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.142355,
+    "lng": 7.703724,
+    "kw": 22,
+    "title": "St. Jakobsgäßli 4"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.139971,
+    "lng": 7.614279,
+    "kw": 22,
+    "title": "Marckolsheimer Str. 11"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 47.972133,
+    "lng": 8.908268,
+    "kw": 22,
+    "title": "Gewerbepark 2"
+  },
+  {
+    "cpo": "allego",
+    "lat": 48.353883,
+    "lng": 7.807496,
+    "kw": 50,
+    "title": "Einsteinallee 2"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 51.223522,
+    "lng": 10.455457,
+    "kw": 150,
+    "title": "Ammersche Landstraße 27-31"
+  },
+  {
+    "cpo": "ewe",
+    "lat": 53.398364078498,
+    "lng": 8.117244243622,
+    "kw": 22,
+    "title": "Gewerbestraße 11"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.696,
+    "lng": 9.0275,
+    "kw": 22,
+    "title": "Am Hexenbuckel 1"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.666271,
+    "lng": 13.48452,
+    "kw": 22,
+    "title": "Goldener Stieg 40"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.78266,
+    "lng": 8.20499,
+    "kw": 11,
+    "title": "Rheinstraße 221"
+  },
+  {
+    "cpo": "enbw",
+    "lat": 48.7038331,
+    "lng": 9.2185226,
+    "kw": 22,
+    "title": "Dreifelderstr 3-5"
+  },
+  {
+    "cpo": "allego",
+    "lat": 52.40218,
+    "lng": 13.509497,
+    "kw": 11,
+    "title": "Jeanette-Wolff-Str. 17"
+  }
+]
