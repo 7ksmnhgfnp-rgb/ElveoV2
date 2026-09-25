@@ -61,13 +61,16 @@ async function main() {
       const cpo = known || (opName ? 'x-' + slugify(opName) : 'x-unbekannt');
       const conn = (poi.Connections || [])[0];
       if (known) knownCount++; else otherCount++;
+      const a = poi.AddressInfo;
+      const addrParts = [a.AddressLine1, [a.Postcode, a.Town].filter(Boolean).join(' ')].filter(Boolean);
       return {
         cpo: cpo,
         name: opName || 'Unbekannter Anbieter',
-        lat: poi.AddressInfo.Latitude,
-        lng: poi.AddressInfo.Longitude,
+        lat: a.Latitude,
+        lng: a.Longitude,
         kw: conn && conn.PowerKW ? Math.round(conn.PowerKW) : null,
-        title: poi.AddressInfo.Title || null
+        title: a.Title || null,
+        address: addrParts.length ? addrParts.join(', ') : null
       };
     })
     .filter(Boolean);
