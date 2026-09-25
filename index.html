@@ -1025,17 +1025,11 @@
       <div class="chip on" data-filter="all">Alle</div>
       <div class="chip" data-filter="mine">Meine Ladesäulen</div>
     </div>
-    <div class="filter-row" id="mapLocationRow" style="gap:8px; align-items:center;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:none;"><path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-      <span id="mapCurrentLocation" style="font-size:13px; color:var(--muted,#667);">Standort wird ermittelt…</span>
-    </div>
     <div class="filter-row" id="mapRadiusRow" style="gap:10px; align-items:center;">
-      <input type="range" id="mapRadiusSlider" min="1" max="100" step="1" value="15" style="flex:1;"/>
-      <span id="mapRadiusValue" style="min-width:64px; text-align:right; font-size:13px;">bis 15 km</span>
-    </div>
-    <div class="filter-row" id="mapRangeFilterRow" style="gap:8px;">
-      <select id="mapKwSelect" style="flex:1; padding:8px; border-radius:10px;">
-        <option value="0" selected>jede Leistung</option>
+      <input type="range" id="mapRadiusSlider" min="1" max="50" step="1" value="15" style="flex:2; min-width:0;"/>
+      <span id="mapRadiusValue" style="min-width:60px; text-align:right; font-size:13px;">bis 15 km</span>
+      <select id="mapKwSelect" style="flex:1; min-width:0; padding:8px; border-radius:10px;">
+        <option value="0" selected>alle KW</option>
         <option value="22">ab 22 kW</option>
         <option value="50">ab 50 kW</option>
         <option value="100">ab 100 kW</option>
@@ -1043,9 +1037,16 @@
         <option value="300">ab 300 kW</option>
       </select>
     </div>
-    <div class="map-card" id="mapCard"></div>
+    <div style="position:relative;">
+      <div class="map-card" id="mapCard"></div>
+      <div id="mapLocationBadge" style="position:absolute; right:8px; bottom:8px; display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.92); border-radius:999px; padding:5px 10px; font-size:12px; color:var(--ink,#222); box-shadow:0 1px 4px rgba(0,0,0,0.18); pointer-events:none;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="flex:none;"><path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <span id="mapCurrentLocation">Standort wird ermittelt…</span>
+      </div>
+    </div>
     <div class="map-legend"><span><i class="on"></i>im Schnellfinder</span><span><i></i>weitere</span><span><i class="cheap"></i>Top-3 günstigste</span></div>
     <section>
+
 
       <p class="section-label">In der Nähe<span class="hint" id="mapCountHint"></span></p>
       <div id="mapList"></div>
@@ -1427,6 +1428,7 @@
     reports: [],
     mapFilter: 'all',
     mapSel: null,
+    mapListLimit: 10,
     modalTariffId: null,
     modalCpoId: null,
     tarifeFilter: "all",
@@ -2599,7 +2601,8 @@
     if (!items.length) {
       list.innerHTML = '<div class="empty-note">Keine Ladesäulen im gewählten Umkreis/Filter gefunden. Radius oder kW-Filter oben anpassen.</div>';
     } else {
-      list.innerHTML = items.map(function (o) {
+      var shown = items.slice(0, state.mapListLimit);
+      list.innerHTML = shown.map(function (o) {
         var m = o.s, isSel = o.i === state.mapSel, name = m.name || cpoName(m.cpo);
         var ob = tariffs.filter(function (t) { return state.owned[t.id] && t.prices[m.cpo] != null; })
           .sort(function (a, b) { return a.prices[m.cpo] - b.prices[m.cpo]; })[0];
@@ -2619,8 +2622,13 @@
         return '<div class="map-item' + (isSel ? ' sel' : '') + '" data-i="' + o.i + '"><div class="mi-top"><div class="mi-name">' + esc(name) + cheapBadge + '</div><div class="mi-dist">' + m.km.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' km</div></div>' + addr + '<div class="mi-sub">' + sub + '</div>' +
           (isSel ? actions : '') + '</div>';
       }).join('');
+      if (items.length > shown.length) {
+        list.innerHTML += '<button id="mapShowMoreBtn" style="width:100%; margin-top:10px; padding:10px; border-radius:10px; border:1px solid var(--line); background:var(--surface); font-weight:600; cursor:pointer;">Weitere ' + Math.min(10, items.length - shown.length) + ' anzeigen (' + shown.length + ' von ' + items.length + ')</button>';
+      }
     }
 
+    var showMoreBtn = document.getElementById('mapShowMoreBtn');
+    if (showMoreBtn) showMoreBtn.addEventListener('click', function (e) { e.stopPropagation(); state.mapListLimit += 10; renderKarte(); });
     document.querySelectorAll('#mapCard .pin').forEach(function (g) {
       g.addEventListener('click', function () { state.mapSel = parseInt(g.getAttribute('data-i'), 10); renderKarte(); });
     });
@@ -2638,12 +2646,13 @@
       });
     });
   }
-  document.getElementById('mapRadiusSlider').addEventListener('input', renderKarte);
-  document.getElementById('mapKwSelect').addEventListener('change', renderKarte);
+  document.getElementById('mapRadiusSlider').addEventListener('input', function () { state.mapListLimit = 10; renderKarte(); });
+  document.getElementById('mapKwSelect').addEventListener('change', function () { state.mapListLimit = 10; renderKarte(); });
   var mapChips = document.querySelectorAll('#mapFilterRow .chip');
   mapChips.forEach(function (chip) {
     chip.addEventListener('click', function () {
       state.mapFilter = chip.getAttribute('data-filter');
+      state.mapListLimit = 10;
       mapChips.forEach(function (c) { c.classList.toggle('on', c === chip); });
       renderKarte();
     });
