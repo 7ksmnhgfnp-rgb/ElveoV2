@@ -438,7 +438,7 @@
   .map-item .mi-dist { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 12.5px; color: var(--ink-soft); white-space: nowrap; }
   .map-item .mi-sub { font-size: 11.5px; color: var(--ink-soft); margin-top: 3px; line-height: 1.45; }
   .map-item .mi-actions { display: flex; gap: 8px; margin-top: 10px; }
-  .map-item .mi-actions button { flex: 1; border: 1px solid var(--line); background: var(--surface); border-radius: var(--radius-sm); padding: 9px 6px; font-size: 12px; font-weight: 600; color: var(--ink); cursor: pointer; }
+  .map-item .mi-actions button, .map-item .mi-actions a { flex: 1; border: 1px solid var(--line); background: var(--surface); border-radius: var(--radius-sm); padding: 9px 6px; font-size: 12px; font-weight: 600; color: var(--ink); cursor: pointer; }
   .map-item .mi-actions button.primary { background: var(--teal); border-color: var(--teal); color: #fff; }
   .map-link { display: flex; align-items: center; justify-content: center; gap: 7px; margin-top: 14px; background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px; font-size: 13px; font-weight: 600; color: var(--teal); text-decoration: none; }
   .map-link svg { width: 16px; height: 16px; }
@@ -1025,15 +1025,15 @@
       <div class="chip on" data-filter="all">Alle</div>
       <div class="chip" data-filter="mine">Meine Ladesäulen</div>
     </div>
+    <div class="filter-row" id="mapLocationRow" style="gap:8px; align-items:center;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:none;"><path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+      <span id="mapCurrentLocation" style="font-size:13px; color:var(--muted,#667);">Standort wird ermittelt…</span>
+    </div>
+    <div class="filter-row" id="mapRadiusRow" style="gap:10px; align-items:center;">
+      <input type="range" id="mapRadiusSlider" min="1" max="100" step="1" value="15" style="flex:1;"/>
+      <span id="mapRadiusValue" style="min-width:64px; text-align:right; font-size:13px;">bis 15 km</span>
+    </div>
     <div class="filter-row" id="mapRangeFilterRow" style="gap:8px;">
-      <select id="mapRadiusSelect" style="flex:1; padding:8px; border-radius:10px;">
-        <option value="5">bis 5 km</option>
-        <option value="10">bis 10 km</option>
-        <option value="15" selected>bis 15 km</option>
-        <option value="25">bis 25 km</option>
-        <option value="50">bis 50 km</option>
-        <option value="100">bis 100 km</option>
-      </select>
       <select id="mapKwSelect" style="flex:1; padding:8px; border-radius:10px;">
         <option value="0" selected>jede Leistung</option>
         <option value="22">ab 22 kW</option>
@@ -1046,6 +1046,7 @@
     <div class="map-card" id="mapCard"></div>
     <div class="map-legend"><span><i class="on"></i>im Schnellfinder</span><span><i></i>weitere</span><span><i class="cheap"></i>Top-3 günstigste</span></div>
     <section>
+
       <p class="section-label">In der Nähe<span class="hint" id="mapCountHint"></span></p>
       <div id="mapList"></div>
     </section>
@@ -2485,7 +2486,7 @@
       var km = haversineKm(userLat, userLng, s.lat, s.lng);
       var bearingRad = toRad(bearingDeg(userLat, userLng, s.lat, s.lng));
       if (s.name) dynamicCpoNames[s.cpo] = s.name;
-      return { cpo: s.cpo, kw: s.kw, km: km, bearingRad: bearingRad, name: s.name, title: s.title };
+      return { cpo: s.cpo, kw: s.kw, km: km, bearingRad: bearingRad, name: s.name, title: s.title, address: s.address, lat: s.lat, lng: s.lng };
     });
     usingRealData = true;
     var nearest = nearbyStations(1, true)[0];
@@ -2499,7 +2500,24 @@
     if (typeof renderResults === 'function') renderResults();
   }
 
+  // Zeigt den aktuellen Standort über der Karte an (Adresse per Reverse-Geocoding,
+  // Fallback auf Koordinaten falls der Dienst nicht erreichbar ist).
+  function showCurrentLocation(lat, lng, approx) {
+    var el = document.getElementById('mapCurrentLocation');
+    if (!el) return;
+    var coordTxt = lat.toFixed(3) + ', ' + lng.toFixed(3);
+    el.textContent = (approx ? 'Angenommener Standort: ' : 'Standort: ') + coordTxt;
+    fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + lat + '&longitude=' + lng + '&localityLanguage=de')
+      .then(function (r) { if (!r.ok) throw new Error('geocode failed'); return r.json(); })
+      .then(function (d) {
+        var place = d.city || d.locality || d.principalSubdivision;
+        if (place) el.textContent = (approx ? 'Angenommener Standort: ' : 'Standort: ') + place;
+      })
+      .catch(function () { /* Koordinaten bleiben als Anzeige stehen */ });
+  }
+
   function loadRealStations() {
+    showCurrentLocation(51.1657, 10.4515, true);
     fetch('./data/stations.json')
       .then(function (r) { if (!r.ok) throw new Error('stations.json nicht gefunden'); return r.json(); })
       .then(function (list) {
@@ -2508,7 +2526,10 @@
         applyRealStations(51.1657, 10.4515, list);
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(
-            function (pos) { applyRealStations(pos.coords.latitude, pos.coords.longitude, list); },
+            function (pos) {
+              applyRealStations(pos.coords.latitude, pos.coords.longitude, list);
+              showCurrentLocation(pos.coords.latitude, pos.coords.longitude, false);
+            },
             function () { /* Standort abgelehnt/nicht verfügbar: Default-Position bleibt aktiv */ },
             { timeout: 6000 }
           );
@@ -2545,7 +2566,8 @@
   }
 
   function renderKarte() {
-    var radiusKm = parseFloat(document.getElementById('mapRadiusSelect').value) || 15;
+    var radiusKm = parseFloat(document.getElementById('mapRadiusSlider').value) || 15;
+    document.getElementById('mapRadiusValue').textContent = 'bis ' + radiusKm + ' km';
     var minKw = parseFloat(document.getElementById('mapKwSelect').value) || 0;
     var pxPerKm = MAP_MAX_RADIUS_PX / radiusKm;
 
@@ -2584,9 +2606,18 @@
         var sub = (m.kw ? m.kw + ' kW · ' : '') + (ob ? ob.name + ' ' + fmtPrice(ob.prices[m.cpo]) : 'kein eigener Tarif hier');
         if (cpoAvg(m.cpo)) sub += ' · ★ ' + fmtAvg(cpoAvg(m.cpo));
         if (reportCount(m.cpo)) sub += ' · ⚠ ' + reportCount(m.cpo) + ' gemeldet';
+        var addr = m.address ? '<div class="mi-addr" style="font-size:12px; color:var(--muted,#667); margin:2px 0;">' + esc(m.address) + '</div>' : '';
+        var mapsUrl = (m.lat != null && m.lng != null)
+          ? 'https://www.google.com/maps/search/?api=1&query=' + m.lat + ',' + m.lng
+          : null;
         var cheapBadge = cheapIdx[o.i] ? '<span class="mi-cheap-badge">€ Top-Preis</span>' : '';
-        return '<div class="map-item' + (isSel ? ' sel' : '') + '" data-i="' + o.i + '"><div class="mi-top"><div class="mi-name">' + esc(name) + cheapBadge + '</div><div class="mi-dist">' + m.km.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' km</div></div><div class="mi-sub">' + sub + '</div>' +
-          (isSel ? '<div class="mi-actions"><button class="primary" data-act="fav" data-cpo="' + m.cpo + '">' + (state.favCpos[m.cpo] ? 'Aus Schnellfinder entfernen' : 'Im Schnellfinder anzeigen') + '</button><button data-act="detail" data-cpo="' + m.cpo + '">Details &amp; Bewertung</button></div>' : '') + '</div>';
+        var actions = '<div class="mi-actions">' +
+          '<button class="primary" data-act="fav" data-cpo="' + m.cpo + '">' + (state.favCpos[m.cpo] ? 'Aus Schnellfinder entfernen' : 'Im Schnellfinder anzeigen') + '</button>' +
+          '<button data-act="detail" data-cpo="' + m.cpo + '">Details &amp; Bewertung</button>' +
+          (mapsUrl ? '<a class="secondary-btn" href="' + mapsUrl + '" target="_blank" rel="noopener" data-act="maps" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">In Google Maps öffnen</a>' : '') +
+          '</div>';
+        return '<div class="map-item' + (isSel ? ' sel' : '') + '" data-i="' + o.i + '"><div class="mi-top"><div class="mi-name">' + esc(name) + cheapBadge + '</div><div class="mi-dist">' + m.km.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' km</div></div>' + addr + '<div class="mi-sub">' + sub + '</div>' +
+          (isSel ? actions : '') + '</div>';
       }).join('');
     }
 
@@ -2596,16 +2627,18 @@
     document.querySelectorAll('#mapList .map-item').forEach(function (el) {
       el.addEventListener('click', function () { state.mapSel = parseInt(el.getAttribute('data-i'), 10); renderKarte(); });
     });
-    document.querySelectorAll('#mapList button').forEach(function (b) {
+    document.querySelectorAll('#mapList button, #mapList a').forEach(function (b) {
       b.addEventListener('click', function (e) {
         e.stopPropagation();
+        var act = b.getAttribute('data-act');
+        if (act === 'maps') return; // Link öffnet normal in neuem Tab
         var cpo = b.getAttribute('data-cpo');
-        if (b.getAttribute('data-act') === 'fav') { state.favCpos[cpo] = !state.favCpos[cpo]; renderSaeulen(); renderQuickFinder(); }
+        if (act === 'fav') { state.favCpos[cpo] = !state.favCpos[cpo]; renderSaeulen(); renderQuickFinder(); }
         else { openCpoModal(cpo); }
       });
     });
   }
-  document.getElementById('mapRadiusSelect').addEventListener('change', renderKarte);
+  document.getElementById('mapRadiusSlider').addEventListener('input', renderKarte);
   document.getElementById('mapKwSelect').addEventListener('change', renderKarte);
   var mapChips = document.querySelectorAll('#mapFilterRow .chip');
   mapChips.forEach(function (chip) {
