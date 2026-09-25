@@ -1025,6 +1025,24 @@
       <div class="chip on" data-filter="all">Alle</div>
       <div class="chip" data-filter="mine">Meine Ladesäulen</div>
     </div>
+    <div class="filter-row" id="mapRangeFilterRow" style="gap:8px;">
+      <select id="mapRadiusSelect" style="flex:1; padding:8px; border-radius:10px;">
+        <option value="5">bis 5 km</option>
+        <option value="10">bis 10 km</option>
+        <option value="15" selected>bis 15 km</option>
+        <option value="25">bis 25 km</option>
+        <option value="50">bis 50 km</option>
+        <option value="100">bis 100 km</option>
+      </select>
+      <select id="mapKwSelect" style="flex:1; padding:8px; border-radius:10px;">
+        <option value="0" selected>jede Leistung</option>
+        <option value="22">ab 22 kW</option>
+        <option value="50">ab 50 kW</option>
+        <option value="100">ab 100 kW</option>
+        <option value="150">ab 150 kW</option>
+        <option value="300">ab 300 kW</option>
+      </select>
+    </div>
     <div class="map-card" id="mapCard"></div>
     <div class="map-legend"><span><i class="on"></i>im Schnellfinder</span><span><i></i>weitere</span><span><i class="cheap"></i>Top-3 günstigste</span></div>
     <section>
@@ -1378,8 +1396,17 @@
     { icon: 'M3 12h18M3 12l5-5M3 12l5 5M21 12l-5-5M21 12l-5 5', title: 'Blockiergebühren im Blick behalten', text: 'Viele Ladesäulen berechnen nach einer Karenzzeit eine Gebühr, wenn das Auto nach dem Ladeende weiter steht. Ein Timer hilft, rechtzeitig umzuparken.' }
   ];
 
-  var cpoName = function (id) { return cpos.filter(function (c) { return c.id === id; })[0].name; };
-  var cpoById = function (id) { return cpos.filter(function (c) { return c.id === id; })[0]; };
+  var cpoName = function (id) {
+    var c = cpos.filter(function (c) { return c.id === id; })[0];
+    if (c) return c.name;
+    return dynamicCpoNames[id] || 'Unbekannter Anbieter';
+  };
+  var cpoById = function (id) {
+    var c = cpos.filter(function (c) { return c.id === id; })[0];
+    if (c) return c;
+    return { id: id, name: dynamicCpoNames[id] || 'Unbekannter Anbieter', blockGraceMin: null, blockFeePerMin: null };
+  };
+  var KNOWN_CPO_IDS = cpos.map(function (c) { return c.id; });
   var fmtEUR = function (n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €"; };
   var fmtPrice = function (n) { return n.toFixed(2).replace('.', ',') + ' €/kWh'; };
   var fmtDuration = function (min) {
@@ -1855,7 +1882,7 @@
   }
 
   function renderQuickFinder() {
-    var near = nearbyStations(3);
+    var near = nearbyStations(3, true);
     var favs = cpos.filter(function (c) { return state.favCpos[c.id]; });
     var visible = function (id) { return !!state.favCpos[id] || near.some(function (n) { return n.cpo === id; }); };
     if (state.quickPicked && visible(state.quickPicked)) state.quickPicked = null;
@@ -2322,7 +2349,7 @@
   }
   function cpoMinPrice(id) {
     var vals = tariffs.map(function (t) { return t.prices[id]; }).filter(function (v) { return v != null; });
-    return Math.min.apply(null, vals);
+    return vals.length ? Math.min.apply(null, vals) : null;
   }
   function makeCpoRow(c) {
     var row = document.createElement('div');
@@ -2373,7 +2400,9 @@
     var c = cpoById(id);
     state.modalCpoId = id;
     document.getElementById('cpoModalTitle').textContent = c.name;
-    document.getElementById('cpoModalFee').textContent = 'Blockiergebühr ab ' + c.blockGraceMin + ' Min. · ca. ' + c.blockFeePerMin.toFixed(2).replace('.', ',') + ' €/Min.';
+    document.getElementById('cpoModalFee').textContent = c.blockGraceMin != null
+      ? 'Blockiergebühr ab ' + c.blockGraceMin + ' Min. · ca. ' + c.blockFeePerMin.toFixed(2).replace('.', ',') + ' €/Min.'
+      : 'Keine Tarif-/Blockiergebühr-Daten für diesen Anbieter hinterlegt.';
     var sorted = tariffs.filter(function (t) { return t.prices[id] != null; })
       .sort(function (a, b) { return a.prices[id] - b.prices[id]; });
     document.getElementById('cpoPriceGrid').innerHTML = sorted.map(function (t) {
@@ -2411,9 +2440,10 @@
   });
 
   // ---- Karte (schematische Beispielkarte) ----
-  var MAP_CX = 200, MAP_CY = 150, MAP_PX_PER_KM = 45;
-  // Fallback-Demodaten, falls data/stations.json (noch) nicht geladen werden kann
-  var mapStationsFallback = [
+  var MAP_CX = 200, MAP_CY = 150, MAP_MAX_RADIUS_PX = 140;
+  // Fallback-Demodaten (fest x/y), falls data/stations.json (noch) nicht geladen werden kann.
+  // Werden unten in km + Richtung umgerechnet, damit dieselbe Render-Logik wie bei echten Daten greift.
+  var mapStationsFallbackXY = [
     { cpo: 'enbw', x: 232, y: 118, kw: 150 },
     { cpo: 'allego', x: 252, y: 196, kw: 150 },
     { cpo: 'aral', x: 118, y: 178, kw: 100 },
@@ -2423,8 +2453,13 @@
     { cpo: 'ewe', x: 168, y: 250, kw: 150 },
     { cpo: 'allego', x: 52, y: 214, kw: 50 }
   ];
+  var FALLBACK_PX_PER_KM = 45;
+  var mapStationsFallback = mapStationsFallbackXY.map(function (m) {
+    var dx = m.x - MAP_CX, dy = m.y - MAP_CY;
+    return { cpo: m.cpo, kw: m.kw, km: Math.sqrt(dx * dx + dy * dy) / FALLBACK_PX_PER_KM, bearingRad: Math.atan2(dx, -dy) };
+  });
   var mapStations = mapStationsFallback.slice();
-  mapStations.forEach(function (m) { m.km = Math.sqrt(Math.pow(m.x - MAP_CX, 2) + Math.pow(m.y - MAP_CY, 2)) / MAP_PX_PER_KM; });
+  var usingRealData = false;
 
   // ---- Echte Ladesäulen aus data/stations.json laden ----
   // stations.json wird von der GitHub Action (scripts/fetch-stations.js) aus
@@ -2443,20 +2478,17 @@
       Math.sin(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.cos(toRad(lon2 - lon1));
     return (toDeg(Math.atan2(y, x)) + 360) % 360;
   }
-  var MAP_MAX_RADIUS_PX = 185; // hält alle Punkte innerhalb der 400x300-Karte
+  var dynamicCpoNames = {};
 
   function applyRealStations(userLat, userLng, list) {
     mapStations = list.map(function (s) {
       var km = haversineKm(userLat, userLng, s.lat, s.lng);
-      var rad = toRad(bearingDeg(userLat, userLng, s.lat, s.lng));
-      var r = Math.min(km * MAP_PX_PER_KM, MAP_MAX_RADIUS_PX);
-      return {
-        cpo: s.cpo, kw: s.kw, km: km, title: s.title,
-        x: MAP_CX + r * Math.sin(rad),
-        y: MAP_CY - r * Math.cos(rad)
-      };
+      var bearingRad = toRad(bearingDeg(userLat, userLng, s.lat, s.lng));
+      if (s.name) dynamicCpoNames[s.cpo] = s.name;
+      return { cpo: s.cpo, kw: s.kw, km: km, bearingRad: bearingRad, name: s.name, title: s.title };
     });
-    var nearest = nearbyStations(1)[0];
+    usingRealData = true;
+    var nearest = nearbyStations(1, true)[0];
     if (nearest) {
       state.quickCpo = nearest.cpo; state.cpo = nearest.cpo;
       if (typeof cpoSelect !== 'undefined' && cpoSelect) cpoSelect.value = nearest.cpo;
@@ -2484,60 +2516,76 @@
       })
       .catch(function (err) { console.warn('Elveo: konnte stations.json nicht laden, Demodaten bleiben aktiv.', err); });
   }
-  var mapBase =
-    '<rect class="map-bg" width="400" height="300"/>' +
+  function fmtRingKm(v) {
+    return (Math.round(v * 10) / 10).toLocaleString('de-DE') + ' km';
+  }
+  function buildMapBase(radiusKm) {
+    var r1 = MAP_MAX_RADIUS_PX * 0.5, r2 = MAP_MAX_RADIUS_PX;
+    return '<rect class="map-bg" width="400" height="300"/>' +
     '<path class="map-water" d="M-10 268 C 70 238, 140 298, 230 268 S 350 234, 410 256"/>' +
     '<rect class="map-park" x="18" y="118" width="70" height="44" rx="14"/>' +
     '<rect class="map-park" x="288" y="112" width="60" height="36" rx="12"/>' +
     '<path class="map-road minor" d="M120 -10 V310 M300 -10 V310 M-10 90 H410 M-10 210 H410"/>' +
     '<path class="map-road" d="M-10 150 H410 M200 -10 V310 M-10 56 C 120 36, 280 116, 410 96"/>' +
-    '<circle class="map-ring" cx="200" cy="150" r="45"/><circle class="map-ring" cx="200" cy="150" r="90"/>' +
-    '<text class="map-lbl" x="248" y="146">1 km</text><text class="map-lbl" x="293" y="146">2 km</text>' +
+    '<circle class="map-ring" cx="200" cy="150" r="' + r1 + '"/><circle class="map-ring" cx="200" cy="150" r="' + r2 + '"/>' +
+    '<text class="map-lbl" x="' + (200 + r1 + 3) + '" y="146">' + fmtRingKm(radiusKm / 2) + '</text><text class="map-lbl" x="' + (200 + r2 - 30) + '" y="146">' + fmtRingKm(radiusKm) + '</text>' +
     '<circle class="map-me-ring" cx="200" cy="150" r="17"/>' +
     '<g transform="translate(182,124) scale(0.38)"><g class="mascot-bob">' + mascotInner({ face: 'default' }) + '</g></g>' +
     '<text class="map-lbl" x="200" y="179" text-anchor="middle">Du</text>';
+  }
 
   // Nächstgelegene Ladesäulen (je Betreiber die nächste), Beispieldaten
-  function nearbyStations(n) {
+  function nearbyStations(n, onlyKnown) {
     var seen = {}, out = [];
-    mapStations.slice().sort(function (a, b) { return a.km - b.km; }).forEach(function (m) {
-      if (out.length < n && !seen[m.cpo]) { seen[m.cpo] = true; out.push(m); }
-    });
+    mapStations.slice()
+      .filter(function (m) { return !onlyKnown || KNOWN_CPO_IDS.indexOf(m.cpo) >= 0; })
+      .sort(function (a, b) { return a.km - b.km; })
+      .forEach(function (m) { if (out.length < n && !seen[m.cpo]) { seen[m.cpo] = true; out.push(m); } });
     return out;
   }
 
   function renderKarte() {
+    var radiusKm = parseFloat(document.getElementById('mapRadiusSelect').value) || 15;
+    var minKw = parseFloat(document.getElementById('mapKwSelect').value) || 0;
+    var pxPerKm = MAP_MAX_RADIUS_PX / radiusKm;
+
     var items = mapStations.map(function (m, i) { return { s: m, i: i }; })
       .filter(function (o) { return state.mapFilter === 'mine' ? !!state.favCpos[o.s.cpo] : true; })
+      .filter(function (o) { return o.s.km <= radiusKm; })
+      .filter(function (o) { return (o.s.kw || 0) >= minKw; })
       .sort(function (a, b) { return a.s.km - b.s.km; });
     if (state.mapSel != null && !items.some(function (o) { return o.i === state.mapSel; })) state.mapSel = null;
 
-    // Top 3 günstigste (nach Preis), unabhängig von der Anzeige-Reihenfolge (die bleibt nach Entfernung)
+    // Top 3 günstigste (nach Preis), nur unter Säulen mit bekannten Tarifdaten
     var cheapIdx = {};
-    items.slice().sort(function (a, b) { return cpoMinPrice(a.s.cpo) - cpoMinPrice(b.s.cpo); })
+    items.slice().filter(function (o) { return cpoMinPrice(o.s.cpo) != null; })
+      .sort(function (a, b) { return cpoMinPrice(a.s.cpo) - cpoMinPrice(b.s.cpo); })
       .slice(0, 3).forEach(function (o) { cheapIdx[o.i] = true; });
 
     var pins = items.slice().sort(function (a, b) { return (a.i === state.mapSel) - (b.i === state.mapSel); }).map(function (o) {
+      var r = Math.min(o.s.km * pxPerKm, MAP_MAX_RADIUS_PX);
+      var x = MAP_CX + r * Math.sin(o.s.bearingRad), y = MAP_CY - r * Math.cos(o.s.bearingRad);
+      var label = o.s.name || cpoName(o.s.cpo);
       var cls = 'pin' + (state.favCpos[o.s.cpo] ? ' on' : '') + (o.i === state.mapSel ? ' sel' : '');
       var badge = cheapIdx[o.i] ? '<g class="pin-badge" transform="translate(9,-9)"><circle r="6.5"/><text y="2.5" text-anchor="middle">€</text></g>' : '';
-      return '<g class="' + cls + '" data-i="' + o.i + '" transform="translate(' + o.s.x + ',' + o.s.y + ')"><rect x="-12" y="-12" width="24" height="24" rx="7"/><path transform="translate(-6.5,-6.5) scale(0.54)" d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/><text y="25" text-anchor="middle">' + cpoName(o.s.cpo) + '</text>' + badge + '</g>';
+      return '<g class="' + cls + '" data-i="' + o.i + '" transform="translate(' + x + ',' + y + ')"><rect x="-12" y="-12" width="24" height="24" rx="7"/><path transform="translate(-6.5,-6.5) scale(0.54)" d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/><text y="25" text-anchor="middle">' + esc(label) + '</text>' + badge + '</g>';
     }).join('');
-    document.getElementById('mapCard').innerHTML = '<svg viewBox="0 0 400 300" role="img" aria-label="Beispielkarte mit Ladesäulen">' + mapBase + pins + '</svg>';
+    document.getElementById('mapCard').innerHTML = '<svg viewBox="0 0 400 300" role="img" aria-label="Karte mit Ladesäulen">' + buildMapBase(radiusKm) + pins + '</svg>';
 
     document.getElementById('mapCountHint').textContent = items.length + (items.length === 1 ? ' Säule' : ' Säulen');
     var list = document.getElementById('mapList');
     if (!items.length) {
-      list.innerHTML = '<div class="empty-note">Noch keine Ladesäulen ausgewählt. Im Tab „Tarife“ wählst du deine Ladesäulen aus.</div>';
+      list.innerHTML = '<div class="empty-note">Keine Ladesäulen im gewählten Umkreis/Filter gefunden. Radius oder kW-Filter oben anpassen.</div>';
     } else {
       list.innerHTML = items.map(function (o) {
-        var m = o.s, isSel = o.i === state.mapSel;
+        var m = o.s, isSel = o.i === state.mapSel, name = m.name || cpoName(m.cpo);
         var ob = tariffs.filter(function (t) { return state.owned[t.id] && t.prices[m.cpo] != null; })
           .sort(function (a, b) { return a.prices[m.cpo] - b.prices[m.cpo]; })[0];
-        var sub = m.kw + ' kW · ' + (ob ? ob.name + ' ' + fmtPrice(ob.prices[m.cpo]) : 'kein eigener Tarif hier');
+        var sub = (m.kw ? m.kw + ' kW · ' : '') + (ob ? ob.name + ' ' + fmtPrice(ob.prices[m.cpo]) : 'kein eigener Tarif hier');
         if (cpoAvg(m.cpo)) sub += ' · ★ ' + fmtAvg(cpoAvg(m.cpo));
         if (reportCount(m.cpo)) sub += ' · ⚠ ' + reportCount(m.cpo) + ' gemeldet';
         var cheapBadge = cheapIdx[o.i] ? '<span class="mi-cheap-badge">€ Top-Preis</span>' : '';
-        return '<div class="map-item' + (isSel ? ' sel' : '') + '" data-i="' + o.i + '"><div class="mi-top"><div class="mi-name">' + cpoName(m.cpo) + cheapBadge + '</div><div class="mi-dist">' + m.km.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' km</div></div><div class="mi-sub">' + sub + '</div>' +
+        return '<div class="map-item' + (isSel ? ' sel' : '') + '" data-i="' + o.i + '"><div class="mi-top"><div class="mi-name">' + esc(name) + cheapBadge + '</div><div class="mi-dist">' + m.km.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' km</div></div><div class="mi-sub">' + sub + '</div>' +
           (isSel ? '<div class="mi-actions"><button class="primary" data-act="fav" data-cpo="' + m.cpo + '">' + (state.favCpos[m.cpo] ? 'Aus Schnellfinder entfernen' : 'Im Schnellfinder anzeigen') + '</button><button data-act="detail" data-cpo="' + m.cpo + '">Details &amp; Bewertung</button></div>' : '') + '</div>';
       }).join('');
     }
@@ -2557,6 +2605,8 @@
       });
     });
   }
+  document.getElementById('mapRadiusSelect').addEventListener('change', renderKarte);
+  document.getElementById('mapKwSelect').addEventListener('change', renderKarte);
   var mapChips = document.querySelectorAll('#mapFilterRow .chip');
   mapChips.forEach(function (chip) {
     chip.addEventListener('click', function () {
@@ -2571,7 +2621,7 @@
   var searchInput = document.getElementById('searchInput');
   function renderSearchResults() {
     var q = searchInput.value.trim().toLowerCase();
-    var nearIds = nearbyStations(3).map(function (n) { return n.cpo; });
+    var nearIds = nearbyStations(3, true).map(function (n) { return n.cpo; });
     var list = cpos.filter(function (c) { return c.name.toLowerCase().indexOf(q) >= 0; });
     var wrap = document.getElementById('searchResults');
     if (!list.length) { wrap.innerHTML = '<div class="empty-note">Kein Anbieter gefunden.</div>'; return; }
@@ -2588,7 +2638,7 @@
   }
   function closeSearch() { searchOverlay.classList.remove('open'); }
   function pickProvider(id) {
-    var isNear = nearbyStations(3).some(function (n) { return n.cpo === id; });
+    var isNear = nearbyStations(3, true).some(function (n) { return n.cpo === id; });
     if (!isNear && !state.favCpos[id]) state.quickPicked = id;
     closeSearch();
     state.quickCpo = null;
@@ -2826,7 +2876,7 @@
 
   // ---- init ----
   // Beim Öffnen: Anbieter in direkter Nähe im Schnellfinder vorauswählen
-  var initialNearest = nearbyStations(1)[0];
+  var initialNearest = nearbyStations(1, true)[0];
   if (initialNearest) { state.quickCpo = initialNearest.cpo; state.cpo = initialNearest.cpo; cpoSelect.value = initialNearest.cpo; }
   state.trip.consumption = vehicleConsumption();
   document.getElementById('tripConsSlider').value = state.trip.consumption;
