@@ -1,0 +1,15 @@
+{
+  "name": "Elveo – Dein smarter Ladeassistent",
+  "short_name": "Elveo",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#E8ECEA",
+  "theme_color": "#0E6E63",
+  "lang": "de",
+  "description": "Elveo – dein smarter Ladeassistent für den E-Auto-Alltag.",
+  "icons": [
+    {"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}

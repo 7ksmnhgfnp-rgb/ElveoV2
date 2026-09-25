@@ -1,0 +1,2790 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E6E63">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Elveo">
+<title>Elveo</title>
+<style>
+  :root {
+    --bg: #E8ECEA;
+    --surface: #FFFFFF;
+    --surface-sunken: #F1F4F2;
+    --line: #D6DEDA;
+    --ink: #132420;
+    --ink-soft: #5B6D67;
+    --amber: #F2A83E;
+    --teal: #0E6E63;
+    --teal-tint: #E3F1EE;
+    --teal-tint-line: #BFDCD6;
+    --radius-lg: 20px;
+    --radius-sm: 10px;
+    --glass-bg: rgba(255, 255, 255, 0.55);
+    --glass-bg-strong: rgba(255, 255, 255, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.7);
+    --glass-shine: rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 10px 34px rgba(19, 36, 32, 0.14);
+    --glass-tint: rgba(14, 110, 99, 0.16);
+    --glass-tint-border: rgba(14, 110, 99, 0.38);
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  html, body {
+    height: 100%; margin: 0; color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; -webkit-font-smoothing: antialiased;
+    background:
+      radial-gradient(720px 480px at 12% -8%, rgba(242, 168, 62, 0.16), transparent 60%),
+      radial-gradient(640px 520px at 108% 12%, rgba(14, 110, 99, 0.20), transparent 60%),
+      radial-gradient(900px 700px at 50% 118%, rgba(14, 110, 99, 0.14), transparent 55%),
+      var(--bg);
+    background-attachment: fixed;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #10201B; --surface: #172B25; --surface-sunken: #10231D;
+      --line: #26433A; --ink: #EAF3EF; --ink-soft: #8FA9A0;
+      --teal: #47C7B4; --teal-tint: #14342E; --teal-tint-line: #2C5A50;
+      --glass-bg: rgba(23, 43, 37, 0.55); --glass-bg-strong: rgba(23, 43, 37, 0.78);
+      --glass-border: rgba(255, 255, 255, 0.12); --glass-shine: rgba(255, 255, 255, 0.08);
+      --glass-shadow: 0 10px 34px rgba(0, 0, 0, 0.45);
+      --glass-tint: rgba(71, 199, 180, 0.20); --glass-tint-border: rgba(71, 199, 180, 0.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #10201B; --surface: #172B25; --surface-sunken: #10231D;
+    --line: #26433A; --ink: #EAF3EF; --ink-soft: #8FA9A0;
+    --teal: #47C7B4; --teal-tint: #14342E; --teal-tint-line: #2C5A50;
+    --glass-bg: rgba(23, 43, 37, 0.55); --glass-bg-strong: rgba(23, 43, 37, 0.78);
+    --glass-border: rgba(255, 255, 255, 0.12); --glass-shine: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 10px 34px rgba(0, 0, 0, 0.45);
+    --glass-tint: rgba(71, 199, 180, 0.20); --glass-tint-border: rgba(71, 199, 180, 0.45);
+  }
+
+  .shell { max-width: 460px; margin: 0 auto; padding: 26px 18px 134px; }
+
+  header.app-head { margin-bottom: 20px; }
+  .brand-row { display: flex; align-items: center; gap: 10px; }
+  .brand-row .brand-icon { width: 40px; height: 40px; flex-shrink: 0; filter: drop-shadow(0 3px 8px rgba(14, 110, 99, 0.28)); }
+  .brand-row .brand-icon svg { display: block; width: 40px; height: 40px; }
+  .brand-row .brand-name { font-weight: 800; font-size: 20px; letter-spacing: -0.02em; }
+  .brand-tagline { font-size: 12px; color: var(--ink-soft); margin: 3px 0 0; }
+  h1 {
+    font-size: 26px; line-height: 1.14;
+    margin: 14px 0 6px; font-weight: 700; letter-spacing: -0.01em;
+  }
+  .sub { color: var(--ink-soft); font-size: 14px; line-height: 1.5; margin: 0; max-width: 40ch; }
+  .notice {
+    margin-top: 14px; padding: 10px 14px; background: var(--surface-sunken);
+    border: 1px solid var(--line); border-radius: var(--radius-sm);
+    font-size: 12.5px; color: var(--ink-soft); line-height: 1.5;
+  }
+
+  .page { display: none; }
+  .page.active { display: block; }
+  .subpage { display: none; }
+  .subpage.active { display: block; }
+
+  /* Kategorien als Kästchen mit abgerundeten Ecken */
+  section {
+    margin-top: 14px; padding: 16px;
+    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg);
+    box-shadow: 0 6px 20px rgba(19, 36, 32, 0.06), inset 0 1px 0 var(--glass-shine);
+  }
+  section .t-row:last-child, section .map-item:last-child, section .field:last-child,
+  section .vehicle-stats:last-child, section .compare-card:last-child { margin-bottom: 0; }
+  .section-label {
+    font-weight: 600; font-size: 15px;
+    margin: 0 0 10px; display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+  }
+  .section-label span.hint { font-weight: 400; font-size: 12.5px; color: var(--ink-soft); }
+
+  select, input[type="text"], input[type="number"] {
+    width: 100%; appearance: none; -webkit-appearance: none; background: var(--surface);
+    border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px 40px 14px 14px;
+    font-size: 17px; font-weight: 600; color: var(--ink);
+  }
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235B6D67' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 16px center;
+  }
+  input[type="text"], input[type="number"] { padding-right: 14px; }
+
+  .slider-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 16px 16px 14px; }
+  .slider-card + .slider-card { margin-top: 10px; }
+  .slider-readout { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+  .slider-readout .val { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 22px; font-weight: 600; }
+  .slider-readout .val small { font-size: 13px; color: var(--ink-soft); font-weight: 500; }
+  .slider-readout .lbl { font-size: 13px; color: var(--ink-soft); }
+  input[type="range"] { width: 100%; accent-color: var(--teal); height: 4px; }
+  .reset-link {
+    display: inline-flex; align-items: center; gap: 4px; margin-top: 10px;
+    font-size: 12px; color: var(--teal); background: none; border: none; padding: 0; cursor: pointer; font-weight: 600;
+  }
+  .reset-link svg { width: 12px; height: 12px; }
+
+  .computed-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-sm);
+    padding: 12px 14px; margin-top: 10px;
+  }
+  .computed-row .cr-label { font-size: 12.5px; color: var(--ink-soft); }
+  .computed-row .cr-val { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 16px; font-weight: 600; }
+
+  .result-list { display: flex; flex-direction: column; gap: 8px; }
+  .tariff-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 13px 14px;
+  }
+  .tariff-row.best { border-color: var(--teal); background: var(--teal-tint); }
+  .tariff-row .name-wrap { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .tariff-row .name { font-weight: 600; font-size: 14.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tariff-row .badge { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 10.5px; color: var(--teal); font-weight: 600; }
+  .tariff-row .price { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 17px; font-weight: 600; white-space: nowrap; }
+  .empty-note {
+    font-size: 13.5px; color: var(--ink-soft); background: var(--surface-sunken);
+    border: 1px dashed var(--line); border-radius: var(--radius-sm); padding: 14px; line-height: 1.5;
+  }
+
+  .overall-best {
+    margin-top: 10px; padding: 13px 14px; border-radius: var(--radius-sm);
+    background: var(--surface-sunken); border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .overall-best .name { font-weight: 600; font-size: 14px; }
+  .overall-best .tag { font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; }
+  .overall-best .price { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-weight: 600; font-size: 16px; }
+
+  .tip-banner { background: var(--teal-tint); border: 1px solid var(--teal-tint-line); border-radius: var(--radius-lg); padding: 16px; }
+  .tip-banner-row { display: flex; gap: 12px; align-items: flex-start; }
+  .tip-mascot { width: 46px; height: 46px; flex-shrink: 0; }
+  .tip-mascot .mascot { width: 100%; height: 100%; }
+  .tip-banner-body { flex: 1; min-width: 0; }
+  .tip-head {
+    font-weight: 600; font-size: 14px; color: var(--teal); margin-bottom: 10px;
+  }
+  .tip-line { font-size: 14px; line-height: 1.55; margin: 0 0 8px; }
+  .tip-line:last-child { margin-bottom: 0; }
+  .tip-line b { font-weight: 600; }
+  .tip-line .amt { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-weight: 600; }
+
+  /* Ladezeit block */
+  .time-grid { display: flex; gap: 8px; }
+  .time-card {
+    flex: 1; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm);
+    padding: 13px 12px; text-align: center;
+  }
+  .time-card.emph { border-color: var(--teal); background: var(--teal-tint); }
+  .time-card .tc-label { font-size: 11.5px; color: var(--ink-soft); margin-bottom: 4px; }
+  .time-card .tc-val { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 18px; font-weight: 700; }
+
+  /* Blocking-fee info */
+  .block-box {
+    margin-top: 10px; background: var(--surface-sunken); border: 1px solid var(--line);
+    border-radius: var(--radius-sm); padding: 12px 14px;
+  }
+  .block-box .bb-head { display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+  .block-box .bb-head svg { width: 14px; height: 14px; color: var(--amber); }
+  .block-box .bb-text { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+  .block-box .bb-timer-btn {
+    margin-top: 9px; display: inline-flex; align-items: center; gap: 6px;
+    background: var(--teal); color: #fff; border: none; border-radius: 999px;
+    padding: 8px 14px; font-size: 12.5px; font-weight: 600; cursor: pointer;
+  }
+  .block-box .bb-timer-btn svg { width: 13px; height: 13px; }
+  .block-box .bb-running {
+    margin-top: 9px; display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface); border: 1px solid var(--teal-tint-line); border-radius: var(--radius-sm); padding: 10px 12px;
+  }
+  .block-box .bb-running .bb-mmss { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 20px; font-weight: 700; color: var(--teal); }
+  .block-box .bb-running .bb-stop {
+    background: none; border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px;
+    font-size: 11.5px; font-weight: 600; color: var(--ink-soft); cursor: pointer;
+  }
+  .block-box.bb-done .bb-running .bb-mmss { color: #C24C3D; }
+
+  /* Segmented control (Rechner: Ladung / Reise) — Liquid Glass */
+  .segmented {
+    display: flex; position: relative; overflow: hidden;
+    background: var(--glass-bg); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-shine);
+    border-radius: 14px; padding: 4px; gap: 4px; margin-bottom: 22px;
+  }
+  .segmented button {
+    flex: 1; border: none; background: none; padding: 10px; border-radius: 10px;
+    font-weight: 600; font-size: 13.5px; color: var(--ink-soft); cursor: pointer;
+    position: relative; transition: color 0.15s ease;
+  }
+  .segmented button.active {
+    background: var(--glass-bg-strong); color: var(--ink);
+    box-shadow: 0 2px 8px rgba(19,36,32,0.14), inset 0 1px 0 var(--glass-shine);
+  }
+
+  /* Filter chips (Tarife/Ladesäulen) — Liquid Glass */
+  .filter-row { display: flex; gap: 8px; margin-bottom: 14px; }
+  .chip {
+    border: 1px solid var(--glass-border); background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: inset 0 1px 0 var(--glass-shine);
+    border-radius: 999px; padding: 9px 14px;
+    font-size: 13px; font-weight: 600; color: var(--ink-soft); cursor: pointer; user-select: none;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .chip.on { background: var(--ink); border-color: var(--ink); color: var(--bg); box-shadow: 0 2px 8px rgba(19,36,32,0.18); }
+
+  /* Unified list row (Home favorites + Tarife + Ladesäulen) */
+  .t-row {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm);
+    padding: 12px 12px; margin-bottom: 8px; cursor: pointer;
+  }
+  .t-row .icon-btn {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--glass-bg); border: 1px solid var(--glass-border);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    box-shadow: inset 0 1px 0 var(--glass-shine);
+    cursor: pointer; color: var(--ink-soft); display: flex; align-items: center; justify-content: center;
+  }
+  .t-row .icon-btn.on.star { color: var(--amber); }
+  .t-row .icon-btn.on.own { color: var(--teal); }
+  .t-row .icon-btn svg { width: 16px; height: 16px; }
+  .t-row .trow-text { flex: 1; min-width: 0; }
+  .t-row .tname { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .t-row .tfee { font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; }
+  .t-row .tchevron { color: var(--ink-soft); flex-shrink: 0; }
+
+  /* Modal popup (tariff details + tips + Ladesäule) */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 50; background: rgba(9, 20, 17, 0.5);
+    display: none; align-items: flex-end; justify-content: center; padding: 0;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-card {
+    width: 100%; max-width: 460px; background: var(--glass-bg-strong);
+    -webkit-backdrop-filter: blur(32px) saturate(190%); backdrop-filter: blur(32px) saturate(190%);
+    border-radius: 26px 26px 0 0; padding: 20px 20px calc(22px + env(safe-area-inset-bottom, 0px));
+    max-height: 85vh; overflow-y: auto; border: 1px solid var(--glass-border); border-bottom: none;
+    box-shadow: 0 -10px 40px rgba(19,36,32,0.18), inset 0 1px 0 var(--glass-shine);
+  }
+  .modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+  .modal-head .mtitle { font-weight: 700; font-size: 19px; line-height: 1.25; }
+  .modal-close {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--glass-border);
+    background: var(--glass-bg); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    color: var(--ink-soft); display: flex; align-items: center; justify-content: center; cursor: pointer;
+  }
+  .modal-fee { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 13px; color: var(--ink-soft); margin-bottom: 16px; }
+  .modal-section-label { font-size: 12px; font-weight: 600; color: var(--ink-soft); margin: 16px 0 8px; }
+  .modal-toggles { display: flex; gap: 8px; margin-top: 4px; }
+  .modal-toggle {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+    border: 1px solid var(--line); background: var(--surface-sunken); border-radius: var(--radius-sm);
+    padding: 11px 10px; font-size: 13px; font-weight: 600; color: var(--ink); cursor: pointer;
+  }
+  .modal-toggle svg { width: 16px; height: 16px; }
+  .modal-toggle.on { background: var(--teal-tint); border-color: var(--teal-tint-line); color: var(--teal); }
+  .price-grid { display: grid; grid-template-columns: 1fr auto; row-gap: 7px; column-gap: 10px; }
+  .price-grid .pg-name { font-size: 13.5px; color: var(--ink-soft); }
+  .price-grid .pg-val { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 13.5px; font-weight: 600; text-align: right; }
+
+  /* Price history chart inside modal */
+  .history-wrap { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px; }
+  .history-chart { display: flex; align-items: flex-end; gap: 6px; height: 76px; }
+  .history-bar { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .history-bar .hb-fill { width: 100%; background: var(--teal-tint-line); border-radius: 4px 4px 2px 2px; }
+  .history-bar.current .hb-fill { background: var(--teal); }
+  .history-bar .hb-month { font-size: 9.5px; color: var(--ink-soft); margin-top: 5px; }
+  .history-delta { margin-top: 10px; font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+  .history-delta b { color: var(--ink); }
+  .history-note { font-size: 10.5px; color: var(--ink-soft); margin-top: 6px; }
+
+  .modal-block-note {
+    margin-top: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 14px;
+  }
+
+  /* Bewertung Ladesäulen */
+  .rate-list { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 2px 14px; }
+  .rate-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 0; }
+  .rate-row + .rate-row { border-top: 1px solid var(--line); }
+  .rate-row .rate-label { font-size: 13.5px; font-weight: 600; }
+  .rate-row .rate-sub { font-size: 11px; color: var(--ink-soft); margin-top: 1px; }
+  .rate-stars { display: flex; gap: 0; flex-shrink: 0; }
+  .rate-stars button { background: none; border: none; padding: 3px; cursor: pointer; color: var(--ink-soft); line-height: 0; }
+  .rate-stars button.on { color: var(--amber); }
+  .rate-stars svg { width: 20px; height: 20px; }
+  .rate-avg { margin-top: 8px; font-size: 12px; color: var(--ink-soft); }
+  .rate-avg b { color: var(--ink); font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; }
+
+  /* Defekte Säule melden */
+  .report-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 7px; background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 11px; font-size: 13px; font-weight: 600; color: var(--ink); cursor: pointer; }
+  .report-btn svg { width: 16px; height: 16px; color: #C24C3D; }
+  .report-actions { display: flex; gap: 8px; margin-top: 10px; }
+  .report-send { flex: 1; background: var(--teal); color: #fff; border: none; border-radius: var(--radius-sm); padding: 11px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .report-cancel { background: none; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 11px 14px; font-size: 13px; font-weight: 600; color: var(--ink-soft); cursor: pointer; }
+  .report-list { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+  .report-item { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 9px 12px; font-size: 12.5px; display: flex; justify-content: space-between; gap: 10px; }
+  .report-item .ri-nr { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-weight: 600; }
+  .report-item .ri-time { color: var(--ink-soft); white-space: nowrap; }
+
+  .sub-label { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; font-size: 12px; font-weight: 600; color: var(--ink-soft); margin: 0 0 8px; }
+  .sub-label span { font-weight: 400; font-size: 11.5px; }
+  .cpo-btn small { display: block; font-weight: 500; font-size: 10.5px; color: var(--ink-soft); margin-top: 2px; }
+  .cpo-btn.on small { color: var(--teal); }
+
+  .sl-right { display: flex; align-items: center; gap: 8px; }
+  .search-btn { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--glass-bg); border: 1px solid var(--glass-border); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: inset 0 1px 0 var(--glass-shine); color: var(--teal); display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; }
+  .search-btn svg { width: 15px; height: 15px; }
+  .link-btn { background: none; border: none; padding: 0; font-size: 11.5px; font-weight: 600; color: var(--teal); cursor: pointer; }
+
+  /* E-Auto-Start Guide mit Maskottchen */
+  .guide-stage { display: flex; align-items: flex-end; gap: 12px; margin-top: 4px; }
+  .mascot { flex-shrink: 0; width: 84px; height: 84px; }
+  .mascot svg { width: 100%; height: 100%; overflow: visible; animation: mbob 2.8s ease-in-out infinite; }
+  .m-shadow { fill: var(--ink); fill-opacity: .08; }
+  .m-body { fill: var(--teal-tint); stroke: var(--teal); stroke-width: 3; }
+  .m-face { fill: var(--surface); stroke: var(--teal-tint-line); stroke-width: 1.5; }
+  .m-eye { fill: var(--ink); transform-box: fill-box; transform-origin: center; animation: mblink 4.5s infinite; }
+  .m-cheek { fill: var(--amber); fill-opacity: .4; }
+  .m-mouth { fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; }
+  .m-mouth-big { fill: var(--ink); display: none; }
+  .m-limb { fill: var(--teal); }
+  .m-bolt { fill: var(--amber); }
+  .m-stem { fill: none; stroke: var(--teal); stroke-width: 3; stroke-linecap: round; }
+  .m-spark { fill: var(--amber); display: none; transform-box: fill-box; transform-origin: center; animation: mtwinkle 1.2s ease-in-out infinite; }
+  .mascot.cheer .m-spark { display: block; }
+  .mascot.cheer .m-mouth { display: none; }
+  .mascot.cheer .m-mouth-big { display: block; }
+  .mascot.wave .arm { transform-box: fill-box; transform-origin: 50% 12%; animation: mwave 1.1s ease-in-out infinite; }
+  .mascot.v-blue .m-body { fill: #DCEEF8; stroke: #1C7FB0; }
+  .mascot.v-blue .m-limb, .mascot.v-blue .m-stem { fill: #1C7FB0; stroke: #1C7FB0; }
+  .mascot.v-amber .m-body { fill: #FBEBD2; stroke: #B8790E; }
+  .mascot.v-amber .m-limb, .mascot.v-amber .m-stem { fill: #B8790E; stroke: #B8790E; }
+  .mascot.v-amber .m-bolt, .mascot.v-amber .m-spark { fill: #0E6E63; }
+  .mascot.v-purple .m-body { fill: #F0E1F7; stroke: #7C3AA6; }
+  .mascot.v-purple .m-limb, .mascot.v-purple .m-stem { fill: #7C3AA6; stroke: #7C3AA6; }
+  .mascot.v-coral .m-body { fill: #FBDEDE; stroke: #C23B3B; }
+  .mascot.v-coral .m-limb, .mascot.v-coral .m-stem { fill: #C23B3B; stroke: #C23B3B; }
+  .mascot.v-coral .m-bolt { fill: #0E6E63; }
+  .m-eye-closed { fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; }
+  .m-z { fill: var(--ink-soft); font-family: -apple-system, sans-serif; font-weight: 700; }
+  @keyframes mbob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  @keyframes mblink { 0%, 92%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.1); } }
+  @keyframes mwave { 0%, 100% { transform: rotate(0deg); } 30% { transform: rotate(-38deg); } 60% { transform: rotate(10deg); } }
+  @keyframes mtwinkle { 0%, 100% { transform: scale(0.7); opacity: .6; } 50% { transform: scale(1.15); opacity: 1; } }
+  @keyframes bpop { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .mascot svg, .m-eye, .m-spark, .mascot.wave .arm, .bubble.pop { animation: none; } }
+  .bubble { position: relative; flex: 1; min-height: 116px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 13px 14px; }
+  .bubble::before { content: ""; position: absolute; left: -7px; bottom: 24px; width: 12px; height: 12px; background: var(--surface); border-left: 1px solid var(--line); border-bottom: 1px solid var(--line); transform: rotate(45deg); }
+  .bubble.pop { animation: bpop 0.3s ease; }
+  .bubble-title { font-weight: 700; font-size: 14.5px; margin-bottom: 5px; }
+  .bubble-text { font-size: 13px; line-height: 1.55; color: var(--ink-soft); }
+  .tip-teaser { cursor: pointer; margin-bottom: 12px; }
+  .mascot.sm { width: 58px; height: 58px; }
+  .bubble.sm { min-height: 0; padding: 10px 12px; border-radius: 16px; }
+  .bubble.sm::before { bottom: 18px; }
+  .bubble.sm .bubble-title { font-size: 12px; color: var(--teal); margin-bottom: 3px; }
+  .bubble.sm .bubble-text { font-size: 12.5px; color: var(--ink); line-height: 1.5; }
+  .mascot.hop svg { animation: mhop 0.5s ease; }
+  @keyframes mhop { 0% { transform: translateY(0); } 40% { transform: translateY(-10px) scale(1.04); } 100% { transform: translateY(0); } }
+  .guide-help { margin-top: 14px; background: var(--teal-tint); border: 1px solid var(--teal-tint-line); border-radius: 14px; padding: 12px 14px; }
+  .guide-help .gh-head { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--teal); margin-bottom: 5px; }
+  .guide-help .gh-head svg { width: 14px; height: 14px; }
+  .guide-help .gh-text { font-size: 12.5px; line-height: 1.5; color: var(--ink); }
+  .guide-action { margin-top: 10px; background: var(--surface); border: 1px solid var(--teal-tint-line); border-radius: 999px; padding: 7px 13px; font-size: 12.5px; font-weight: 600; color: var(--teal); cursor: pointer; }
+  .guide-dots { display: flex; justify-content: center; gap: 6px; margin: 16px 0 4px; }
+  .gdot { width: 7px; height: 7px; border-radius: 999px; border: none; background: var(--line); padding: 0; cursor: pointer; transition: width 0.2s ease, background 0.2s ease; }
+  .gdot.on { width: 20px; background: var(--teal); }
+  .guide-nav { display: flex; gap: 8px; margin-top: 12px; }
+  .guide-prev { border: 1px solid var(--line); background: var(--surface-sunken); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 13.5px; font-weight: 600; color: var(--ink-soft); cursor: pointer; }
+  .guide-next { flex: 1; border: none; background: var(--teal); color: #fff; border-radius: var(--radius-sm); padding: 12px; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+
+  /* Karte */
+  .map-card { background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+  .map-card svg { display: block; width: 100%; height: auto; }
+  .map-bg { fill: var(--surface-sunken); }
+  .map-park { fill: var(--teal-tint); }
+  .map-water { fill: none; stroke: var(--teal-tint-line); stroke-width: 16; stroke-linecap: round; }
+  .map-road { fill: none; stroke: var(--line); stroke-width: 6; stroke-linecap: round; }
+  .map-road.minor { stroke-width: 3.5; }
+  .map-ring { fill: none; stroke: var(--ink-soft); stroke-opacity: .35; stroke-dasharray: 3 4; }
+  .map-lbl { font-size: 9px; fill: var(--ink-soft); }
+  .map-me-ring { fill: var(--amber); fill-opacity: .22; }
+  .map-me { fill: var(--amber); stroke: #fff; stroke-width: 2.5; }
+  .mascot-bob { transform-box: fill-box; transform-origin: 50% 50%; animation: mbob 2.8s ease-in-out infinite; }
+  .pin { cursor: pointer; }
+  .pin rect { fill: var(--ink-soft); stroke: var(--surface); stroke-width: 2; }
+  .pin.on rect { fill: var(--teal); }
+  .pin.sel rect { stroke: var(--amber); stroke-width: 3; }
+  .pin path { fill: var(--bg); }
+  .pin text { font-size: 9px; font-weight: 600; fill: var(--ink); paint-order: stroke; stroke: var(--surface-sunken); stroke-width: 3px; }
+  .pin .pin-badge circle { fill: var(--amber); stroke: var(--surface); stroke-width: 1.5; }
+  .pin .pin-badge text { fill: #fff; font-size: 8px; stroke: none; }
+  .map-legend { display: flex; gap: 14px; font-size: 11.5px; color: var(--ink-soft); margin: 10px 2px 0; flex-wrap: wrap; }
+  .map-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; background: var(--ink-soft); margin-right: 5px; vertical-align: -1px; }
+  .map-legend i.on { background: var(--teal); }
+  .map-legend i.cheap { background: var(--amber); border-radius: 50%; }
+  .map-item { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 8px; cursor: pointer; }
+  .map-item.sel { border-color: var(--teal); background: var(--teal-tint); }
+  .map-item .mi-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .map-item .mi-name { font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 6px; }
+  .mi-cheap-badge { display: inline-flex; align-items: center; gap: 2px; background: var(--amber); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 20px; white-space: nowrap; }
+  .map-item .mi-dist { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 12.5px; color: var(--ink-soft); white-space: nowrap; }
+  .map-item .mi-sub { font-size: 11.5px; color: var(--ink-soft); margin-top: 3px; line-height: 1.45; }
+  .map-item .mi-actions { display: flex; gap: 8px; margin-top: 10px; }
+  .map-item .mi-actions button { flex: 1; border: 1px solid var(--line); background: var(--surface); border-radius: var(--radius-sm); padding: 9px 6px; font-size: 12px; font-weight: 600; color: var(--ink); cursor: pointer; }
+  .map-item .mi-actions button.primary { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .map-link { display: flex; align-items: center; justify-content: center; gap: 7px; margin-top: 14px; background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px; font-size: 13px; font-weight: 600; color: var(--teal); text-decoration: none; }
+  .map-link svg { width: 16px; height: 16px; }
+
+  /* Tips modal list */
+  .tips-list { display: flex; flex-direction: column; gap: 10px; }
+  .tip-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px; display: flex; gap: 12px; }
+  .tip-card .tip-icon {
+    flex-shrink: 0; width: 34px; height: 34px; border-radius: 10px; background: var(--teal-tint); color: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tip-card .tip-icon svg { width: 17px; height: 17px; }
+  .tip-card .tip-title { font-weight: 600; font-size: 13.5px; margin-bottom: 3px; }
+  .tip-card .tip-text { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
+
+  /* Home dashboard */
+  .cpo-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .cpo-btn {
+    background: var(--glass-bg); border: 1px solid var(--glass-border);
+    -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: inset 0 1px 0 var(--glass-shine);
+    border-radius: 14px;
+    padding: 13px 6px; font-weight: 600; font-size: 12.5px;
+    color: var(--ink); cursor: pointer; text-align: center; line-height: 1.25;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .cpo-btn.on {
+    background: var(--glass-tint); border-color: var(--glass-tint-border); color: var(--teal);
+    box-shadow: 0 2px 8px rgba(19,36,32,0.12), inset 0 1px 0 var(--glass-shine);
+  }
+  .quick-result {
+    margin-top: 12px; background: var(--teal-tint); border: 1px solid var(--teal-tint-line);
+    border-radius: var(--radius-lg); padding: 18px;
+  }
+  .quick-result .qr-tag { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 11px; color: var(--teal); font-weight: 600; margin-bottom: 6px; }
+  .quick-result .qr-name { font-weight: 700; font-size: 19px; margin-bottom: 4px; }
+  .quick-result .qr-price { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-weight: 700; font-size: 34px; line-height: 1; }
+  .quick-result .qr-price small { font-size: 15px; font-weight: 600; color: var(--ink-soft); }
+  .quick-result .qr-alt { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--teal-tint-line); font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
+  .quick-result .qr-alt b { color: var(--ink); }
+  .qr-more {
+    display: inline-flex; align-items: center; gap: 4px; margin-top: 12px;
+    font-size: 12.5px; font-weight: 600; color: var(--teal); background: none; border: none; padding: 0; cursor: pointer;
+  }
+  .qr-more svg { width: 13px; height: 13px; }
+  .quick-placeholder {
+    margin-top: 12px; text-align: center; padding: 20px 14px; color: var(--ink-soft); font-size: 13px;
+    border: 1px dashed var(--line); border-radius: var(--radius-lg); line-height: 1.5;
+  }
+  .quicklinks { display: flex; gap: 10px; }
+  .quicklink {
+    flex: 1; background: var(--glass-bg); border: 1px solid var(--glass-border);
+    -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: inset 0 1px 0 var(--glass-shine);
+    border-radius: 16px; padding: 14px; cursor: pointer; text-align: left;
+  }
+  .quicklink .ql-icon { color: var(--teal); margin-bottom: 8px; }
+  .quicklink .ql-icon svg { width: 20px; height: 20px; }
+  .quicklink .ql-label { font-weight: 600; font-size: 13.5px; }
+  .quicklink .ql-sub { font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; }
+  .tips-card { background: linear-gradient(160deg, var(--teal-tint), var(--glass-bg) 70%); border-color: var(--teal-tint-line); }
+  .tips-card .section-label { color: var(--teal); }
+  .tips-card .quicklink { background: var(--surface); }
+  .tip-link {
+    width: 100%; display: flex; align-items: center; gap: 12px;
+    background: var(--surface); border: 1px solid var(--teal-tint-line); border-radius: 16px;
+    padding: 13px 14px; cursor: pointer; text-align: left;
+  }
+  .tip-link .tl-icon {
+    flex-shrink: 0; width: 34px; height: 34px; border-radius: 10px; background: var(--teal-tint); color: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tip-link .tl-icon svg { width: 17px; height: 17px; }
+  .tip-link .tl-label { font-weight: 600; font-size: 13.5px; color: var(--ink); }
+  .tip-link .tl-sub { font-size: 11.5px; color: var(--ink-soft); margin-top: 1px; }
+  .tip-link .tl-chevron { margin-left: auto; color: var(--ink-soft); flex-shrink: 0; }
+  .tips-entry {
+    width: 100%; margin-top: 10px; display: flex; align-items: center; gap: 12px;
+    background: linear-gradient(135deg, #16332C, #0B211C); border: 1px solid #1F3F36;
+    box-shadow: 0 8px 22px rgba(6, 20, 16, 0.28), inset 0 1px 0 rgba(255,255,255,0.06);
+    border-radius: 16px; padding: 13px 14px; cursor: pointer; text-align: left;
+  }
+  .tips-entry .te-icon {
+    flex-shrink: 0; width: 34px; height: 34px; border-radius: 10px; background: var(--amber); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tips-entry .te-icon svg { width: 17px; height: 17px; }
+  .tips-entry .te-label { font-weight: 600; font-size: 13.5px; color: #F3F8F6; }
+  .tips-entry .te-sub { font-size: 11.5px; color: #9FC2B8; margin-top: 1px; }
+  .tips-entry .te-chevron { margin-left: auto; color: #9FC2B8; }
+
+  /* Trip page pieces */
+  .toggle-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 13px 14px;
+  }
+  .toggle-row .tr-label { font-size: 14px; font-weight: 500; }
+  .toggle-row .tr-sub { font-size: 12px; color: var(--ink-soft); margin-top: 1px; }
+  .switch { position: relative; width: 44px; height: 26px; flex-shrink: 0; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .switch .track { position: absolute; inset: 0; background: var(--line); border-radius: 999px; cursor: pointer; transition: background 0.15s ease; }
+  .switch .track::before {
+    content: ""; position: absolute; width: 20px; height: 20px; left: 3px; top: 3px;
+    background: var(--surface); border-radius: 50%; transition: transform 0.15s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  }
+  .switch input:checked + .track { background: var(--teal); }
+  .switch input:checked + .track::before { transform: translateX(18px); }
+
+  .trip-total {
+    background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-sm);
+    padding: 14px 16px; display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px;
+  }
+  .trip-total .tt-label { font-size: 13px; color: var(--ink-soft); }
+  .trip-total .tt-val { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 20px; font-weight: 600; }
+
+  .stops-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm);
+    padding: 14px 16px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .stops-card .sc-label { font-size: 12.5px; color: var(--ink-soft); }
+  .stops-card .sc-val { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 26px; font-weight: 700; }
+  .stops-card .sc-sub { font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
+
+  .compare-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 8px; }
+  .compare-card .cc-tag { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 10.5px; color: var(--ink-soft); margin-bottom: 4px; }
+  .compare-card .cc-name { font-weight: 600; font-size: 14.5px; margin-bottom: 6px; }
+  .compare-card .cc-price { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 19px; font-weight: 600; }
+  .compare-card .cc-sub { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+
+  .reco-banner { border-radius: var(--radius-lg); padding: 16px; margin-top: 14px; border: 1px solid var(--teal-tint-line); background: var(--teal-tint); }
+  .reco-banner.negative { border-color: var(--line); background: var(--surface-sunken); }
+  .reco-banner .reco-head { font-weight: 700; font-size: 15px; color: var(--teal); margin-bottom: 6px; }
+  .reco-banner.negative .reco-head { color: var(--ink); }
+  .reco-banner p { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--ink); }
+  .home-compare-line {
+    margin-top: 10px; font-size: 12.5px; color: var(--ink-soft); background: var(--surface-sunken);
+    border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 12px; line-height: 1.5;
+  }
+
+  /* Konto page */
+  .avatar-grid { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .avatar-opt {
+    width: 62px; height: 62px; border-radius: 16px; border: none; padding: 4px;
+    background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background-color .15s, transform .15s;
+  }
+  .avatar-opt .mascot { width: 100%; height: 100%; }
+  .avatar-opt .mascot svg { overflow: visible; }
+  .avatar-opt.selected { background: var(--teal-tint); transform: scale(1.08); }
+  .title-row { display: flex; align-items: center; gap: 8px; }
+  .title-row h1 { margin: 0; }
+  .header-avatar { width: 36px; height: 36px; flex-shrink: 0; display: none; }
+  .header-avatar .mascot { width: 100%; height: 100%; }
+  .header-avatar.show { display: block; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 12.5px; font-weight: 600; color: var(--ink-soft); margin-bottom: 6px; }
+  .field .field-note { font-size: 11.5px; color: var(--ink-soft); margin-top: 6px; line-height: 1.5; }
+  .vehicle-stats { display: flex; gap: 10px; margin-bottom: 16px; }
+  .vstat { flex: 1; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px; text-align: center; }
+  .vstat .vs-val { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 17px; font-weight: 700; }
+  .vstat .vs-label { font-size: 10.5px; color: var(--ink-soft); margin-top: 2px; }
+  .stat-row { display: flex; gap: 10px; }
+  .stat-card { flex: 1; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 14px 12px; box-shadow: 0 2px 8px rgba(19, 36, 32, 0.04); text-align: center; }
+  .stat-card .stat-icon { width: 30px; height: 30px; border-radius: 9px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; }
+  .stat-card .stat-icon svg { width: 15px; height: 15px; }
+  .stat-card.owned .stat-icon { background: var(--teal-tint); color: var(--teal); }
+  .stat-card.fav .stat-icon { background: rgba(242, 168, 62, 0.18); color: var(--amber); }
+  .stat-card.fix .stat-icon { background: rgba(194, 59, 59, 0.14); color: #C23B3B; }
+  .stat-card .stat-val { font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 21px; font-weight: 700; letter-spacing: -0.01em; }
+  .stat-card .stat-label { font-size: 11.5px; color: var(--ink-soft); margin-top: 3px; }
+  .danger-btn {
+    width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm);
+    padding: 13px; font-size: 13.5px; font-weight: 600; color: var(--ink-soft); cursor: pointer;
+  }
+
+  footer.foot-note { margin-top: 30px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+
+  /* Bottom tab bar — schwebendes Liquid-Glass-Dock mit angehobenem "Jetzt laden" */
+  .tabbar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+    display: flex; justify-content: center;
+    padding: 0 16px calc(12px + env(safe-area-inset-bottom, 0px));
+    pointer-events: none;
+  }
+  .tabbar-inner {
+    max-width: 420px; width: 100%; display: flex; align-items: flex-end; gap: 2px;
+    background: var(--glass-bg-strong);
+    -webkit-backdrop-filter: blur(30px) saturate(200%); backdrop-filter: blur(30px) saturate(200%);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 14px 34px rgba(19, 36, 32, 0.16), 0 2px 6px rgba(19, 36, 32, 0.06), inset 0 1px 0 var(--glass-shine);
+    position: relative; border-radius: 30px; padding: 6px; pointer-events: auto;
+  }
+  .tab-btn {
+    position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+    background: none; border: none; padding: 8px 2px 7px; cursor: pointer; border-radius: 22px;
+    color: var(--ink-soft); font-family: inherit; font-size: 10px; font-weight: 500; letter-spacing: 0.01em;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.12s ease;
+  }
+  .tab-btn:active { transform: scale(0.94); }
+  .tab-btn svg { width: 22px; height: 22px; stroke-width: 1.8; transition: transform 0.2s ease, stroke-width 0.2s ease; }
+  .tab-btn.active { color: var(--teal); font-weight: 600; }
+  .tab-btn.active svg { stroke-width: 2.1; transform: translateY(-1px); }
+  /* Gleitende Markierung */
+  .tab-indicator {
+    position: absolute; top: 0; left: 0; right: 0; height: 0; border-radius: 22px;
+    background: var(--glass-tint); box-shadow: inset 0 1px 0 var(--glass-shine);
+    pointer-events: none; z-index: 0;
+  }
+  .tab-btn { z-index: 1; }
+
+  /* Jetzt laden = Startseite: nur dünne Trennlinien links und rechts */
+  .tab-btn.tab-home::before, .tab-btn.tab-home::after {
+    content: ""; position: absolute; top: 50%; width: 1px; height: 28px; transform: translateY(-50%);
+    background: var(--ink-soft); opacity: 0.3; pointer-events: none;
+  }
+  .tab-btn.tab-home::before { left: -1.5px; }
+  .tab-btn.tab-home::after { right: -1.5px; }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <header class="app-head">
+    <div class="brand-row">
+      <div class="brand-icon"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJFbHZlbyIgeG1sbnM6YzJwYT0iaHR0cDovL2MycGEub3JnL21hbmlmZXN0Ij48bWV0YWRhdGE+PGMycGE6bWFuaWZlc3Q+QUFBV2dtcDFiV0lBQUFBZWFuVnRaR015Y0dFQUVRQVFnQUFBcWdBNG0zRURZekp3WVFBQUFCWmNhblZ0WWdBQUFFZHFkVzFrWXpKdFlRQVJBQkNBQUFDcUFEaWJjUU4xY200Nll6SndZVG94TVRKbE5URXpOQzB5WXpjekxUUmpaakl0WWpJNFl5MWtPV0l5TURrMVpqTmtabVVBQUFBRGwycDFiV0lBQUFBcGFuVnRaR015WVhNQUVRQVFnQUFBcWdBNG0zRURZekp3WVM1aGMzTmxjblJwYjI1ekFBQUFBTHhxZFcxaUFBQUFSR3AxYldSalltOXlBQkVBRUlBQUFLb0FPSnR4RTJNeWNHRXVhVzVuY21Wa2FXVnVkQzUyTXdBQUFBQVlZekp6YUtTYjJOTzViL1BxT0pmTDRHVmJJbEVBQUFCd1kySnZjcU5wWkdNNlptOXliV0YwYldsdFlXZGxMM04yWnl0NGJXeHFhVzV6ZEdGdVkyVkpSSGdzZUcxd09tbHBaRG93TkRJeU56RXpPQzAzTm1NNUxUUmhZamN0T0Rka055MW1aR00yWXpkbE1EbGlOakJzY21Wc1lYUnBiMjV6YUdsd2FIQmhjbVZ1ZEU5bUFBQUI0bXAxYldJQUFBQkJhblZ0WkdOaWIzSUFFUUFRZ0FBQXFnQTRtM0VUWXpKd1lTNWhZM1JwYjI1ekxuWXlBQUFBQUJoak1uTm90UTcrckd5RWsvYlRSRUZKcXQreHVnQUFBWmxqWW05eW9tZGhZM1JwYjI1emdxSm1ZV04wYVc5dWEyTXljR0V1YjNCbGJtVmthbkJoY21GdFpYUmxjbk9oYTJsdVozSmxaR2xsYm5SemdhSmpkWEpzZUMxelpXeG1JMnAxYldKbVBXTXljR0V1WVhOelpYSjBhVzl1Y3k5ak1uQmhMbWx1WjNKbFpHbGxiblF1ZGpOa2FHRnphRmdnL2lHU3J0UTBpV1JpQ1RMS05lRC84bEJ0VEtaVWlNdVhrR0tWeERrajZhS2tabUZqZEdsdmJuZ2RZMjl0TG1GdWRHaHliM0JwWXk1amJHRjFaR1V1Y0hKdmRtbGtaV1JxY0dGeVlXMWxkR1Z5YzZGNEgyTnZiUzVoYm5Sb2NtOXdhV011YjNKcFoybHVMV052Ym1acFpHVnVZMlZuZFc1cmJtOTNibXRrWlhOamNtbHdkR2x2Ym5obVEyeGhkV1JsSUhCeWIzWnBaR1ZrSUhSb2FYTWdabWxzWlNCaGRDQjBhR1VnY21WeGRXVnpkQ0J2WmlCaElIVnpaWElnWVc1a0lHMWhlU0JvWVhabElHTnlaV0YwWldRZ2IzSWdiVzlrYVdacFpXUWdkR2hsSUdacGJHVWdZMjl1ZEdWdWRITXViWE52Wm5SM1lYSmxRV2RsYm5TaFpHNWhiV1ZtUTJ4aGRXUmxjbUZzYkVGamRHbHZibk5KYm1Oc2RXUmxaUFVBQUFESWFuVnRZZ0FBQUVCcWRXMWtZMkp2Y2dBUkFCQ0FBQUNxQURpYmNSTmpNbkJoTG1oaGMyZ3VaR0YwWVFBQUFBQVlZekp6YUV6ZVBSVU5mQjRmeVcxNlhQM1hJeHNBQUFDQVkySnZjcVZqWVd4blpuTm9ZVEkxTm1Od1lXUk5BQUFBQUFBQUFBQUFBQUFBQUdSb1lYTm9XQ0J2S3MremgzMTVTOFF3SnlFSFhBeHlKVDFyOEd3SS9CanZWcHNpbElnRmsyUnVZVzFsYm1wMWJXSm1JRzFoYm1sbVpYTjBhbVY0WTJ4MWMybHZibk9Cb21WemRHRnlkQmkwWm14bGJtZDBhQmtlQkFBQUFqNXFkVzFpQUFBQUoycDFiV1JqTW1Oc0FCRUFFSUFBQUtvQU9KdHhBMk15Y0dFdVkyeGhhVzB1ZGpJQUFBQUNEMk5pYjNLbFkyRnNaMlp6YUdFeU5UWnBjMmxuYm1GMGRYSmxlRTF6Wld4bUkycDFiV0ptUFM5ak1uQmhMM1Z5Ympwak1uQmhPakV4TW1VMU1UTTBMVEpqTnpNdE5HTm1NaTFpTWpoakxXUTVZakl3T1RWbU0yUm1aUzlqTW5CaExuTnBaMjVoZEhWeVpXcHBibk4wWVc1alpVbEVlQ3g0YlhBNmFXbGtPbVEwTTJKak5HWXlMVFptT0dZdE5EazROUzA0WVRaakxUSXdOMkkwTmpOa016VXhPWEpqY21WaGRHVmtYMkZ6YzJWeWRHbHZibk9Eb21OMWNteDRMWE5sYkdZamFuVnRZbVk5WXpKd1lTNWhjM05sY25ScGIyNXpMMk15Y0dFdWFXNW5jbVZrYVdWdWRDNTJNMlJvWVhOb1dDRCtJWkt1MURTSlpHSUpNc28xNFAveVVHMU1wbFNJeTVlUVlwWEVPU1Bwb3FKamRYSnNlQ3B6Wld4bUkycDFiV0ptUFdNeWNHRXVZWE56WlhKMGFXOXVjeTlqTW5CaExtRmpkR2x2Ym5NdWRqSmthR0Z6YUZnZ3FCeFZMMHFESFh0YUFZK1o2OG5GRmQvYkllMnpscE5XbWVWd2dtSDlHNkNpWTNWeWJIZ3BjMlZzWmlOcWRXMWlaajFqTW5CaExtRnpjMlZ5ZEdsdmJuTXZZekp3WVM1b1lYTm9MbVJoZEdGa2FHRnphRmdnRHp3cDl0eUhOTTdhZHpOazRRMHJYbzloMGNQRXN5dWN1QjRuL2ZCSkJiNTBZMnhoYVcxZloyVnVaWEpoZEc5eVgybHVabStqWkc1aGJXVnZRVzUwYUhKdmNHbGpJRVpwYkdWelozWmxjbk5wYjI1bE1TNHdMakJyYzNCbFkxWmxjbk5wYjI1bE1pNDBMakFBQUJBNGFuVnRZZ0FBQUNocWRXMWtZekpqY3dBUkFCQ0FBQUNxQURpYmNRTmpNbkJoTG5OcFoyNWhkSFZ5WlFBQUFCQUlZMkp2Y3RLRVdRSVNvZ0VtR0NGWkFnb3dnZ0lHTUlJQmphQURBZ0VDQWhSQTVhQUs3c0k1MEw2NGcvb0dRZ1U5WjFVVEFEQUtCZ2dxaGtqT1BRUURBekJKTVJjd0ZRWURWUVFLRXc1QmJuUm9jbTl3YVdNc0lGQkNRekV1TUN3R0ExVUVBeE1sUVc1MGFISnZjR2xqSUVOdmJuUmxiblFnUTNKbFpHVnVkR2xoYkhNZ1VtOXZkQ0JEUVRBZUZ3MHlOakE0TURjeE9EUXpOVFphRncweU9EQTRNRFl4T1RRek5UWmFNRVF4RnpBVkJnTlZCQW9URGtGdWRHaHliM0JwWXl3Z1VFSkRNU2t3SndZRFZRUURFeUJCYm5Sb2NtOXdhV01nUTJ4aGRXUmxJRU52Ym5SbGJuUWdVMmxuYm1sdVp6QlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJKaDZDbXZMVUJnRkZOVTB2VUtsT1Z0RTZkamQxN0w1U3V3WDBMZW1GaXNCTTNka2QvM2N5anhGQTNRbzVTNDZmWDAvaWhZMFZaN21mYjlLRjcwM3Q1T2pXREJXTUE0R0ExVWREd0VCL3dRRUF3SUhnREFWQmdOVkhTVUVEakFNQmdvckJnRUVBWVBvWGdJQk1Bd0dBMVVkRXdFQi93UUNNQUF3SHdZRFZSMGpCQmd3Rm9BVXpsSGlCSUZPWkZzaitPUEV6NW8rbk1IWFhNSXdDZ1lJS29aSXpqMEVBd01EWndBd1pBSXdNWE1kRko0QmV0TExWWTdPUnVFOW5vcWJiQVpPWm4vYUFyWHlUd0ZBWmZLclB6eEYydlBvSk5mMStVQ2RnMVhHQWpCd1gxemQ5V0dxWWtxbUw1U0ZxdzFReVNqcjF6SmZwSk05KzFyZER3U1BMTU9QT2pLdWlYam9VL3BVVWVHOVJ3bWhZM0JoWkZrTm5nQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBUFpZUUZleGJqL29VdXFsTklEdU9tSVlZNmJTWWM0d2JrQnNOWkJMMVZaeVIvcFhpVnVXNi9QMWx0eEhRYVY4RW5qU3BYV0dMREZOcS9EbFNmOEE4ZU1KVjFRPTwvYzJwYTptYW5pZmVzdD48L21ldGFkYXRhPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJsZ0JnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjNkZEQ0NCIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMEI1RjU1Ii8+PC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibGdTaGVlbiIgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2ZmZiIgc3RvcC1vcGFjaXR5PSIuMzgiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmYiIHN0b3Atb3BhY2l0eT0iMCIvPjwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxnQm9sdCIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzIyQUU5QyIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzBFNkU2MyIvPjwvbGluZWFyR3JhZGllbnQ+CiAgICA8Y2xpcFBhdGggaWQ9ImxnQ2xpcCI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMTYiLz48L2NsaXBQYXRoPgogICAgPGZpbHRlciBpZD0ibGdCbHVyIiB4PSItMjAlIiB5PSItMjAlIiB3aWR0aD0iMTQwJSIgaGVpZ2h0PSIxNDAlIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxMCIvPjwvZmlsdGVyPgogIDwvZGVmcz4KICA8ZyBjbGlwLXBhdGg9InVybCgjbGdDbGlwKSI+CiAgICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0idXJsKCNsZ0JnKSIvPgogICAgPGNpcmNsZSBjeD0iMTEwIiBjeT0iNzAiIHI9IjIwMCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjEwIi8+CiAgICA8ZyB0cmFuc2Zvcm09InJvdGF0ZSgtNiAxNzEgMjU3KSI+CiAgICAgIDxyZWN0IHg9Ijc2IiB5PSIxMzIiIHdpZHRoPSIxOTAiIGhlaWdodD0iMjUwIiByeD0iMzYiIGZpbGw9IiMwNjJBMjYiIG9wYWNpdHk9Ii4zNSIgZmlsdGVyPSJ1cmwoI2xnQmx1cikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDggMTQpIi8+CiAgICAgIDxyZWN0IHg9Ijc2IiB5PSIxMzIiIHdpZHRoPSIxOTAiIGhlaWdodD0iMjUwIiByeD0iMzYiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii45NyIvPgogICAgICA8cGF0aCB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMTMuNSAxOTcpIHNjYWxlKDUpIiBkPSJNMTMgMiAzIDE0aDdsLTEgOCAxMS0xNGgtN2wwLTZ6IiBmaWxsPSJ1cmwoI2xnQm9sdCkiLz4KICAgIDwvZz4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQzMiAzMjApIHJvdGF0ZSgtOSkgc2NhbGUoNC4zKSB0cmFuc2xhdGUoLTQ4IC01NSkiPgogICAgICA8ZWxsaXBzZSBjeD0iNDgiIGN5PSI5MCIgcng9IjIyIiByeT0iNCIgZmlsbD0iIzA2MkEyNiIgb3BhY2l0eT0iLjI1Ii8+CiAgICAgIDxwYXRoIGQ9Ik00OCAyOFYxNSIgc3Ryb2tlPSIjMEU2RTYzIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsbD0ibm9uZSIvPgogICAgICA8cGF0aCB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MS41LDEpIHNjYWxlKC41OCkiIGQ9Ik0xMyAyIDMgMTRoN2wtMSA4IDExLTE0aC03bDAtNnoiIGZpbGw9IiNGMkE4M0UiLz4KICAgICAgPHJlY3QgeD0iMTAiIHk9IjQ4IiB3aWR0aD0iOSIgaGVpZ2h0PSIxOCIgcng9IjQuNSIgZmlsbD0iIzlFRDhDQyIvPgogICAgICA8cmVjdCB4PSI3NyIgeT0iNDgiIHdpZHRoPSI5IiBoZWlnaHQ9IjE4IiByeD0iNC41IiBmaWxsPSIjOUVEOENDIi8+CiAgICAgIDxyZWN0IHg9IjMyIiB5PSI3OCIgd2lkdGg9IjEzIiBoZWlnaHQ9IjgiIHJ4PSI0IiBmaWxsPSIjOUVEOENDIi8+CiAgICAgIDxyZWN0IHg9IjUxIiB5PSI3OCIgd2lkdGg9IjEzIiBoZWlnaHQ9IjgiIHJ4PSI0IiBmaWxsPSIjOUVEOENDIi8+CiAgICAgIDxyZWN0IHg9IjE4IiB5PSIyOCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjU0IiByeD0iMjAiIGZpbGw9IiNFM0YxRUUiIHN0cm9rZT0iIzBFNkU2MyIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgICAgIDxyZWN0IHg9IjI3IiB5PSIzNyIgd2lkdGg9IjQyIiBoZWlnaHQ9IjI4IiByeD0iMTMiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI0JGRENENiIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICAgICAgPGNpcmNsZSBjeD0iMzcuNSIgY3k9IjQ5IiByPSIzLjYiIGZpbGw9IiMxMzI0MjAiLz4KICAgICAgPGNpcmNsZSBjeD0iNTMuNSIgY3k9IjQ5IiByPSIzLjYiIGZpbGw9IiMxMzI0MjAiLz4KICAgICAgPGNpcmNsZSBjeD0iMzMiIGN5PSI1OCIgcj0iMy4yIiBmaWxsPSIjRjJBODNFIiBvcGFjaXR5PSIuNCIvPgogICAgICA8Y2lyY2xlIGN4PSI2MyIgY3k9IjU4IiByPSIzLjIiIGZpbGw9IiNGMkE4M0UiIG9wYWNpdHk9Ii40Ii8+CiAgICAgIDxwYXRoIGQ9Ik00MiA1NiBRNDggNjIgNTQgNTYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzEzMjQyMCIgc3Ryb2tlLXdpZHRoPSIyLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogICAgPC9nPgogICAgPHBhdGggZD0iTTAgMEg1MTJWMjEwQzQwMCAxNzIgMTIwIDE5NiAwIDIzNloiIGZpbGw9InVybCgjbGdTaGVlbikiLz4KICAgIDxyZWN0IHg9IjEuNSIgeT0iMS41IiB3aWR0aD0iNTA5IiBoZWlnaHQ9IjUwOSIgcng9IjExNC41IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1vcGFjaXR5PSIuMzUiIHN0cm9rZS13aWR0aD0iMyIvPgogIDwvZz4KPC9zdmc+Cg==" alt="Elveo Logo" width="40" height="40"></div>
+      <div class="brand-name">Elveo</div>
+    </div>
+    <p class="brand-tagline">Dein smarter Ladeassistent</p>
+    <div class="title-row">
+      <span class="header-avatar" id="headerAvatar"></span>
+      <h1 id="pageTitle">—</h1>
+    </div>
+    <p class="sub" id="pageSub">—</p>
+  </header>
+
+  <!-- PAGE: HOME -->
+  <div class="page active" id="page-home">
+    <section style="margin-top:0;">
+      <p class="section-label">Schnellfinder<span class="sl-right"><span class="hint">Umgebung & deine Ladesäulen</span><button class="search-btn" id="quickSearchBtn" aria-label="Anbieter suchen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg></button></span></p>
+      <p class="sub-label">In deiner Nähe<span>Beispielstandort</span></p>
+      <div class="cpo-grid" id="quickNearGrid"></div>
+      <p class="sub-label" style="margin-top:16px;">Deine Ladesäulen</p>
+      <div class="cpo-grid" id="quickCpoGrid"></div>
+      <div id="quickPickWrap"></div>
+      <div id="quickResultWrap"></div>
+    </section>
+    <section>
+      <p class="section-label">Rechner<span class="hint">Kosten & Ladezeit</span></p>
+      <div class="quicklinks">
+        <button class="quicklink" id="qlCharge">
+          <div class="ql-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 12l5-5M3 12l5 5M21 12l-5-5M21 12l-5 5"/></svg></div>
+          <div class="ql-label">Ladung berechnen</div>
+          <div class="ql-sub">Nach Akkustand & Zeit</div>
+        </button>
+        <button class="quicklink" id="qlTrip">
+          <div class="ql-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l4-11 4 7 3-5 7 9"/><circle cx="7" cy="7" r="1.4" fill="currentColor" stroke="none"/></svg></div>
+          <div class="ql-label">Reise berechnen</div>
+          <div class="ql-sub">Inkl. Ladestopps</div>
+        </button>
+      </div>
+
+    </section>
+    <section class="tips-card">
+      <p class="section-label">Tipps von Volti</p>
+      <div class="guide-stage tip-teaser" id="homeTeaser">
+        <div class="mascot sm" id="homeMascot"></div>
+        <div class="bubble sm" id="homeBubble"></div>
+      </div>
+      <button class="tip-link" id="tipsEntry">
+        <div class="tl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.05V17h6v-.25c0-.85.4-1.55 1-2.05A7 7 0 0 0 12 2Z"/></svg></div>
+        <div>
+          <div class="tl-label">Ladetipps</div>
+          <div class="tl-sub">Effizient laden, Akku schonen</div>
+        </div>
+        <svg class="tl-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </section>
+    <section>
+      <p class="section-label">Für Einsteiger</p>
+      <button class="tips-entry" id="startEntry">
+        <div class="te-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg></div>
+        <div>
+          <div class="te-label">E-Auto-Start</div>
+          <div class="te-sub">Tipps für Neulinge — in 8 Schritten startklar</div>
+        </div>
+        <svg class="te-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </section>
+    <section>
+      <p class="section-label">Deine Favoriten<span class="hint" id="favCountHint"></span></p>
+      <div id="favList"></div>
+    </section>
+    <footer class="foot-note">Tippe auf einen Tarif für Details. Favoriten und Besitzstatus verwaltest du im Tab „Tarife“, dort wählst du auch die Ladesäulen für den Schnellfinder.</footer>
+  </div>
+
+  <!-- PAGE: RECHNER (Ladung + Reise) -->
+  <div class="page" id="page-rechner">
+    <div class="segmented">
+      <button class="seg-btn active" data-sub="charge">Ladung</button>
+      <button class="seg-btn" data-sub="trip">Reise</button>
+      <button class="seg-btn" data-sub="alltag">Alltag</button>
+    </div>
+
+    <!-- SUB: LADUNG -->
+    <div class="subpage active" id="sub-charge">
+      <section style="margin-top:0;">
+        <p class="section-label">Wo lädst du gerade?</p>
+        <select id="cpoSelect"></select>
+        <div id="chargeBlockBox"></div>
+      </section>
+
+      <section>
+        <p class="section-label">Akkustand<span class="hint" id="chargeVehicleHint"></span></p>
+        <div class="slider-card">
+          <div class="slider-readout">
+            <div class="lbl">Aktueller Stand</div>
+            <div class="val" id="socFromVal">20 <small>%</small></div>
+          </div>
+          <input type="range" id="socFromSlider" min="0" max="100" value="20" step="1">
+        </div>
+        <div class="slider-card">
+          <div class="slider-readout">
+            <div class="lbl">Laden bis</div>
+            <div class="val" id="socToVal">80 <small>%</small></div>
+          </div>
+          <input type="range" id="socToSlider" min="0" max="100" value="80" step="1">
+        </div>
+        <div class="computed-row">
+          <div class="cr-label">Energiemenge für diese Ladung</div>
+          <div class="cr-val" id="chargeKwhVal">—</div>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">Ladezeit<span class="hint">Ladeleistung an der Säule</span></p>
+        <div class="slider-card">
+          <div class="slider-readout">
+            <div class="lbl">Ladeleistung</div>
+            <div class="val" id="stationPowerVal">150 <small>kW</small></div>
+          </div>
+          <input type="range" id="stationPowerSlider" min="11" max="350" value="150" step="1">
+        </div>
+        <div class="time-grid" style="margin-top:10px;">
+          <div class="time-card" id="timeToTargetCard">
+            <div class="tc-label">Bis Zielstand</div>
+            <div class="tc-val" id="timeToTargetVal">—</div>
+          </div>
+          <div class="time-card" id="timeTo80Card">
+            <div class="tc-label">Bis 80 %</div>
+            <div class="tc-val" id="timeTo80Val">—</div>
+          </div>
+          <div class="time-card" id="timeTo100Card">
+            <div class="tc-label">Bis 100 %</div>
+            <div class="tc-val" id="timeTo100Val">—</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">Deine Tarife für diese Ladung</p>
+        <div class="result-list" id="resultList"></div>
+        <div id="overallBestWrap"></div>
+      </section>
+
+      <section>
+        <p class="section-label">Tipps<span class="hint">basierend auf Monatsmenge</span></p>
+        <div class="slider-card" style="margin-bottom:12px;">
+          <div class="slider-readout">
+            <div class="lbl">Geschätzt pro Monat bei diesem Betreiber</div>
+            <div class="val" id="monthlyVal">50 <small>kWh</small></div>
+          </div>
+          <input type="range" id="monthlySlider" min="0" max="200" value="50" step="5">
+        </div>
+        <div class="tip-banner">
+          <div class="tip-banner-row">
+            <div class="tip-mascot" id="tipMascot"></div>
+            <div class="tip-banner-body">
+              <div class="tip-head">Lohnt sich ein Wechsel?</div>
+              <div id="tipContent"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- SUB: REISE -->
+    <div class="subpage" id="sub-trip">
+      <section style="margin-top:0;">
+        <p class="section-label">Strecke</p>
+        <div class="slider-card">
+          <div class="slider-readout">
+            <div class="lbl">Entfernung (einfache Strecke)</div>
+            <div class="val" id="tripDistVal">500 <small>km</small></div>
+          </div>
+          <input type="range" id="tripDistSlider" min="20" max="1200" value="500" step="10">
+        </div>
+      </section>
+
+      <section>
+        <div class="toggle-row">
+          <div>
+            <div class="tr-label">Hin- und Rückfahrt</div>
+            <div class="tr-sub">Verdoppelt die Strecke für die Berechnung</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="tripRoundTrip" checked>
+            <span class="track"></span>
+          </label>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">Verbrauch<span class="hint">aus deinem Konto</span></p>
+        <div class="slider-card">
+          <div class="slider-readout">
+            <div class="lbl">Durchschnittsverbrauch</div>
+            <div class="val" id="tripConsVal">16 <small>kWh/100km</small></div>
+          </div>
+          <input type="range" id="tripConsSlider" min="12" max="28" value="16" step="0.5">
+          <button class="reset-link" id="tripConsReset">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12a10 10 0 1 1 3 7.1M2 12v6h6"/></svg>
+            Fahrzeug-Wert aus Konto übernehmen
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">Wo lädst du unterwegs?</p>
+        <select id="tripCpoSelect"></select>
+      </section>
+
+      <section>
+        <p class="section-label">Akkustand für die Reise</p>
+        <div class="slider-card">
+          <div class="slider-readout">
+            <div class="lbl">Bei Abfahrt</div>
+            <div class="val" id="tripStartPctVal">90 <small>%</small></div>
+          </div>
+          <input type="range" id="tripStartPctSlider" min="20" max="100" value="90" step="5">
+        </div>
+        <div class="slider-card">
+          <div class="slider-readout">
+            <div class="lbl">Gewünscht bei Ankunft</div>
+            <div class="val" id="tripArrivalPctVal">20 <small>%</small></div>
+          </div>
+          <input type="range" id="tripArrivalPctSlider" min="5" max="60" value="20" step="5">
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">Sonstiger Verbrauch diesen Monat<span class="hint">optional</span></p>
+        <div class="slider-card">
+          <div class="slider-readout">
+            <div class="lbl">Zuhause oder andere Fahrten, diesen Monat</div>
+            <div class="val" id="tripOtherVal">0 <small>kWh</small></div>
+          </div>
+          <input type="range" id="tripOtherSlider" min="0" max="300" value="0" step="10">
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">Ergebnis</p>
+        <div class="trip-total">
+          <div class="tt-label">Energie für die Reise</div>
+          <div class="tt-val" id="tripKwhVal">—</div>
+        </div>
+        <div class="stops-card">
+          <div>
+            <div class="sc-label">Ladestopps nötig</div>
+            <div class="sc-sub" id="tripStopsSub">—</div>
+          </div>
+          <div class="sc-val" id="tripStopsVal">—</div>
+        </div>
+        <div class="compare-card" id="tripOwnedCard"></div>
+        <div class="compare-card" id="tripNewCard"></div>
+        <div id="tripHomeCompare"></div>
+        <div id="tripReco"></div>
+      </section>
+    </div>
+
+    <!-- SUB: ALLTAG -->
+    <div class="subpage" id="sub-alltag">
+      <section style="margin-top:0;">
+        <p class="section-label">Deine tägliche Fahrstrecke</p>
+        <div class="slider-card">
+          <div class="slider-readout">
+            <div class="lbl">Strecke pro Tag</div>
+            <div class="val" id="alltagKmVal">30 <small>km</small></div>
+          </div>
+          <input type="range" id="alltagKmSlider" min="5" max="150" value="30" step="5">
+        </div>
+        <div class="slider-card">
+          <div class="slider-readout">
+            <div class="lbl">Du lädst meist nach, wenn der Akku unter</div>
+            <div class="val" id="alltagThresholdVal">20 <small>%</small></div>
+          </div>
+          <input type="range" id="alltagThresholdSlider" min="5" max="50" value="20" step="5">
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">Wie oft musst du laden?<span class="hint" id="alltagVehicleHint"></span></p>
+        <div class="time-grid">
+          <div class="time-card emph">
+            <div class="tc-label">Laden alle</div>
+            <div class="tc-val" id="alltagDaysVal">—</div>
+          </div>
+          <div class="time-card">
+            <div class="tc-label">Pro Woche</div>
+            <div class="tc-val" id="alltagWeekVal">—</div>
+          </div>
+          <div class="time-card">
+            <div class="tc-label">Verbrauch/Tag</div>
+            <div class="tc-val" id="alltagKwhDayVal">—</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">Verbinde es mit deinem Alltag</p>
+        <div class="tip-banner">
+          <div class="tip-banner-row">
+            <div class="tip-mascot" id="alltagTipMascot"></div>
+            <div class="tip-banner-body">
+              <div class="tip-head">Laden beim Einkaufen</div>
+              <p class="tip-line" id="alltagTipText">—</p>
+            </div>
+          </div>
+        </div>
+        <div class="filter-row" style="margin-top:12px; margin-bottom:0;" id="alltagDurationChips">
+          <div class="chip" data-min="15">~15 Min</div>
+          <div class="chip on" data-min="30">~30 Min</div>
+          <div class="chip" data-min="45">~45 Min</div>
+          <div class="chip" data-min="60">~60 Min</div>
+        </div>
+        <p class="foot-note" style="margin-top:10px;">Angenommen: Normal-Ladesäule mit 11 kW am Geschäft, wie an vielen Supermärkten üblich.</p>
+      </section>
+    </div>
+
+    <footer class="foot-note">Berechnungen sind Schätzungen auf Basis von Beispieltarifen, einem vereinfachten Ladekurven-Modell und deinen Konto-Angaben.</footer>
+  </div>
+
+  <!-- PAGE: TARIFE + LADESÄULEN -->
+  <div class="page" id="page-tarife">
+    <section style="margin-top:0;">
+      <p class="section-label">Tarife<span class="hint">★ Favorit · ✓ besitze ich</span></p>
+      <div class="filter-row" id="tarifeFilterRow">
+        <div class="chip on" data-filter="all">Alle</div>
+        <div class="chip" data-filter="mine">Meine</div>
+        <div class="chip" data-filter="fav">Favoriten</div>
+      </div>
+      <div id="tarifeList"></div>
+    </section>
+    <section>
+      <p class="section-label">Ladesäulen<span class="hint">★ im Schnellfinder</span></p>
+      <div class="filter-row" id="saeulenFilterRow">
+        <div class="chip on" data-filter="all">Alle</div>
+        <div class="chip" data-filter="fav">Ausgewählt</div>
+      </div>
+      <div id="saeulenList"></div>
+    </section>
+    <section class="tips-card">
+      <p class="section-label">Tipps von Volti</p>
+      <div class="guide-stage tip-teaser" id="tarifeTeaser">
+        <div class="mascot sm" id="tarifeTeaserMascot"></div>
+        <div class="bubble sm" id="tarifeTeaserBubble"></div>
+      </div>
+      <button class="tip-link" id="tarifeTipsEntry">
+        <div class="tl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.05V17h6v-.25c0-.85.4-1.55 1-2.05A7 7 0 0 0 12 2Z"/></svg></div>
+        <div>
+          <div class="tl-label">Tarif- &amp; Ladetipps</div>
+          <div class="tl-sub">Die richtige Wahl bei Tarifen und Ladearten</div>
+        </div>
+        <svg class="tl-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </section>
+    <footer class="foot-note">Antippen öffnet die Details. Tarife mit Stern erscheinen auf „Jetzt laden“ unter Favoriten, Ladesäulen mit Stern im Schnellfinder. Bei Ladesäulen bewertest du außerdem und meldest defekte Säulen.</footer>
+  </div>
+
+  <!-- PAGE: KARTE -->
+  <div class="page" id="page-karte">
+    <div class="filter-row" id="mapFilterRow">
+      <div class="chip on" data-filter="all">Alle</div>
+      <div class="chip" data-filter="mine">Meine Ladesäulen</div>
+    </div>
+    <div class="map-card" id="mapCard"></div>
+    <div class="map-legend"><span><i class="on"></i>im Schnellfinder</span><span><i></i>weitere</span><span><i class="cheap"></i>Top-3 günstigste</span></div>
+    <section>
+      <p class="section-label">In der Nähe<span class="hint" id="mapCountHint"></span></p>
+      <div id="mapList"></div>
+    </section>
+    <section class="tips-card">
+      <p class="section-label">Tipps von Volti</p>
+      <div class="guide-stage tip-teaser" id="karteTeaser">
+        <div class="mascot sm" id="karteTeaserMascot"></div>
+        <div class="bubble sm" id="karteTeaserBubble"></div>
+      </div>
+      <button class="tip-link" id="karteTipsEntry">
+        <div class="tl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.05V17h6v-.25c0-.85.4-1.55 1-2.05A7 7 0 0 0 12 2Z"/></svg></div>
+        <div>
+          <div class="tl-label">Tipps zur Ladesäulen-Suche</div>
+          <div class="tl-sub">So findest und wählst du die richtige Säule</div>
+        </div>
+        <svg class="tl-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </section>
+    <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Ladestation" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+      Echte Ladesäulen in Google Maps suchen
+    </a>
+    <footer class="foot-note">Beispielkarte: Positionen, Entfernungen und Leistung sind Platzhalter, keine echten Ladesäulen. Für echte Standorte braucht es eine Anbindung an eine Ladesäulen-Datenbank und einen Kartendienst.</footer>
+  </div>
+
+  <!-- PAGE: KONTO -->
+  <div class="page" id="page-konto">
+    <section style="margin-top:0;">
+      <p class="section-label">Profil</p>
+      <div class="avatar-grid" id="avatarGrid"></div>
+      <div class="field">
+        <label for="acctName">Name</label>
+        <input type="text" id="acctName" maxlength="30">
+      </div>
+    </section>
+
+    <section>
+      <p class="section-label">Mein Fahrzeug<span class="hint">für Reichweite, Kosten & Ladezeit</span></p>
+      <div class="field">
+        <label for="acctVehicle">Modell</label>
+        <select id="acctVehicle"></select>
+      </div>
+      <div id="acctCustomWrap" style="display:none;">
+        <div class="field">
+          <label for="acctCustomCapacity">Akkukapazität (kWh)</label>
+          <input type="number" id="acctCustomCapacity" min="15" max="150" step="1">
+        </div>
+        <div class="field">
+          <label for="acctCustomConsumption">Verbrauch (kWh/100km)</label>
+          <input type="number" id="acctCustomConsumption" min="8" max="40" step="0.5">
+        </div>
+        <div class="field">
+          <label for="acctCustomPower">Max. Ladeleistung (kW)</label>
+          <input type="number" id="acctCustomPower" min="20" max="350" step="5">
+        </div>
+      </div>
+      <div class="vehicle-stats">
+        <div class="vstat"><div class="vs-val" id="vsCapacity">—</div><div class="vs-label">kWh Akku</div></div>
+        <div class="vstat"><div class="vs-val" id="vsRange">—</div><div class="vs-label">km Reichweite (100%)</div></div>
+        <div class="vstat"><div class="vs-val" id="vsPower">—</div><div class="vs-label">kW max. Laden</div></div>
+      </div>
+    </section>
+
+    <section>
+      <p class="section-label">Laden zuhause<span class="hint">optional</span></p>
+      <div class="field">
+        <label for="acctHomePrice">Preis pro kWh an deiner Wallbox</label>
+        <input type="number" id="acctHomePrice" min="0" max="1" step="0.01">
+        <div class="field-note">Wird in der Reise-Berechnung zum Vergleich angezeigt.</div>
+      </div>
+    </section>
+
+    <section>
+      <p class="section-label">Überblick<span class="hint">Deine Nutzung auf einen Blick</span></p>
+      <div class="stat-row">
+        <div class="stat-card owned">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg></div>
+          <div class="stat-val" id="statOwned">0</div>
+          <div class="stat-label">eigene Tarife</div>
+        </div>
+        <div class="stat-card fav">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2z"/></svg></div>
+          <div class="stat-val" id="statFav">0</div>
+          <div class="stat-label">Favoriten</div>
+        </div>
+        <div class="stat-card fix">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 6.5a7 7 0 1 0 0 11M4 10h10M4 14h9"/></svg></div>
+          <div class="stat-val" id="statFix">0€</div>
+          <div class="stat-label">Fixkosten/Monat</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <button class="danger-btn" id="acctReset">Alle Daten zurücksetzen</button>
+    </section>
+
+    <footer class="foot-note">Konto-Daten bleiben nur in dieser Sitzung gespeichert.</footer>
+  </div>
+
+</div>
+
+<div class="tabbar">
+  <div class="tabbar-inner">
+    <div class="tab-indicator" id="tabIndicator"></div>
+    <button class="tab-btn" data-page="rechner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01"/></svg>
+      Rechner
+    </button>
+    <button class="tab-btn" data-page="karte">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+      Karte
+    </button>
+    <button class="tab-btn tab-home active" data-page="home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/></svg>
+      Jetzt laden
+    </button>
+    <button class="tab-btn" data-page="tarife">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+      Tarife
+    </button>
+    <button class="tab-btn" data-page="konto">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
+      Konto
+    </button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-card" id="modalCard">
+    <div class="modal-head">
+      <div class="mtitle" id="modalTitle">—</div>
+      <button class="modal-close" id="modalClose" aria-label="Schließen">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal-fee" id="modalFee"></div>
+    <div class="modal-toggles">
+      <button class="modal-toggle" id="modalFavToggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2z"/></svg>
+        Favorit
+      </button>
+      <button class="modal-toggle" id="modalOwnToggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        Besitze ich
+      </button>
+    </div>
+    <p class="modal-section-label">Preise je Ladesäulen-Betreiber</p>
+    <div class="price-grid" id="modalPriceGrid"></div>
+
+    <p class="modal-section-label">Preisverlauf (6 Monate)</p>
+    <div class="history-wrap">
+      <div class="history-chart" id="modalHistoryChart"></div>
+      <div class="history-delta" id="modalHistoryDelta"></div>
+      <div class="history-note">Beispielhafter Verlauf zur Orientierung — keine echten historischen Daten.</div>
+    </div>
+
+    <div class="modal-block-note" id="modalBlockNote"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="cpoOverlay">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="mtitle" id="cpoModalTitle">—</div>
+      <button class="modal-close" id="cpoModalClose" aria-label="Schließen">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal-fee" id="cpoModalFee"></div>
+    <div class="modal-toggles">
+      <button class="modal-toggle" id="cpoFavToggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2z"/></svg>
+        Im Schnellfinder anzeigen
+      </button>
+    </div>
+    <p class="modal-section-label">Deine Bewertung</p>
+    <div id="cpoRatings"></div>
+    <p class="modal-section-label">Säule defekt?</p>
+    <button class="report-btn" id="cpoReportBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v5M12 18h.01"/></svg>
+      Defekte Säule melden
+    </button>
+    <div id="cpoReportForm" style="display:none;">
+      <div class="field" style="margin:12px 0 0;">
+        <label for="cpoReportNr">Nummer der Säule</label>
+        <input type="text" id="cpoReportNr" maxlength="40" placeholder="z. B. 1234 oder DE*XYZ*E12345">
+      </div>
+      <div class="report-actions">
+        <button class="report-send" id="cpoReportSend">Melden</button>
+        <button class="report-cancel" id="cpoReportCancel">Abbrechen</button>
+      </div>
+    </div>
+    <div id="cpoReportList"></div>
+    <div class="rate-avg">Meldungen bleiben in dieser Sitzung gespeichert und werden nicht an den Betreiber gesendet.</div>
+    <p class="modal-section-label">Preise je Tarif an dieser Ladesäule</p>
+    <div class="price-grid" id="cpoPriceGrid"></div>
+    <div class="block-box" style="margin-top:14px;" id="cpoBlockNote"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="searchOverlay">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="mtitle">Anbieter suchen</div>
+      <button class="modal-close" id="searchClose" aria-label="Schließen">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <p class="modal-fee">Auch Anbieter abseits von Favoriten und Umgebung</p>
+    <input type="text" id="searchInput" placeholder="z. B. Ionity, Shell …" autocomplete="off">
+    <div id="searchResults" style="margin-top:12px;"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="startOverlay">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="mtitle">E-Auto-Start</div>
+      <button class="modal-close" id="startClose" aria-label="Schließen">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <p class="modal-fee" id="guideCount"></p>
+    <div class="guide-stage">
+      <div class="mascot" id="guideMascot">
+        <svg viewBox="0 0 96 96" aria-hidden="true">
+          <ellipse class="m-shadow" cx="48" cy="90" rx="22" ry="4"/>
+          <path class="m-stem" d="M48 28V15"/>
+          <path class="m-bolt" transform="translate(41.5,1) scale(0.58)" d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/>
+          <rect class="m-limb" x="10" y="48" width="9" height="18" rx="4.5"/>
+          <rect class="m-limb arm" x="77" y="48" width="9" height="18" rx="4.5"/>
+          <rect class="m-limb" x="32" y="78" width="13" height="8" rx="4"/>
+          <rect class="m-limb" x="51" y="78" width="13" height="8" rx="4"/>
+          <rect class="m-body" x="18" y="28" width="60" height="54" rx="20"/>
+          <rect class="m-face" x="27" y="37" width="42" height="28" rx="13"/>
+          <circle class="m-eye" cx="40" cy="49" r="3.6"/>
+          <circle class="m-eye" cx="56" cy="49" r="3.6"/>
+          <circle class="m-cheek" cx="33" cy="58" r="3.2"/>
+          <circle class="m-cheek" cx="63" cy="58" r="3.2"/>
+          <path class="m-mouth" d="M42 56 Q48 62 54 56"/>
+          <path class="m-mouth-big" d="M41 55 Q48 67 55 55Z"/>
+          <path class="m-spark" d="M86 14l1.8 4.6 4.6 1.8-4.6 1.8-1.8 4.6-1.8-4.6-4.6-1.8 4.6-1.8z"/>
+          <path class="m-spark" d="M9 24l1.4 3.4 3.4 1.4-3.4 1.4-1.4 3.4-1.4-3.4-3.4-1.4 3.4-1.4z"/>
+        </svg>
+      </div>
+      <div class="bubble" id="guideBubble"></div>
+    </div>
+    <div class="guide-help" id="guideHelp"></div>
+    <div class="guide-dots" id="guideDots"></div>
+    <div class="guide-nav">
+      <button class="guide-prev" id="guidePrev">Zurück</button>
+      <button class="guide-next" id="guideNext">Weiter</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="tipsOverlay">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="mtitle">Lade-Tipps</div>
+      <button class="modal-close" id="tipsClose" aria-label="Schließen">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <p class="modal-fee">So lädst du effizienter, günstiger und akkuschonender</p>
+    <div class="tips-list" id="tipsList"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="tarifeTipsOverlay">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="mtitle">Tarif- &amp; Ladetipps</div>
+      <button class="modal-close" id="tarifeTipsClose" aria-label="Schließen">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="tip-banner-row" style="margin-bottom:16px;">
+      <div class="tip-mascot" id="tarifeTipsMascot"></div>
+      <p class="modal-fee" style="margin-bottom:0;">So findest du den passenden Tarif und die richtige Ladeart</p>
+    </div>
+    <div class="tips-list" id="tarifeTipsList"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="karteTipsOverlay">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="mtitle">Ladesäulen-Suche</div>
+      <button class="modal-close" id="karteTipsClose" aria-label="Schließen">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="tip-banner-row" style="margin-bottom:16px;">
+      <div class="tip-mascot" id="karteTipsMascot"></div>
+      <p class="modal-fee" style="margin-bottom:0;">So findest und wählst du die passende Säule</p>
+    </div>
+    <div class="tips-list" id="karteTipsList"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var cpos = [
+    { id: "allego", name: "Allego", blockGraceMin: 30, blockFeePerMin: 0.12 },
+    { id: "enbw", name: "EnBW HPC", blockGraceMin: 30, blockFeePerMin: 0.10 },
+    { id: "ionity", name: "Ionity", blockGraceMin: 30, blockFeePerMin: 0.20 },
+    { id: "aral", name: "Aral pulse", blockGraceMin: 15, blockFeePerMin: 0.10 },
+    { id: "shell", name: "Shell Recharge", blockGraceMin: 30, blockFeePerMin: 0.15 },
+    { id: "ewe", name: "EWE Go", blockGraceMin: 45, blockFeePerMin: 0.08 }
+  ];
+
+  var tariffs = [
+    { id: "adac", name: "ADAC e-Charge", grundgebuehr: 0,
+      prices: { allego: 0.59, enbw: 0.60, ionity: 0.79, aral: 0.62, shell: 0.61, ewe: 0.58 } },
+    { id: "enbw_s", name: "EnBW mobility+ S", grundgebuehr: 0,
+      prices: { allego: 0.57, enbw: 0.51, ionity: 0.75, aral: 0.60, shell: 0.59, ewe: 0.56 } },
+    { id: "enbw_m", name: "EnBW mobility+ M", grundgebuehr: 5.99,
+      prices: { allego: 0.52, enbw: 0.45, ionity: 0.70, aral: 0.55, shell: 0.54, ewe: 0.51 } },
+    { id: "enbw_l", name: "EnBW mobility+ L", grundgebuehr: 17.99,
+      prices: { allego: 0.47, enbw: 0.36, ionity: 0.66, aral: 0.50, shell: 0.49, ewe: 0.46 } },
+    { id: "maingau", name: "Maingau Autostrom", grundgebuehr: 4.95,
+      prices: { allego: 0.49, enbw: 0.55, ionity: 0.72, aral: 0.51, shell: 0.50, ewe: 0.48 } },
+    { id: "shell_card", name: "Shell Recharge Card", grundgebuehr: 0,
+      prices: { allego: 0.58, enbw: 0.59, ionity: 0.77, aral: 0.57, shell: 0.42, ewe: 0.57 } }
+  ];
+
+  var vehicles = [
+    { id: "id3", label: "VW ID.3 Pro", capacity: 58, consumption: 16, maxPower: 120 },
+    { id: "id4", label: "VW ID.4", capacity: 77, consumption: 18, maxPower: 135 },
+    { id: "model3", label: "Tesla Model 3", capacity: 60, consumption: 15, maxPower: 170 },
+    { id: "modely", label: "Tesla Model Y", capacity: 75, consumption: 16.5, maxPower: 190 },
+    { id: "ioniq5", label: "Hyundai Ioniq 5", capacity: 77, consumption: 18, maxPower: 220 },
+    { id: "ev6", label: "Kia EV6", capacity: 77, consumption: 17.5, maxPower: 230 },
+    { id: "megane", label: "Renault Mégane E-Tech", capacity: 60, consumption: 16, maxPower: 130 },
+    { id: "500e", label: "Fiat 500e", capacity: 42, consumption: 15, maxPower: 85 },
+    { id: "custom", label: "Eigenes Fahrzeug …", capacity: null, consumption: null, maxPower: null }
+  ];
+
+  var tipsData = [
+    { icon: 'M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2z', title: '20–80 % im Alltag', text: 'Für die tägliche Nutzung ist der Bereich zwischen 20 % und 80 % am akkuschonendsten. Volle 100 % nur kurz vor langen Fahrten laden.' },
+    { icon: 'M12 2C8 6 5 10 5 13.5A7 7 0 0 0 19 13.5C19 10 16 6 12 2z', title: 'Nicht dauerhaft leer oder voll stehen lassen', text: 'Ein Akku, der wochenlang bei unter 10 % oder bei 100 % steht, altert schneller. Lieber zeitnah nachladen bzw. nicht sofort volltanken.' },
+    { icon: 'M13 2 3 14h7l-1 8 11-14h-7l0-6z', title: 'Mehrere kurze Stopps statt einem langen', text: 'Schnellladen ist bis ca. 80 % am effizientesten. Danach wird die Ladeleistung stark gedrosselt — für Reisen oft schneller: kürzer bis 80 % laden, dann weiterfahren.' },
+    { icon: 'M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5', title: 'Vorkonditionieren vor dem Schnellladen', text: 'Viele Fahrzeuge heizen die Batterie automatisch vor, wenn eine Schnellladesäule im Navi als Ziel eingestellt ist. Das verkürzt die Ladezeit spürbar, besonders im Winter.' },
+    { icon: 'M4 14.5C4 10 7.5 6 12 6s8 4 8 8.5', title: 'Kälte kostet Reichweite und Ladetempo', text: 'Bei niedrigen Temperaturen sinkt sowohl die Reichweite als auch die maximale Ladeleistung. Plane bei Frost etwas mehr Puffer ein.' },
+    { icon: 'M9 21h6M12 17v4M5 3h14l-1 10a6 6 0 0 1-12 0L5 3z', title: 'Wallbox zuhause schonen den Akku', text: 'Langsames AC-Laden zuhause belastet die Zellen weniger als wiederholtes Schnellladen. Nutze die Wallbox für den Grundbedarf, Schnelllader für unterwegs.' },
+    { icon: 'M3 12h18M3 12l5-5M3 12l5 5M21 12l-5-5M21 12l-5 5', title: 'Blockiergebühren im Blick behalten', text: 'Viele Ladesäulen berechnen nach einer Karenzzeit eine Gebühr, wenn das Auto nach dem Ladeende weiter steht. Ein Timer hilft, rechtzeitig umzuparken.' }
+  ];
+
+  var cpoName = function (id) { return cpos.filter(function (c) { return c.id === id; })[0].name; };
+  var cpoById = function (id) { return cpos.filter(function (c) { return c.id === id; })[0]; };
+  var fmtEUR = function (n) { return n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €"; };
+  var fmtPrice = function (n) { return n.toFixed(2).replace('.', ',') + ' €/kWh'; };
+  var fmtDuration = function (min) {
+    if (min == null || isNaN(min) || min <= 0) return '0 min';
+    var h = Math.floor(min / 60), m = Math.round(min % 60);
+    if (h > 0) return h + ' h ' + (m > 0 ? m + ' min' : '');
+    return m + ' min';
+  };
+
+  var state = {
+    cpo: "enbw",
+    monthlyKwh: 50,
+    owned: { adac: true, enbw_m: true, enbw_l: true },
+    favorites: { enbw_l: true },
+    favCpos: { allego: true, enbw: true, ionity: true },
+    ratings: {},
+    reports: [],
+    mapFilter: 'all',
+    mapSel: null,
+    modalTariffId: null,
+    modalCpoId: null,
+    tarifeFilter: "all",
+    saeulenFilter: "all",
+    quickCpo: null,
+    quickPicked: null,
+    charge: { socFrom: 20, socTo: 80, stationPower: 150 },
+    trip: { distance: 500, roundTrip: true, consumption: 16, cpo: "ionity", otherKwh: 0, startPercent: 90, arrivalPercent: 20 },
+    alltag: { km: 30, threshold: 20, duration: 30 },
+    account: { name: "Fahrer", avatar: 1, vehicle: "id3", customCapacity: 60, customConsumption: 18, customMaxPower: 120, homePrice: 0.32 },
+    blockTimer: { endTime: null, intervalId: null, cpo: null }
+  };
+
+  function currentVehicle() { return vehicles.filter(function (v) { return v.id === state.account.vehicle; })[0]; }
+  function vehicleCapacity() { var v = currentVehicle(); return v.id === 'custom' ? state.account.customCapacity : v.capacity; }
+  function vehicleConsumption() { var v = currentVehicle(); return v.id === 'custom' ? state.account.customConsumption : v.consumption; }
+  function vehicleMaxPower() { var v = currentVehicle(); return v.id === 'custom' ? state.account.customMaxPower : v.maxPower; }
+  function vehicleRangeAtFull() { return Math.round((vehicleCapacity() / vehicleConsumption()) * 100); }
+
+  // Simplified charging curve: fraction of max power at a given SoC (%)
+  function chargingPowerFraction(soc) {
+    if (soc < 10) return 0.75;
+    if (soc < 50) return 1.0;
+    if (soc < 80) { var t = (soc - 50) / 30; return 1.0 - t * 0.55; }
+    var t2 = (soc - 80) / 20; return 0.45 - Math.min(t2, 1) * 0.33;
+  }
+  function chargingTimeMinutes(fromSoc, toSoc, capacity, vMaxPower, stationPower) {
+    if (toSoc <= fromSoc || !capacity || !vMaxPower) return 0;
+    var totalMin = 0, step = 1;
+    for (var soc = fromSoc; soc < toSoc; soc += step) {
+      var mid = Math.min(soc + step / 2, 100);
+      var power = Math.min(vMaxPower * chargingPowerFraction(mid), stationPower);
+      if (power <= 0) power = 1;
+      var energy = capacity * (step / 100);
+      totalMin += (energy / power) * 60;
+    }
+    return totalMin;
+  }
+
+  // ---- Tab navigation ----
+  var pageTexts = {
+    home: { title: "Hallo!", sub: "Dein schnellster Weg zum günstigsten Tarif — und zu deinen Favoriten." },
+    rechner: { title: "Rechner", sub: "Kosten und Ladezeit für eine Ladung oder eine ganze Reise berechnen." },
+    tarife: { title: "Tarife & Ladesäulen", sub: "Wähle deine Tarife und Ladesäulen — beides fließt in Rechner und Schnellfinder ein." },
+    karte: { title: "Karte", sub: "Ladesäulen in deiner Umgebung." },
+    konto: { title: "Konto", sub: "Fahrzeug, Akku und Heimladepreis hinterlegen, damit die Rechner genauer werden." }
+  };
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var pages = { home: document.getElementById('page-home'), rechner: document.getElementById('page-rechner'), tarife: document.getElementById('page-tarife'), karte: document.getElementById('page-karte'), konto: document.getElementById('page-konto') };
+  function showPage(key) {
+    Object.keys(pages).forEach(function (k) { pages[k].classList.toggle('active', k === key); });
+    tabBtns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-page') === key); });
+    document.getElementById('pageTitle').textContent = key === 'home' ? ('Hallo, ' + (state.account.name || 'Fahrer') + '!') : pageTexts[key].title;
+    document.getElementById('pageSub').textContent = pageTexts[key].sub;
+    var brandRow = document.querySelector('.brand-row'), brandTag = document.querySelector('.brand-tagline');
+    brandRow.style.display = key === 'konto' ? 'flex' : 'none';
+    brandTag.style.display = key === 'konto' ? 'block' : 'none';
+    document.getElementById('headerAvatar').classList.toggle('show', key === 'home');
+    moveTabIndicator();
+    if (key === 'home') renderHomeTeaser();
+    window.scrollTo({ top: 0 });
+  }
+  var tabIndicator = document.getElementById('tabIndicator'), tabIndicatorReady = false, tabIndicatorLeft = 0;
+  function moveTabIndicator() {
+    var btn = document.querySelector('.tab-btn.active');
+    if (!btn) return;
+    var L = btn.offsetLeft, R = tabIndicator.parentNode.clientWidth - L - btn.offsetWidth;
+    tabIndicator.style.top = btn.offsetTop + 'px';
+    tabIndicator.style.height = btn.offsetHeight + 'px';
+    if (!tabIndicatorReady) {
+      tabIndicator.style.transition = 'none';
+    } else {
+      // Vordere Kante läuft schneller, hintere langsamer: die Markierung dehnt sich kurz und zieht sich wieder zusammen
+      var toRight = L > tabIndicatorLeft;
+      var fast = '0.3s cubic-bezier(0.22, 0.9, 0.3, 1)', slow = '0.4s cubic-bezier(0.45, 0.05, 0.25, 1)';
+      tabIndicator.style.transition = 'left ' + (toRight ? slow : fast) + ', right ' + (toRight ? fast : slow);
+    }
+    tabIndicator.style.left = L + 'px';
+    tabIndicator.style.right = R + 'px';
+    tabIndicatorLeft = L;
+    if (!tabIndicatorReady) { void tabIndicator.offsetWidth; tabIndicator.style.transition = ''; tabIndicatorReady = true; }
+  }
+  window.addEventListener('resize', function () { tabIndicatorReady = false; moveTabIndicator(); });
+  tabBtns.forEach(function (b) { b.addEventListener('click', function () { showPage(b.getAttribute('data-page')); }); });
+
+  // ---- Segmented control (Rechner: Ladung / Reise) ----
+  var segBtns = document.querySelectorAll('.seg-btn');
+  var subpages = { charge: document.getElementById('sub-charge'), trip: document.getElementById('sub-trip'), alltag: document.getElementById('sub-alltag') };
+  function showSub(key) {
+    Object.keys(subpages).forEach(function (k) { subpages[k].classList.toggle('active', k === key); });
+    segBtns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-sub') === key); });
+  }
+  segBtns.forEach(function (b) { b.addEventListener('click', function () { showSub(b.getAttribute('data-sub')); }); });
+
+  document.getElementById('qlCharge').addEventListener('click', function () { showPage('rechner'); showSub('charge'); });
+  document.getElementById('qlTrip').addEventListener('click', function () { showPage('rechner'); showSub('trip'); });
+
+  // ---- CPO selects ----
+  var cpoSelect = document.getElementById('cpoSelect');
+  cpos.forEach(function (c) { var opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.name; cpoSelect.appendChild(opt); });
+  cpoSelect.value = state.cpo;
+  cpoSelect.addEventListener('change', function () { state.cpo = cpoSelect.value; renderResults(); renderTips(); renderChargeBlockBox(); });
+
+  var tripCpoSelect = document.getElementById('tripCpoSelect');
+  cpos.forEach(function (c) { var opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.name; tripCpoSelect.appendChild(opt); });
+  tripCpoSelect.value = state.trip.cpo;
+  tripCpoSelect.addEventListener('change', function () { state.trip.cpo = tripCpoSelect.value; renderTrip(); });
+
+  // ---- Ladung: Akkustand sliders ----
+  var socFromSlider = document.getElementById('socFromSlider');
+  var socToSlider = document.getElementById('socToSlider');
+  function updateSocLabels() {
+    document.getElementById('socFromVal').innerHTML = state.charge.socFrom + ' <small>%</small>';
+    document.getElementById('socToVal').innerHTML = state.charge.socTo + ' <small>%</small>';
+  }
+  socFromSlider.addEventListener('input', function () {
+    state.charge.socFrom = parseInt(socFromSlider.value, 10);
+    if (state.charge.socFrom >= state.charge.socTo) { state.charge.socTo = Math.min(100, state.charge.socFrom + 5); socToSlider.value = state.charge.socTo; }
+    updateSocLabels(); renderResults(); renderChargeTimes();
+  });
+  socToSlider.addEventListener('input', function () {
+    state.charge.socTo = parseInt(socToSlider.value, 10);
+    if (state.charge.socTo <= state.charge.socFrom) { state.charge.socFrom = Math.max(0, state.charge.socTo - 5); socFromSlider.value = state.charge.socFrom; }
+    updateSocLabels(); renderResults(); renderChargeTimes();
+  });
+
+  var stationPowerSlider = document.getElementById('stationPowerSlider');
+  stationPowerSlider.addEventListener('input', function () {
+    state.charge.stationPower = parseInt(stationPowerSlider.value, 10);
+    document.getElementById('stationPowerVal').innerHTML = state.charge.stationPower + ' <small>kW</small>';
+    renderChargeTimes();
+  });
+
+  function getSessionKwh() {
+    var cap = vehicleCapacity() || 60;
+    return cap * (state.charge.socTo - state.charge.socFrom) / 100;
+  }
+
+  var monthlySlider = document.getElementById('monthlySlider');
+  monthlySlider.addEventListener('input', function () {
+    state.monthlyKwh = parseInt(monthlySlider.value, 10);
+    document.getElementById('monthlyVal').innerHTML = state.monthlyKwh + ' <small>kWh</small>';
+    renderTips();
+  });
+
+  // ---- Reise controls ----
+  var tripDistSlider = document.getElementById('tripDistSlider');
+  tripDistSlider.addEventListener('input', function () {
+    state.trip.distance = parseInt(tripDistSlider.value, 10);
+    document.getElementById('tripDistVal').innerHTML = state.trip.distance + ' <small>km</small>';
+    renderTrip();
+  });
+  document.getElementById('tripRoundTrip').addEventListener('change', function (e) { state.trip.roundTrip = e.target.checked; renderTrip(); });
+  var tripConsSlider = document.getElementById('tripConsSlider');
+  tripConsSlider.addEventListener('input', function () {
+    state.trip.consumption = parseFloat(tripConsSlider.value);
+    document.getElementById('tripConsVal').innerHTML = state.trip.consumption.toLocaleString('de-DE') + ' <small>kWh/100km</small>';
+    renderTrip();
+  });
+  document.getElementById('tripConsReset').addEventListener('click', function () {
+    state.trip.consumption = vehicleConsumption();
+    tripConsSlider.value = state.trip.consumption;
+    document.getElementById('tripConsVal').innerHTML = state.trip.consumption.toLocaleString('de-DE') + ' <small>kWh/100km</small>';
+    renderTrip();
+  });
+  var tripOtherSlider = document.getElementById('tripOtherSlider');
+  tripOtherSlider.addEventListener('input', function () {
+    state.trip.otherKwh = parseInt(tripOtherSlider.value, 10);
+    document.getElementById('tripOtherVal').innerHTML = state.trip.otherKwh + ' <small>kWh</small>';
+    renderTrip();
+  });
+  var tripStartPctSlider = document.getElementById('tripStartPctSlider');
+  tripStartPctSlider.addEventListener('input', function () {
+    state.trip.startPercent = parseInt(tripStartPctSlider.value, 10);
+    document.getElementById('tripStartPctVal').innerHTML = state.trip.startPercent + ' <small>%</small>';
+    renderTrip();
+  });
+  var tripArrivalPctSlider = document.getElementById('tripArrivalPctSlider');
+  tripArrivalPctSlider.addEventListener('input', function () {
+    state.trip.arrivalPercent = parseInt(tripArrivalPctSlider.value, 10);
+    document.getElementById('tripArrivalPctVal').innerHTML = state.trip.arrivalPercent + ' <small>%</small>';
+    renderTrip();
+  });
+
+  // ---- Alltag ----
+  var alltagKmSlider = document.getElementById('alltagKmSlider');
+  alltagKmSlider.addEventListener('input', function () {
+    state.alltag.km = parseInt(alltagKmSlider.value, 10);
+    document.getElementById('alltagKmVal').innerHTML = state.alltag.km + ' <small>km</small>';
+    renderAlltag();
+  });
+  var alltagThresholdSlider = document.getElementById('alltagThresholdSlider');
+  alltagThresholdSlider.addEventListener('input', function () {
+    state.alltag.threshold = parseInt(alltagThresholdSlider.value, 10);
+    document.getElementById('alltagThresholdVal').innerHTML = state.alltag.threshold + ' <small>%</small>';
+    renderAlltag();
+  });
+  document.getElementById('alltagDurationChips').addEventListener('click', function (e) {
+    var chip = e.target.closest('.chip');
+    if (!chip) return;
+    state.alltag.duration = parseInt(chip.getAttribute('data-min'), 10);
+    document.querySelectorAll('#alltagDurationChips .chip').forEach(function (c) { c.classList.toggle('on', c === chip); });
+    renderAlltag();
+  });
+  function renderAlltag() {
+    var capacity = vehicleCapacity(), consumption = vehicleConsumption();
+    document.getElementById('alltagVehicleHint').textContent = currentVehicle().label;
+    var kwhPerDay = state.alltag.km * consumption / 100;
+    document.getElementById('alltagKwhDayVal').textContent = kwhPerDay.toLocaleString('de-DE', { maximumFractionDigits: 1 }) + ' kWh';
+    if (!capacity || kwhPerDay <= 0) {
+      document.getElementById('alltagDaysVal').textContent = '—';
+      document.getElementById('alltagWeekVal').textContent = '—';
+    } else {
+      var usableKwh = capacity * (100 - state.alltag.threshold) / 100;
+      var days = usableKwh / kwhPerDay;
+      document.getElementById('alltagDaysVal').innerHTML = days < 1 ? '&lt; 1 Tag' : days.toLocaleString('de-DE', { maximumFractionDigits: 1 }) + ' Tage';
+      var perWeek = days > 0 ? 7 / days : 0;
+      document.getElementById('alltagWeekVal').textContent = '≈ ' + perWeek.toLocaleString('de-DE', { maximumFractionDigits: 1 }) + '×';
+    }
+    var stationKw = 11;
+    var energyGained = Math.min(stationKw * (state.alltag.duration / 60), capacity || Infinity);
+    var rangeAdded = consumption > 0 ? energyGained / consumption * 100 : 0;
+    var daysCovered = state.alltag.km > 0 ? rangeAdded / state.alltag.km : 0;
+    document.getElementById('alltagTipText').innerHTML = 'Bei ~' + state.alltag.duration + ' Minuten an einer Normal-Ladesäule beim Einkaufen bekommst du etwa <b>' + energyGained.toLocaleString('de-DE', { maximumFractionDigits: 1 }) + ' kWh</b> — das sind rund <b>' + Math.round(rangeAdded) + ' km</b>, genug für etwa <b>' + daysCovered.toLocaleString('de-DE', { maximumFractionDigits: 1 }) + ' Tage</b> bei deiner täglichen Strecke.';
+  }
+  var alltagTipMascotEl = document.getElementById('alltagTipMascot');
+  if (alltagTipMascotEl) alltagTipMascotEl.innerHTML = mascotSVG({ cls: '', face: 'default', topIcon: 'lamp' });
+
+  // ---- Results (Ladung) ----
+  function renderResults() {
+    var kwh = getSessionKwh();
+    document.getElementById('chargeKwhVal').textContent = kwh.toLocaleString('de-DE', { maximumFractionDigits: 1 }) + ' kWh';
+    document.getElementById('chargeVehicleHint').textContent = currentVehicle().label;
+
+    var list = document.getElementById('resultList');
+    var overallWrap = document.getElementById('overallBestWrap');
+    list.innerHTML = '';
+    var ownedTariffs = tariffs.filter(function (t) { return state.owned[t.id]; });
+    var priced = ownedTariffs.filter(function (t) { return t.prices[state.cpo] != null; })
+      .map(function (t) { return { tariff: t, cost: t.prices[state.cpo] * kwh, perKwh: t.prices[state.cpo] }; })
+      .sort(function (a, b) { return a.cost - b.cost; });
+
+    if (kwh <= 0) {
+      list.innerHTML = '<div class="empty-note">Zielstand muss höher sein als der aktuelle Akkustand.</div>';
+    } else if (priced.length === 0) {
+      var empty = document.createElement('div');
+      empty.className = 'empty-note';
+      empty.textContent = 'Keiner deiner Tarife lädt bei diesem Betreiber – oder du hast im Tab „Tarife“ noch keinen als eigenen markiert.';
+      list.appendChild(empty);
+    } else {
+      priced.forEach(function (p, i) {
+        var row = document.createElement('div');
+        row.className = 'tariff-row' + (i === 0 ? ' best' : '');
+        row.innerHTML =
+          '<div class="name-wrap"><div class="name">' + p.tariff.name + '</div>' +
+          (i === 0 ? '<div class="badge">GÜNSTIGSTER EIGENER TARIF</div>' : '<div class="badge" style="color:var(--ink-soft)">' + p.perKwh.toFixed(2).replace('.', ',') + ' €/kWh</div>') +
+          '</div><div class="price">' + fmtEUR(p.cost) + '</div>';
+        list.appendChild(row);
+      });
+    }
+
+    var allPriced = tariffs.filter(function (t) { return t.prices[state.cpo] != null; })
+      .map(function (t) { return { tariff: t, cost: t.prices[state.cpo] * kwh }; })
+      .sort(function (a, b) { return a.cost - b.cost; });
+    overallWrap.innerHTML = '';
+    if (allPriced.length > 0 && kwh > 0) {
+      var best = allPriced[0];
+      if (!state.owned[best.tariff.id]) {
+        var box = document.createElement('div');
+        box.className = 'overall-best';
+        box.innerHTML = '<div><div class="name">' + best.tariff.name + '</div><div class="tag">Günstigster verfügbarer Tarif hier — hast du (noch) nicht</div></div><div class="price">' + fmtEUR(best.cost) + '</div>';
+        overallWrap.appendChild(box);
+      }
+    }
+    renderChargeTimes();
+  }
+
+  function renderChargeTimes() {
+    var cap = vehicleCapacity() || 60;
+    var vMax = vehicleMaxPower() || 120;
+    var station = state.charge.stationPower;
+    var from = state.charge.socFrom, to = state.charge.socTo;
+
+    var timeToTarget = chargingTimeMinutes(from, to, cap, vMax, station);
+    document.getElementById('timeToTargetVal').textContent = to > from ? fmtDuration(timeToTarget) : '—';
+
+    var timeTo80 = from >= 80 ? 0 : chargingTimeMinutes(from, 80, cap, vMax, station);
+    document.getElementById('timeTo80Val').textContent = from >= 80 ? 'erreicht' : fmtDuration(timeTo80);
+
+    var timeTo100 = from >= 100 ? 0 : chargingTimeMinutes(from, 100, cap, vMax, station);
+    document.getElementById('timeTo100Val').textContent = from >= 100 ? 'erreicht' : fmtDuration(timeTo100);
+  }
+
+  // ---- Tips (Ladung) ----
+  function renderTips() {
+    var content = document.getElementById('tipContent');
+    content.innerHTML = '';
+    var cn = cpoName(state.cpo);
+    var ownedTariffs = tariffs.filter(function (t) { return state.owned[t.id] && t.prices[state.cpo] != null; });
+    if (ownedTariffs.length < 2) {
+      var p = document.createElement('p');
+      p.className = 'tip-line';
+      p.innerHTML = 'Markiere im Tab „Tarife“ mindestens zwei eigene Tarife, die bei <b>' + cn + '</b> laden — dann zeige ich dir, ab wann sich der teurere Grundpreis lohnt.';
+      content.appendChild(p);
+      return;
+    }
+    var withCost = ownedTariffs.map(function (t) { var pr = t.prices[state.cpo]; return { t: t, pr: pr, monthlyCost: t.grundgebuehr + pr * state.monthlyKwh }; })
+      .sort(function (a, b) { return a.monthlyCost - b.monthlyCost; });
+    var lead = document.createElement('p');
+    lead.className = 'tip-line';
+    lead.innerHTML = 'Bei <span class="amt">' + state.monthlyKwh + ' kWh</span>/Monat bei <b>' + cn + '</b> ist aktuell <b>' + withCost[0].t.name + '</b> am günstigsten von deinen Tarifen (' + fmtEUR(withCost[0].monthlyCost) + '/Monat).';
+    content.appendChild(lead);
+
+    var pairs = [];
+    for (var i = 0; i < ownedTariffs.length; i++) {
+      for (var j = 0; j < ownedTariffs.length; j++) {
+        if (i === j) continue;
+        var a = ownedTariffs[i], b = ownedTariffs[j];
+        if (b.grundgebuehr > a.grundgebuehr && b.prices[state.cpo] < a.prices[state.cpo]) {
+          pairs.push({ from: a, to: b, breakeven: (b.grundgebuehr - a.grundgebuehr) / (a.prices[state.cpo] - b.prices[state.cpo]) });
+        }
+      }
+    }
+    pairs.sort(function (x, y) { return x.breakeven - y.breakeven; });
+    var seen = {};
+    pairs.forEach(function (pair) {
+      var key = pair.from.id + '>' + pair.to.id;
+      if (seen[key]) return;
+      seen[key] = true;
+      var line = document.createElement('p');
+      line.className = 'tip-line';
+      line.innerHTML = 'Lädst du öfter bei <b>' + cn + '</b>, verwende ab <span class="amt">' + Math.ceil(pair.breakeven) + ' kWh</span>/Monat lieber <b>' + pair.to.name + '</b> statt <b>' + pair.from.name + '</b> — die höhere Grundgebühr rechnet sich ab dann.';
+      content.appendChild(line);
+    });
+    if (pairs.length === 0) {
+      var none = document.createElement('p');
+      none.className = 'tip-line';
+      none.textContent = 'Zwischen deinen ausgewählten Tarifen gibt es bei diesem Betreiber aktuell keinen sinnvollen Umstiegspunkt.';
+      content.appendChild(none);
+    }
+  }
+
+  // ---- Blocking-fee box on the Ladung page (static info, no timer here) ----
+  function renderChargeBlockBox() {
+    var cpo = cpoById(state.cpo);
+    var box = document.getElementById('chargeBlockBox');
+    box.innerHTML =
+      '<div class="block-box">' +
+        '<div class="bb-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Blockiergebühr bei ' + cpo.name + '</div>' +
+        '<div class="bb-text">Ab ' + cpo.blockGraceMin + ' Min. nach Ladeende fallen ca. ' + cpo.blockFeePerMin.toFixed(2).replace('.', ',') + ' €/Min. an. Timer dafür: Startseite → Schnellfinder (Ladesäule vorher im Tab „Tarife“ auswählen).</div>' +
+      '</div>';
+  }
+
+  // ---- Reise ----
+  function renderTrip() {
+    var t = state.trip;
+    var totalDistance = t.roundTrip ? t.distance * 2 : t.distance;
+    var tripKwh = totalDistance * (t.consumption / 100);
+    document.getElementById('tripKwhVal').innerHTML = tripKwh.toLocaleString('de-DE', { maximumFractionDigits: 0 }) + ' <small>kWh</small>';
+    var monthTotalKwh = tripKwh + t.otherKwh;
+    var cpo = t.cpo, cn = cpoName(cpo);
+
+    // Charging stops needed
+    var cap = vehicleCapacity() || 60;
+    var startEnergy = cap * t.startPercent / 100;
+    var arrivalEnergy = cap * t.arrivalPercent / 100;
+    var netNeeded = tripKwh - (startEnergy - arrivalEnergy);
+    var perStopWindow = 0.65; // practical fast-charge window ~15%–80%
+    var stops = netNeeded <= 0 ? 0 : Math.ceil(netNeeded / (cap * perStopWindow));
+    document.getElementById('tripStopsVal').textContent = stops;
+    document.getElementById('tripStopsSub').textContent = stops === 0
+      ? 'Akku reicht mit deinem Start- und Ankunftspuffer.'
+      : ('Je ca. 15–80 % nachladen, ' + currentVehicle().label + ' · ' + cap + ' kWh Akku');
+
+    var ownedCard = document.getElementById('tripOwnedCard');
+    var newCard = document.getElementById('tripNewCard');
+    var reco = document.getElementById('tripReco');
+    var homeCompare = document.getElementById('tripHomeCompare');
+
+    var ownedTariffs = tariffs.filter(function (x) { return state.owned[x.id] && x.prices[cpo] != null; });
+    var notOwnedTariffs = tariffs.filter(function (x) { return !state.owned[x.id] && x.prices[cpo] != null; });
+
+    if (ownedTariffs.length === 0) {
+      ownedCard.innerHTML = '<div class="cc-tag">VORHANDENER TARIF</div><div class="cc-name">Kein passender Tarif</div><div class="cc-sub">Keiner deiner Tarife lädt bei ' + cn + '.</div>';
+    } else {
+      var bestOwned = ownedTariffs.map(function (x) { return { t: x, cost: x.prices[cpo] * monthTotalKwh }; }).sort(function (a, b) { return a.cost - b.cost; })[0];
+      ownedCard.innerHTML = '<div class="cc-tag">MIT DEINEM VORHANDENEN TARIF</div><div class="cc-name">' + bestOwned.t.name + '</div><div class="cc-price">' + fmtEUR(bestOwned.cost) + '</div><div class="cc-sub">' + fmtPrice(bestOwned.t.prices[cpo]) + ' · keine neue Grundgebühr</div>';
+    }
+
+    if (notOwnedTariffs.length === 0) {
+      newCard.innerHTML = '<div class="cc-tag">BEFRISTET NEU ABSCHLIESSEN</div><div class="cc-name">Du hast bereits alle Tarife</div>';
+    } else {
+      var bestNew = notOwnedTariffs.map(function (x) { return { t: x, cost: x.grundgebuehr + x.prices[cpo] * monthTotalKwh }; }).sort(function (a, b) { return a.cost - b.cost; })[0];
+      newCard.innerHTML = '<div class="cc-tag">BEFRISTET NEU ABSCHLIESSEN, EINEN MONAT</div><div class="cc-name">' + bestNew.t.name + '</div><div class="cc-price">' + fmtEUR(bestNew.cost) + '</div><div class="cc-sub">' + fmtPrice(bestNew.t.prices[cpo]) + (bestNew.t.grundgebuehr > 0 ? ' + ' + fmtEUR(bestNew.t.grundgebuehr) + ' Grundgebühr' : ', keine Grundgebühr') + '</div>';
+    }
+
+    homeCompare.innerHTML = '';
+    if (state.account.homePrice > 0) {
+      var homeCost = tripKwh * state.account.homePrice;
+      var line = document.createElement('div');
+      line.className = 'home-compare-line';
+      line.innerHTML = 'Zum Vergleich: Die gleiche Energiemenge zuhause geladen (' + fmtPrice(state.account.homePrice) + ', aus deinem Konto) würde <b>' + fmtEUR(homeCost) + '</b> kosten.';
+      homeCompare.appendChild(line);
+    }
+
+    reco.innerHTML = '';
+    if (ownedTariffs.length > 0 && notOwnedTariffs.length > 0) {
+      var bestOwnedCost = ownedTariffs.map(function (x) { return x.prices[cpo] * monthTotalKwh; }).sort(function (a, b) { return a - b; })[0];
+      var bestNewOpt = notOwnedTariffs.map(function (x) { return { t: x, cost: x.grundgebuehr + x.prices[cpo] * monthTotalKwh }; }).sort(function (a, b) { return a.cost - b.cost; })[0];
+      var diff = bestOwnedCost - bestNewOpt.cost;
+      var banner = document.createElement('div');
+      var mascotHtml = '<div class="tip-mascot">' + mascotSVG({ cls: '', face: 'default', topIcon: 'lamp' }) + '</div>';
+      if (diff > 0.5) {
+        banner.className = 'reco-banner';
+        banner.innerHTML = '<div class="tip-banner-row">' + mascotHtml + '<div class="tip-banner-body"><div class="reco-head">Lohnt sich — ' + fmtEUR(diff) + ' sparen</div><p>Für ' + tripKwh.toLocaleString('de-DE', { maximumFractionDigits: 0 }) + ' kWh unterwegs bei <b>' + cn + '</b>' + (t.otherKwh > 0 ? ' plus ' + t.otherKwh + ' kWh sonst diesen Monat' : '') + ' wäre <b>' + bestNewOpt.t.name + '</b> befristet abgeschlossen günstiger als dein vorhandener Tarif.</p></div></div>';
+      } else {
+        banner.className = 'reco-banner negative';
+        banner.innerHTML = '<div class="tip-banner-row">' + mascotHtml + '<div class="tip-banner-body"><div class="reco-head">Lohnt sich nicht</div><p>Dein vorhandener Tarif bleibt für diese Reise die günstigere Wahl.</p></div></div>';
+      }
+      reco.appendChild(banner);
+    }
+  }
+
+  // ---- Home: Schnellfinder (nur ausgewählte Ladesäulen) ----
+  var quickGrid = document.getElementById('quickCpoGrid');
+  var quickNearGrid = document.getElementById('quickNearGrid');
+
+  function selectQuick(id) {
+    if (state.quickCpo === id) {
+      state.quickCpo = null;
+      renderQuickFinder();
+      return;
+    }
+    state.quickCpo = id;
+    state.cpo = id;
+    cpoSelect.value = id;
+    renderQuickFinder();
+    renderResults();
+    renderTips();
+    renderChargeBlockBox();
+  }
+  function quickBtn(c, sub) {
+    var btn = document.createElement('button');
+    btn.className = 'cpo-btn' + (c.id === state.quickCpo ? ' on' : '');
+    btn.innerHTML = c.name + (sub ? '<small>' + sub + '</small>' : '');
+    btn.addEventListener('click', function () { selectQuick(c.id); });
+    return btn;
+  }
+
+  function fmtKm(v) { return v.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' km'; }
+  function nearestKm(cpoId) {
+    var v = mapStations.filter(function (m) { return m.cpo === cpoId; }).map(function (m) { return m.km; });
+    return v.length ? Math.min.apply(null, v) : null;
+  }
+
+  function renderQuickFinder() {
+    var near = nearbyStations(3);
+    var favs = cpos.filter(function (c) { return state.favCpos[c.id]; });
+    var visible = function (id) { return !!state.favCpos[id] || near.some(function (n) { return n.cpo === id; }); };
+    if (state.quickPicked && visible(state.quickPicked)) state.quickPicked = null;
+    if (state.quickCpo && !visible(state.quickCpo) && state.quickCpo !== state.quickPicked) state.quickCpo = null;
+
+    quickNearGrid.innerHTML = '';
+    near.forEach(function (n) { quickNearGrid.appendChild(quickBtn(cpoById(n.cpo), fmtKm(n.km))); });
+
+    quickGrid.innerHTML = '';
+    favs.forEach(function (c) { quickGrid.appendChild(quickBtn(c, null)); });
+
+    // Über die Lupe gefundener Anbieter (weder Favorit noch in der Nähe)
+    var pickWrap = document.getElementById('quickPickWrap');
+    pickWrap.innerHTML = '';
+    if (state.quickPicked) {
+      pickWrap.innerHTML = '<p class="sub-label" style="margin-top:16px;">Gesucht<button class="link-btn" id="quickPickClear">Entfernen</button></p><div class="cpo-grid" id="quickPickGrid"></div>';
+      document.getElementById('quickPickGrid').appendChild(quickBtn(cpoById(state.quickPicked), 'Suche'));
+      document.getElementById('quickPickClear').addEventListener('click', function () {
+        if (state.quickCpo === state.quickPicked) state.quickCpo = null;
+        state.quickPicked = null;
+        renderQuickFinder();
+      });
+    }
+
+    var wrap = document.getElementById('quickResultWrap');
+    wrap.innerHTML = '';
+    if (!state.quickCpo) {
+      var ph = document.createElement('div');
+      ph.className = 'quick-placeholder';
+      if (favs.length === 0) {
+        ph.innerHTML = 'Tippe oben eine Ladesäule in deiner Nähe an.<br>Eigene Ladesäulen wählst du im Tab „Tarife“ aus.<br><button class="qr-more">Zu den Ladesäulen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>';
+        ph.querySelector('button').addEventListener('click', function () { showPage('tarife'); });
+      } else {
+        ph.textContent = 'Betreiber antippen — sofort erscheint dein günstigster Tarif.';
+      }
+      wrap.appendChild(ph);
+      return;
+    }
+    var cpo = state.quickCpo, cn = cpoName(cpo);
+    var owned = tariffs.filter(function (t) { return state.owned[t.id] && t.prices[cpo] != null; })
+      .sort(function (a, b) { return a.prices[cpo] - b.prices[cpo]; });
+    var allSorted = tariffs.filter(function (t) { return t.prices[cpo] != null; })
+      .sort(function (a, b) { return a.prices[cpo] - b.prices[cpo]; });
+
+    var box = document.createElement('div');
+    box.className = 'quick-result';
+    if (owned.length === 0) {
+      box.innerHTML =
+        '<div class="qr-tag">' + cn.toUpperCase() + '</div>' +
+        '<div class="qr-name">Keinen eigenen Tarif hier</div>' +
+        '<div class="qr-alt">Günstigster verfügbarer Tarif insgesamt: <b>' + allSorted[0].name + '</b> zu <b>' + fmtPrice(allSorted[0].prices[cpo]) + '</b>.</div>';
+    } else {
+      var best = owned[0];
+      box.innerHTML =
+        '<div class="qr-tag">GÜNSTIGSTER EIGENER TARIF · ' + cn.toUpperCase() + '</div>' +
+        '<div class="qr-name">' + best.name + '</div>' +
+        '<div class="qr-price">' + best.prices[cpo].toFixed(2).replace('.', ',') + '<small> €/kWh</small></div>';
+      var overallBest = allSorted[0];
+      if (overallBest.id !== best.id) {
+        box.innerHTML += '<div class="qr-alt">Insgesamt günstigster hier wäre <b>' + overallBest.name + '</b> (' + fmtPrice(overallBest.prices[cpo]) + ') — hast du (noch) nicht.</div>';
+      } else if (owned.length > 1) {
+        box.innerHTML += '<div class="qr-alt">Nächstbester eigener Tarif: <b>' + owned[1].name + '</b> (' + fmtPrice(owned[1].prices[cpo]) + ').</div>';
+      }
+    }
+    var moreBtn = document.createElement('button');
+    moreBtn.className = 'qr-more';
+    moreBtn.innerHTML = 'Genaue Kosten & Ladezeit <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+    moreBtn.addEventListener('click', function () { showPage('rechner'); showSub('charge'); });
+    box.appendChild(moreBtn);
+
+    var blockWrap = document.createElement('div');
+    blockWrap.id = 'homeBlockBox';
+    box.appendChild(blockWrap);
+    wrap.appendChild(box);
+    renderHomeBlockBox();
+  }
+
+  // ---- Blocking-fee box with live in-app timer (Home, primary location) ----
+  function renderHomeBlockBox() {
+    var wrap = document.getElementById('homeBlockBox');
+    if (!wrap) return;
+    var cpo = cpoById(state.quickCpo);
+    var isRunningHere = state.blockTimer.intervalId && state.blockTimer.cpo === cpo.id;
+    var html = '<div class="block-box' + (state.blockTimer.doneFlag && isRunningHere ? ' bb-done' : '') + '">' +
+      '<div class="bb-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Blockiergebühr</div>' +
+      '<div class="bb-text">Ab ' + cpo.blockGraceMin + ' Min. nach Ladeende ca. ' + cpo.blockFeePerMin.toFixed(2).replace('.', ',') + ' €/Min. bei ' + cpo.name + '.</div>';
+    if (isRunningHere) {
+      html += '<div class="bb-running"><div class="bb-mmss" id="blockTimerDisplay">--:--</div><button class="bb-stop" id="blockTimerStop">Stoppen</button></div>' +
+        '<div class="bb-text" style="margin-top:6px;">Läuft nur, solange diese Seite geöffnet ist. Alternativ die Zeit oben auch manuell als Timer in der Uhr-App eintragen.</div>';
+    } else {
+      html += '<button class="bb-timer-btn" id="blockTimerStart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Timer starten (' + cpo.blockGraceMin + ' Min.)</button>';
+    }
+    html += '</div>';
+    wrap.innerHTML = html;
+    var startBtn = document.getElementById('blockTimerStart');
+    if (startBtn) startBtn.addEventListener('click', function () { startBlockTimer(cpo.id, cpo.blockGraceMin); });
+    var stopBtn = document.getElementById('blockTimerStop');
+    if (stopBtn) stopBtn.addEventListener('click', function () { clearBlockTimer(); renderHomeBlockBox(); });
+  }
+  function startBlockTimer(cpoId, minutes) {
+    clearInterval(state.blockTimer.intervalId);
+    state.blockTimer.cpo = cpoId;
+    state.blockTimer.endTime = Date.now() + minutes * 60000;
+    state.blockTimer.doneFlag = false;
+    state.blockTimer.intervalId = setInterval(updateBlockTimerDisplay, 1000);
+    renderHomeBlockBox();
+    updateBlockTimerDisplay();
+  }
+  function clearBlockTimer() {
+    clearInterval(state.blockTimer.intervalId);
+    state.blockTimer.intervalId = null; state.blockTimer.endTime = null; state.blockTimer.cpo = null; state.blockTimer.doneFlag = false;
+  }
+  function updateBlockTimerDisplay() {
+    var el = document.getElementById('blockTimerDisplay');
+    if (!el) return;
+    var remaining = Math.max(0, Math.round((state.blockTimer.endTime - Date.now()) / 1000));
+    var mm = Math.floor(remaining / 60), ss = remaining % 60;
+    el.textContent = (mm < 10 ? '0' : '') + mm + ':' + (ss < 10 ? '0' : '') + ss;
+    if (remaining <= 0) {
+      state.blockTimer.doneFlag = true;
+      clearInterval(state.blockTimer.intervalId);
+      state.blockTimer.intervalId = null;
+      var box = el.closest('.block-box');
+      if (box) box.classList.add('bb-done');
+    }
+  }
+
+  // ---- Unified tariff row (Home favorites + Tarife master list) ----
+  function makeTariffRow(t) {
+    var row = document.createElement('div');
+    row.className = 't-row';
+    var min = Math.min.apply(null, cpos.map(function (c) { return t.prices[c.id]; }).filter(function (v) { return v != null; }));
+    var isFav = !!state.favorites[t.id], isOwn = !!state.owned[t.id];
+    row.innerHTML =
+      '<button class="icon-btn star ' + (isFav ? 'on' : '') + '" aria-label="Favorit">' +
+        '<svg viewBox="0 0 24 24" fill="' + (isFav ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2z"/></svg>' +
+      '</button>' +
+      '<button class="icon-btn own ' + (isOwn ? 'on' : '') + '" aria-label="Besitze ich">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>' +
+      '</button>' +
+      '<div class="trow-text"><div class="tname">' + t.name + '</div><div class="tfee">ab ' + fmtPrice(min) + (t.grundgebuehr > 0 ? ' · ' + fmtEUR(t.grundgebuehr) + '/Monat' : ' · keine Grundgebühr') + '</div></div>' +
+      '<svg class="tchevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+    row.querySelector('.star').addEventListener('click', function (e) {
+      e.stopPropagation();
+      state.favorites[t.id] = !state.favorites[t.id];
+      renderHome(); renderTarife();
+    });
+    row.querySelector('.own').addEventListener('click', function (e) {
+      e.stopPropagation();
+      state.owned[t.id] = !state.owned[t.id];
+      renderHome(); renderTarife(); renderResults(); renderTips(); renderTrip(); renderAlltag(); renderKonto(); renderQuickFinder();
+    });
+    row.addEventListener('click', function () { openModal(t.id); });
+    return row;
+  }
+
+  // ---- Home ----
+  function renderHome() {
+    var favWrap = document.getElementById('favList');
+    favWrap.innerHTML = '';
+    var favTariffs = tariffs.filter(function (t) { return state.favorites[t.id]; });
+    document.getElementById('favCountHint').textContent = favTariffs.length > 0 ? (favTariffs.length + (favTariffs.length === 1 ? ' Tarif' : ' Tarife')) : '';
+    if (favTariffs.length === 0) {
+      var empty = document.createElement('div');
+      empty.className = 'empty-note';
+      empty.textContent = 'Noch keine Favoriten. Im Tab „Tarife“ markierst du Tarife mit dem Stern, dann tauchen sie hier auf.';
+      favWrap.appendChild(empty);
+    } else {
+      favTariffs.forEach(function (t) { favWrap.appendChild(makeTariffRow(t)); });
+    }
+  }
+
+  // ---- Tips modal ----
+  var tipsOverlay = document.getElementById('tipsOverlay');
+  // Wie weit kommt man mit 10 Minuten Kaffeepause? (ab 20 %, mit der vereinfachten Ladekurve)
+  function vehicleName() { return currentVehicle().id === 'custom' ? 'E-Auto' : currentVehicle().label; }
+  function coffeeBreakKm() {
+    var cap = vehicleCapacity(), vMax = vehicleMaxPower(), cons = vehicleConsumption();
+    if (!cap || !vMax || !cons) return null;
+    var station = state.charge.stationPower, soc = 20, t = 0;
+    while (t < 10 && soc < 100) {
+      var power = Math.max(1, Math.min(vMax * chargingPowerFraction(Math.min(soc + 0.5, 100)), station));
+      var dt = (cap * 0.01 / power) * 60;
+      if (t + dt > 10) { soc += (10 - t) / dt; t = 10; } else { soc += 1; t += dt; }
+    }
+    return Math.round(cap * (soc - 20) / 100 / cons * 100 / 5) * 5;
+  }
+  function coffeeText() {
+    var km = coffeeBreakKm();
+    if (!km) return 'Schon eine Kaffeepause von 10 Minuten kann dein E-Auto ein gutes Stück weiterbringen. Hinterlege dein Fahrzeug im Konto, dann rechnet Elveo dir aus, wie weit.';
+    return 'Schon eine Kaffeepause von 10 Minuten bringt dein ' + vehicleName() + ' ab 20 % Akkustand etwa ' + km + ' km weiter, an einer Säule mit ' + state.charge.stationPower + ' kW.';
+  }
+  function stationAdviceText() {
+    var vMax = vehicleMaxPower();
+    return (vMax ? 'Dein ' + vehicleName() + ' lädt mit bis zu ' + vMax + ' kW. ' : '') +
+      'Wähle die Ladesäule passend zu deinem Auto. Eine Säule mit mehr Leistung, als dein Auto laden kann, solltest du für Fahrzeuge freihalten, die diese Leistung auch nutzen. Kann dein Auto ohnehin nicht schneller laden, lass den leistungsstärkeren Platz lieber frei.';
+  }
+  function tipsItems() {
+    return [
+      { icon: 'M13 2 3 14h7l-1 8 11-14h-7l0-6z', title: 'Die passende Ladesäule wählen', text: stationAdviceText() },
+      { icon: 'M6 8h10v6a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4V8zM16 10h1.5a2 2 0 0 1 0 4H16M9 2v3M13 2v3', title: 'Schon 10 Minuten bringen dich weiter', text: coffeeText() }
+    ].concat(tipsData);
+  }
+  function renderTipsList() {
+    var wrap = document.getElementById('tipsList');
+    wrap.innerHTML = tipsItems().map(function (tip) {
+      return '<div class="tip-card"><div class="tip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="' + tip.icon + '"/></svg></div><div><div class="tip-title">' + tip.title + '</div><div class="tip-text">' + tip.text + '</div></div></div>';
+    }).join('');
+  }
+  document.getElementById('tipsEntry').addEventListener('click', function () { renderTipsList(); tipsOverlay.classList.add('open'); });
+  document.getElementById('tipsClose').addEventListener('click', function () { tipsOverlay.classList.remove('open'); });
+  tipsOverlay.addEventListener('click', function (e) { if (e.target === tipsOverlay) tipsOverlay.classList.remove('open'); });
+
+  // ---- Tarif- & Ladetipps (Tarife-Seite) ----
+  var tarifeTipsOverlay = document.getElementById('tarifeTipsOverlay');
+  var tarifeTipsData = [
+    { icon: 'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01', title: 'Grundgebühr gegen kWh-Preis abwägen', text: 'Tarife mit monatlicher Grundgebühr haben meist einen niedrigeren Preis pro kWh. Das lohnt sich erst ab einer gewissen Lademenge — bei wenig Nutzung ist ein Tarif ohne Grundgebühr oft günstiger.' },
+    { icon: 'M6 8h12v5a6 6 0 0 1-12 0V8zM9 2v4M15 2v4M9 19v3M15 19v3', title: 'AC- und DC-Preise unterscheiden sich', text: 'Normalladen (AC, z. B. an der Wallbox) und Schnellladen (DC) werden bei vielen Anbietern unterschiedlich bepreist. Schau beim Tarifvergleich gezielt auf den Preis für die Ladeart, die du am meisten nutzt.' },
+    { icon: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 1 0-18zM12 7v5l3 3', title: 'Blockiergebühren vor Vertragsabschluss prüfen', text: 'Manche Tarife berechnen nach einer Karenzzeit hohe Standgebühren, andere gar keine. Wenn du oft länger stehen bleibst, lohnt sich ein genauer Blick auf diese Bedingung.' },
+    { icon: 'M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z', title: 'Roaming kostet meist einen Aufschlag', text: 'Lädst du über eine fremde App oder Karte statt direkt beim Betreiber, wird oft ein Roaming-Aufschlag fällig. Ein eigener Tarif oder Vertrag beim jeweiligen Betreiber ist an häufig genutzten Säulen meist günstiger.' },
+    { icon: 'M4 20V10M10 20V4M16 20v-7M22 20H2', title: 'Nutzungsvolumen entscheidet über den passenden Tarif', text: 'Vielfahrer profitieren meist von Tarifen mit Grundgebühr und niedrigem kWh-Preis. Wer selten unterwegs lädt, fährt oft besser mit einem Ad-hoc-Tarif ohne feste Kosten.' },
+    { icon: 'M9 21h6M12 17v4M5 3h14l-1 10a6 6 0 0 1-12 0L5 3z', title: 'Zuhause laden ist meist am günstigsten', text: 'Eine Wallbox oder Haushaltssteckdose kostet in der Regel deutlich weniger pro kWh als öffentliches Laden. Öffentliche Tarife lohnen sich vor allem für unterwegs und für Fahrzeuge ohne eigenen Stellplatz.' }
+  ];
+  function renderTarifeTipsList() {
+    var wrap = document.getElementById('tarifeTipsList');
+    wrap.innerHTML = tarifeTipsData.map(function (tip) {
+      return '<div class="tip-card"><div class="tip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="' + tip.icon + '"/></svg></div><div><div class="tip-title">' + tip.title + '</div><div class="tip-text">' + tip.text + '</div></div></div>';
+    }).join('');
+  }
+  document.getElementById('tarifeTipsEntry').addEventListener('click', function () { renderTarifeTipsList(); tarifeTipsOverlay.classList.add('open'); });
+  document.getElementById('tarifeTipsClose').addEventListener('click', function () { tarifeTipsOverlay.classList.remove('open'); });
+  tarifeTipsOverlay.addEventListener('click', function (e) { if (e.target === tarifeTipsOverlay) tarifeTipsOverlay.classList.remove('open'); });
+  var tarifeTipsMascotEl = document.getElementById('tarifeTipsMascot');
+  if (tarifeTipsMascotEl) tarifeTipsMascotEl.innerHTML = mascotSVG({ cls: '', face: 'default', topIcon: 'lamp' });
+  var tarifeTeaserMascotEl = document.getElementById('tarifeTeaserMascot');
+  if (tarifeTeaserMascotEl) tarifeTeaserMascotEl.innerHTML = '<svg viewBox="0 0 96 96" aria-hidden="true">' + mascotInner({ face: 'default' }) + '</svg>';
+  var tarifeTeaserIdx = Math.floor(Math.random() * 4);
+  function renderTarifeTeaser() {
+    var list = ['Grundgebühr und kWh-Preis lohnen sich je nach Lademenge unterschiedlich.', 'AC- und DC-Laden werden oft unterschiedlich bepreist.', 'Roaming über fremde Apps kostet meist einen Aufschlag.', 'Prüfe Blockiergebühren, bevor du einen Tarif abschließt.'];
+    document.getElementById('tarifeTeaserBubble').innerHTML = '<div class="bubble-title">Volti-Tipp</div><div class="bubble-text">' + list[tarifeTeaserIdx % list.length] + '</div>';
+  }
+  renderTarifeTeaser();
+  document.getElementById('tarifeTeaser').addEventListener('click', function () {
+    tarifeTeaserIdx++;
+    renderTarifeTeaser();
+    var mm = document.getElementById('tarifeTeaserMascot');
+    mm.classList.remove('hop'); void mm.offsetWidth; mm.classList.add('hop');
+  });
+
+  // ---- Ladesäulen-Suche-Tipps (Karte-Seite) ----
+  var karteTipsOverlay = document.getElementById('karteTipsOverlay');
+  var karteTipsData = [
+    { icon: 'M21 21l-4.35-4.35M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z', title: 'Filter „Meine Ladesäulen“ nutzen', text: 'Zeigt dir nur Säulen der Betreiber, bei denen du bereits einen Tarif oder Favoriten hinterlegt hast — meist die günstigste und schnellste Wahl für dich.' },
+    { icon: 'M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2z', title: 'Bewertungen &amp; Meldungen beachten', text: 'Die Sternebewertung und gemeldete Ausfälle in den Details einer Säule zeigen dir, ob sie zuverlässig funktioniert, bevor du extra hinfährst.' },
+    { icon: 'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01', title: 'Leistung zum Fahrzeug passend wählen', text: 'Eine Säule mit deutlich mehr kW, als dein Auto laden kann, bringt dir keinen Vorteil. Für kurze Zwischenstopps lohnt sich trotzdem eine leistungsstärkere Säule mehr als eine langsame.' },
+    { icon: 'M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.05V17h6v-.25c0-.85.4-1.55 1-2.05A7 7 0 0 0 12 2Z', title: 'Top-3-Badge zeigt den günstigsten Preis', text: 'Das €-Symbol an einem Pin markiert eine der drei günstigsten Säulen in der Nähe — unabhängig von der Entfernung, die weiterhin die Sortierung bestimmt.' },
+    { icon: 'M9 21h6M12 17v4M5 3h14l-1 10a6 6 0 0 1-12 0L5 3z', title: 'Alternative nicht direkt ausschließen', text: 'Ist deine bevorzugte Säule belegt oder gemeldet, lohnt der Blick auf die nächste in der Liste — oft nur wenige Minuten Umweg für spürbar weniger Wartezeit.' }
+  ];
+  function renderKarteTipsList() {
+    var wrap = document.getElementById('karteTipsList');
+    wrap.innerHTML = karteTipsData.map(function (tip) {
+      return '<div class="tip-card"><div class="tip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="' + tip.icon + '"/></svg></div><div><div class="tip-title">' + tip.title + '</div><div class="tip-text">' + tip.text + '</div></div></div>';
+    }).join('');
+  }
+  document.getElementById('karteTipsEntry').addEventListener('click', function () { renderKarteTipsList(); karteTipsOverlay.classList.add('open'); });
+  document.getElementById('karteTipsClose').addEventListener('click', function () { karteTipsOverlay.classList.remove('open'); });
+  karteTipsOverlay.addEventListener('click', function (e) { if (e.target === karteTipsOverlay) karteTipsOverlay.classList.remove('open'); });
+  var karteTipsMascotEl = document.getElementById('karteTipsMascot');
+  if (karteTipsMascotEl) karteTipsMascotEl.innerHTML = mascotSVG({ cls: '', face: 'default', topIcon: 'lamp' });
+  var karteTeaserMascotEl = document.getElementById('karteTeaserMascot');
+  if (karteTeaserMascotEl) karteTeaserMascotEl.innerHTML = '<svg viewBox="0 0 96 96" aria-hidden="true">' + mascotInner({ face: 'default' }) + '</svg>';
+  var karteTeaserIdx = Math.floor(Math.random() * 4);
+  function renderKarteTeaser() {
+    var list = ['Nutze den Filter „Meine Ladesäulen“, um nur deine Betreiber zu sehen.', 'Das €-Badge markiert eine der 3 günstigsten Säulen in der Nähe.', 'Prüfe Bewertungen und Meldungen, bevor du extra hinfährst.', 'Wähle die Leistung passend zu deinem Auto — mehr kW bringt nicht immer mehr.'];
+    document.getElementById('karteTeaserBubble').innerHTML = '<div class="bubble-title">Volti-Tipp</div><div class="bubble-text">' + list[karteTeaserIdx % list.length] + '</div>';
+  }
+  renderKarteTeaser();
+  document.getElementById('karteTeaser').addEventListener('click', function () {
+    karteTeaserIdx++;
+    renderKarteTeaser();
+    var mm = document.getElementById('karteTeaserMascot');
+    mm.classList.remove('hop'); void mm.offsetWidth; mm.classList.add('hop');
+  });
+
+  // ---- E-Auto-Start: Guide mit Maskottchen ----
+  var guideSteps = [
+    { title: 'Hi, ich bin Volti!', mood: 'wave',
+      text: 'Ich führe dich in acht kurzen Schritten durch die wichtigsten Punkte beim Einstieg ins E-Auto und zeige dir, wie dir Elveo dabei hilft.',
+      help: 'Elveo vergleicht Ladetarife, rechnet Ladezeit und Reisen durch und zeigt dir Ladesäulen in der Nähe.' },
+    { title: 'Ladearten und Stecker',
+      text: 'Wechselstrom (AC) lädt langsamer, etwa an der Wallbox. Gleichstrom (DC) ist das Schnellladen an Autobahn und Ladeparks. In Europa passt meist Typ 2 für AC und CCS für DC. Ein Typ-2-Ladekabel gehört ins Auto.',
+      help: 'Im Rechner stellst du die Ladeleistung der Säule ein und siehst, wie lange du bis 80 % und bis 100 % brauchst.',
+      action: { label: 'Zum Ladungs-Rechner', go: 'charge' } },
+    { title: 'Die passende Ladesäule wählen',
+      text: function () { return stationAdviceText(); },
+      help: 'Im Ladungs-Rechner stellst du die Ladeleistung der Säule ein und siehst an der Ladezeit, ab wann mehr Säulenleistung deinem Auto nichts mehr bringt.',
+      action: { label: 'Zum Ladungs-Rechner', go: 'charge' } },
+    { title: 'Wenn möglich zuhause laden',
+      text: 'Laden an der eigenen Wallbox oder am Arbeitsplatz ist meist günstiger und bequemer als unterwegs. Für eine Wallbox lohnt sich ein Elektriker, der Anschluss und Absicherung prüft.',
+      help: 'Trage im Konto deinen Preis pro kWh an der Wallbox ein. Der Reise-Rechner zeigt dir dann, was dieselbe Energie zuhause kosten würde.',
+      action: { label: 'Zum Konto', go: 'konto' } },
+    { title: 'Ladekarte oder App vorbereiten',
+      text: 'Richte vor der ersten Fahrt einen Ladetarif ein, damit du nicht spontan zum teuersten Preis lädst. Viele Säulen lassen sich per Karte, App oder direkt bezahlen.',
+      help: 'Im Tab „Tarife“ siehst du alle Tarife mit Preisen je Betreiber und Preisverlauf. Deine eigenen markierst du mit dem Haken.',
+      action: { label: 'Zu den Tarifen', go: 'tarife' } },
+    { title: 'Reichweite realistisch planen',
+      text: 'Autobahn, Kälte und Anhänger erhöhen den Verbrauch. Rechne mit einem Puffer und plane Ladestopps lieber etwas früher ein, statt mit dem letzten Prozent anzukommen.',
+      help: 'Im Reise-Rechner gibst du Strecke und Akkustand ein. Elveo schätzt Energie, nötige Ladestopps und Kosten.',
+      action: { label: 'Zum Reise-Rechner', go: 'trip' } },
+    { title: 'Schon 10 Minuten bringen dich weiter',
+      text: function () { return coffeeText(); },
+      help: 'Elveo rechnet mit der Ladekurve deines Fahrzeugs. Im Konto wählst du dein Modell, im Ladungs-Rechner die Ladeleistung der Säule.',
+      action: { label: 'Zum Konto', go: 'konto' } },
+    { title: 'Die erste Schnellladung üben',
+      text: 'Probiere Anstecken, Freischalten und Bezahlen einmal in Ruhe aus, nicht erst mit fast leerem Akku. Danach ist jede weitere Ladung Routine.',
+      help: 'Auf „Jetzt laden“ zeigt dir der Schnellfinder Anbieter in der Nähe und sofort deinen günstigsten Tarif.',
+      action: { label: 'Zum Schnellfinder', go: 'home' } },
+    { title: 'Rücksicht an der Ladesäule', mood: 'cheer',
+      text: 'Stelle das Auto nach dem Laden zügig um, damit die Säule frei wird. Nach einer Karenzzeit fallen bei vielen Betreibern Blockiergebühren an. Geschafft, du bist startklar!',
+      help: 'Im Schnellfinder startest du einen Timer, der dich an die Karenzzeit erinnert. Er läuft, solange die App geöffnet ist.',
+      action: { label: 'Zum Schnellfinder', go: 'home' } }
+  ];
+  var guideStep = 0;
+  var startOverlay = document.getElementById('startOverlay');
+  function closeGuide() { startOverlay.classList.remove('open'); }
+  function guideGo(go) {
+    if (go === 'charge') { showPage('rechner'); showSub('charge'); }
+    else if (go === 'trip') { showPage('rechner'); showSub('trip'); }
+    else { showPage(go); }
+  }
+  function renderGuide() {
+    var st = guideSteps[guideStep], last = guideStep === guideSteps.length - 1;
+    document.getElementById('guideCount').textContent = 'Schritt ' + (guideStep + 1) + ' von ' + guideSteps.length;
+    var bubble = document.getElementById('guideBubble');
+    bubble.innerHTML = '<div class="bubble-title">' + st.title + '</div><div class="bubble-text">' + (typeof st.text === 'function' ? st.text() : st.text) + '</div>';
+    bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop');
+    var m = document.getElementById('guideMascot');
+    m.classList.toggle('wave', st.mood === 'wave');
+    m.classList.toggle('cheer', st.mood === 'cheer');
+    var help = document.getElementById('guideHelp');
+    help.innerHTML = '<div class="gh-head"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/></svg>So hilft dir Elveo</div><div class="gh-text">' + st.help + '</div>' +
+      (st.action ? '<button class="guide-action" id="guideAction">' + st.action.label + ' ›</button>' : '');
+    if (st.action) document.getElementById('guideAction').addEventListener('click', function () { closeGuide(); guideGo(st.action.go); });
+    var dots = document.getElementById('guideDots');
+    dots.innerHTML = guideSteps.map(function (x, i) { return '<button class="gdot' + (i === guideStep ? ' on' : '') + '" data-i="' + i + '" aria-label="Schritt ' + (i + 1) + '"></button>'; }).join('');
+    dots.querySelectorAll('.gdot').forEach(function (d) {
+      d.addEventListener('click', function () { guideStep = parseInt(d.getAttribute('data-i'), 10); renderGuide(); });
+    });
+    document.getElementById('guidePrev').style.visibility = guideStep === 0 ? 'hidden' : 'visible';
+    document.getElementById('guideNext').textContent = last ? 'Fertig' : (guideStep === 0 ? 'Los geht’s' : 'Weiter');
+  }
+  document.getElementById('startEntry').addEventListener('click', function () { guideStep = 0; renderGuide(); startOverlay.classList.add('open'); });
+  document.getElementById('guideNext').addEventListener('click', function () {
+    if (guideStep >= guideSteps.length - 1) { closeGuide(); } else { guideStep++; renderGuide(); }
+  });
+  document.getElementById('guidePrev').addEventListener('click', function () { if (guideStep > 0) { guideStep--; renderGuide(); } });
+  document.getElementById('startClose').addEventListener('click', closeGuide);
+  startOverlay.addEventListener('click', function (e) { if (e.target === startOverlay) closeGuide(); });
+
+  // ---- Maskottchen auf der Startseite: kurzer Tipp, Antippen zeigt den nächsten ----
+  document.getElementById('homeMascot').innerHTML = document.getElementById('guideMascot').innerHTML;
+  var teaserIdx = Math.floor(Math.random() * 5);
+  function teaserList() {
+    var km = coffeeBreakKm();
+    var list = [
+      'Im Alltag ist der Bereich von 20 bis 80 % am akkuschonendsten.',
+      'Wähle die Ladesäule passend zu deinem Auto und lass stärkere Säulen für schnellere Fahrzeuge frei.',
+      'Nach dem Laden zügig umparken, so vermeidest du Blockiergebühren.',
+      'Neu im E-Auto? Tippe auf „E-Auto-Start“, ich führe dich durch die wichtigsten Punkte.'
+    ];
+    if (km) list.unshift('Schon 10 Minuten Kaffeepause bringen dein ' + vehicleName() + ' ab 20 % etwa ' + km + ' km weiter, an einer Säule mit ' + state.charge.stationPower + ' kW.');
+    return list;
+  }
+  function renderHomeTeaser() {
+    var list = teaserList();
+    document.getElementById('homeBubble').innerHTML = '<div class="bubble-title">Volti-Tipp</div><div class="bubble-text">' + list[teaserIdx % list.length] + '</div>';
+  }
+  document.getElementById('homeTeaser').addEventListener('click', function () {
+    teaserIdx++;
+    renderHomeTeaser();
+    var mm = document.getElementById('homeMascot');
+    mm.classList.remove('hop'); void mm.offsetWidth; mm.classList.add('hop');
+  });
+
+  // ---- Tarife (master list with filter) ----
+  var filterChips = document.querySelectorAll('#tarifeFilterRow .chip');
+  filterChips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      state.tarifeFilter = chip.getAttribute('data-filter');
+      filterChips.forEach(function (c) { c.classList.toggle('on', c === chip); });
+      renderTarife();
+    });
+  });
+  function renderTarife() {
+    var wrap = document.getElementById('tarifeList');
+    wrap.innerHTML = '';
+    var list = tariffs.filter(function (t) {
+      if (state.tarifeFilter === 'mine') return !!state.owned[t.id];
+      if (state.tarifeFilter === 'fav') return !!state.favorites[t.id];
+      return true;
+    });
+    if (list.length === 0) {
+      var empty = document.createElement('div');
+      empty.className = 'empty-note';
+      empty.textContent = state.tarifeFilter === 'mine' ? 'Noch keine eigenen Tarife markiert.' : 'Noch keine Favoriten markiert.';
+      wrap.appendChild(empty);
+      return;
+    }
+    list.forEach(function (t) { wrap.appendChild(makeTariffRow(t)); });
+  }
+
+  // ---- Ladesäulen (Liste mit Auswahl, wirkt auf den Schnellfinder) ----
+  var starPath = 'M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2z';
+  var ratingCriteria = [
+    { key: 'clean', label: 'Sauberkeit', sub: 'Säule, Stellplatz, Umgebung' },
+    { key: 'amen', label: 'Annehmlichkeiten', sub: 'z. B. Kiosk, WC, Café, Überdachung' },
+    { key: 'safe', label: 'Sicherheit (Tag & Nacht)', sub: 'Beleuchtung, Übersicht, belebt' },
+    { key: 'rely', label: 'Zuverlässigkeit', sub: 'Säulen funktionieren, Laden startet' }
+  ];
+  function cpoAvg(id) {
+    var r = state.ratings[id];
+    if (!r) return null;
+    var vals = ratingCriteria.map(function (k) { return r[k.key]; }).filter(function (v) { return v > 0; });
+    if (!vals.length) return null;
+    return vals.reduce(function (a, b) { return a + b; }, 0) / vals.length;
+  }
+  function fmtAvg(v) { return v.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }
+  function renderCpoRatings() {
+    var id = state.modalCpoId;
+    if (!id) return;
+    var r = state.ratings[id] || {};
+    var wrap = document.getElementById('cpoRatings');
+    wrap.innerHTML = '<div class="rate-list">' + ratingCriteria.map(function (k) {
+      var stars = '';
+      for (var i = 1; i <= 5; i++) {
+        var on = r[k.key] >= i;
+        stars += '<button class="' + (on ? 'on' : '') + '" data-key="' + k.key + '" data-val="' + i + '" aria-label="' + i + ' Sterne"><svg viewBox="0 0 24 24" fill="' + (on ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="' + starPath + '"/></svg></button>';
+      }
+      return '<div class="rate-row"><div><div class="rate-label">' + k.label + '</div><div class="rate-sub">' + k.sub + '</div></div><div class="rate-stars">' + stars + '</div></div>';
+    }).join('') + '</div>' +
+    '<div class="rate-avg">' + (cpoAvg(id) ? 'Gesamt: <b>★ ' + fmtAvg(cpoAvg(id)) + '</b> von 5' : 'Tippe auf die Sterne, um zu bewerten. Erneut tippen entfernt die Bewertung.') + '</div>';
+    wrap.querySelectorAll('button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var key = b.getAttribute('data-key'), val = parseInt(b.getAttribute('data-val'), 10);
+        if (!state.ratings[id]) state.ratings[id] = {};
+        if (state.ratings[id][key] === val) { delete state.ratings[id][key]; } else { state.ratings[id][key] = val; }
+        renderCpoRatings(); renderSaeulen();
+      });
+    });
+  }
+  function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function reportCount(id) { return state.reports.filter(function (r) { return r.cpo === id; }).length; }
+  function renderCpoReports() {
+    var id = state.modalCpoId;
+    if (!id) return;
+    var mine = state.reports.filter(function (r) { return r.cpo === id; });
+    document.getElementById('cpoReportList').innerHTML = mine.length
+      ? '<div class="report-list">' + mine.map(function (r) { return '<div class="report-item"><span>Säule <span class="ri-nr">' + esc(r.nr) + '</span> gemeldet</span><span class="ri-time">' + r.time + '</span></div>'; }).join('') + '</div>'
+      : '';
+  }
+  function resetReportForm() {
+    document.getElementById('cpoReportForm').style.display = 'none';
+    document.getElementById('cpoReportNr').value = '';
+  }
+  function cpoMinPrice(id) {
+    var vals = tariffs.map(function (t) { return t.prices[id]; }).filter(function (v) { return v != null; });
+    return Math.min.apply(null, vals);
+  }
+  function makeCpoRow(c) {
+    var row = document.createElement('div');
+    row.className = 't-row';
+    var isSel = !!state.favCpos[c.id];
+    row.innerHTML =
+      '<button class="icon-btn star ' + (isSel ? 'on' : '') + '" aria-label="Im Schnellfinder anzeigen">' +
+        '<svg viewBox="0 0 24 24" fill="' + (isSel ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="' + starPath + '"/></svg>' +
+      '</button>' +
+      '<div class="trow-text"><div class="tname">' + c.name + '</div><div class="tfee">ab ' + fmtPrice(cpoMinPrice(c.id)) + ' · Blockiergebühr ab ' + c.blockGraceMin + ' Min.' + (cpoAvg(c.id) ? ' · ★ ' + fmtAvg(cpoAvg(c.id)) : '') + (reportCount(c.id) ? ' · ⚠ ' + reportCount(c.id) + ' gemeldet' : '') + '</div></div>' +
+      '<svg class="tchevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+    row.querySelector('.star').addEventListener('click', function (e) {
+      e.stopPropagation();
+      state.favCpos[c.id] = !state.favCpos[c.id];
+      renderSaeulen(); renderQuickFinder();
+    });
+    row.addEventListener('click', function () { openCpoModal(c.id); });
+    return row;
+  }
+  var saeulenChips = document.querySelectorAll('#saeulenFilterRow .chip');
+  saeulenChips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      state.saeulenFilter = chip.getAttribute('data-filter');
+      saeulenChips.forEach(function (c) { c.classList.toggle('on', c === chip); });
+      renderSaeulen();
+    });
+  });
+  function renderSaeulen() {
+    renderKarte();
+    var wrap = document.getElementById('saeulenList');
+    wrap.innerHTML = '';
+    var list = cpos.filter(function (c) { return state.saeulenFilter === 'fav' ? !!state.favCpos[c.id] : true; });
+    if (list.length === 0) {
+      var empty = document.createElement('div');
+      empty.className = 'empty-note';
+      empty.textContent = 'Noch keine Ladesäulen ausgewählt. Tippe bei „Alle“ auf den Stern.';
+      wrap.appendChild(empty);
+      return;
+    }
+    list.forEach(function (c) { wrap.appendChild(makeCpoRow(c)); });
+  }
+
+  var cpoOverlay = document.getElementById('cpoOverlay');
+  function updateCpoModalToggle() {
+    document.getElementById('cpoFavToggle').classList.toggle('on', !!state.favCpos[state.modalCpoId]);
+  }
+  function openCpoModal(id) {
+    var c = cpoById(id);
+    state.modalCpoId = id;
+    document.getElementById('cpoModalTitle').textContent = c.name;
+    document.getElementById('cpoModalFee').textContent = 'Blockiergebühr ab ' + c.blockGraceMin + ' Min. · ca. ' + c.blockFeePerMin.toFixed(2).replace('.', ',') + ' €/Min.';
+    var sorted = tariffs.filter(function (t) { return t.prices[id] != null; })
+      .sort(function (a, b) { return a.prices[id] - b.prices[id]; });
+    document.getElementById('cpoPriceGrid').innerHTML = sorted.map(function (t) {
+      return '<div class="pg-name">' + t.name + (state.owned[t.id] ? ' ✓' : '') + '</div><div class="pg-val">' + fmtPrice(t.prices[id]) + '</div>';
+    }).join('');
+    document.getElementById('cpoBlockNote').innerHTML =
+      '<div class="bb-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Blockiergebühr bei ' + c.name + '</div>' +
+      '<div class="bb-text">✓ = du besitzt diesen Tarif. Wenn die Ladesäule ausgewählt ist, findest du den Blockier-Timer auf „Jetzt laden“ im Schnellfinder.</div>';
+    updateCpoModalToggle();
+    renderCpoRatings();
+    renderCpoReports(); resetReportForm();
+    cpoOverlay.classList.add('open');
+  }
+  function closeCpoModal() { cpoOverlay.classList.remove('open'); state.modalCpoId = null; }
+  document.getElementById('cpoModalClose').addEventListener('click', closeCpoModal);
+  cpoOverlay.addEventListener('click', function (e) { if (e.target === cpoOverlay) closeCpoModal(); });
+  document.getElementById('cpoFavToggle').addEventListener('click', function () {
+    var id = state.modalCpoId; if (!id) return;
+    state.favCpos[id] = !state.favCpos[id];
+    updateCpoModalToggle(); renderSaeulen(); renderQuickFinder();
+  });
+
+  document.getElementById('cpoReportBtn').addEventListener('click', function () {
+    document.getElementById('cpoReportForm').style.display = 'block';
+    document.getElementById('cpoReportNr').focus();
+  });
+  document.getElementById('cpoReportCancel').addEventListener('click', resetReportForm);
+  document.getElementById('cpoReportSend').addEventListener('click', function () {
+    var id = state.modalCpoId; if (!id) return;
+    var input = document.getElementById('cpoReportNr');
+    var nr = input.value.trim();
+    if (!nr) { input.focus(); return; }
+    state.reports.push({ cpo: id, nr: nr, time: new Date().toLocaleString('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) });
+    resetReportForm(); renderCpoReports(); renderSaeulen();
+  });
+
+  // ---- Karte (schematische Beispielkarte) ----
+  var MAP_CX = 200, MAP_CY = 150, MAP_PX_PER_KM = 45;
+  var mapStations = [
+    { cpo: 'enbw', x: 232, y: 118, kw: 150 },
+    { cpo: 'allego', x: 252, y: 196, kw: 150 },
+    { cpo: 'aral', x: 118, y: 178, kw: 100 },
+    { cpo: 'ionity', x: 318, y: 70, kw: 350 },
+    { cpo: 'enbw', x: 84, y: 82, kw: 300 },
+    { cpo: 'shell', x: 336, y: 206, kw: 150 },
+    { cpo: 'ewe', x: 168, y: 250, kw: 150 },
+    { cpo: 'allego', x: 52, y: 214, kw: 50 }
+  ];
+  mapStations.forEach(function (m) { m.km = Math.sqrt(Math.pow(m.x - MAP_CX, 2) + Math.pow(m.y - MAP_CY, 2)) / MAP_PX_PER_KM; });
+  var mapBase =
+    '<rect class="map-bg" width="400" height="300"/>' +
+    '<path class="map-water" d="M-10 268 C 70 238, 140 298, 230 268 S 350 234, 410 256"/>' +
+    '<rect class="map-park" x="18" y="118" width="70" height="44" rx="14"/>' +
+    '<rect class="map-park" x="288" y="112" width="60" height="36" rx="12"/>' +
+    '<path class="map-road minor" d="M120 -10 V310 M300 -10 V310 M-10 90 H410 M-10 210 H410"/>' +
+    '<path class="map-road" d="M-10 150 H410 M200 -10 V310 M-10 56 C 120 36, 280 116, 410 96"/>' +
+    '<circle class="map-ring" cx="200" cy="150" r="45"/><circle class="map-ring" cx="200" cy="150" r="90"/>' +
+    '<text class="map-lbl" x="248" y="146">1 km</text><text class="map-lbl" x="293" y="146">2 km</text>' +
+    '<circle class="map-me-ring" cx="200" cy="150" r="17"/>' +
+    '<g transform="translate(182,124) scale(0.38)"><g class="mascot-bob">' + mascotInner({ face: 'default' }) + '</g></g>' +
+    '<text class="map-lbl" x="200" y="179" text-anchor="middle">Du</text>';
+
+  // Nächstgelegene Ladesäulen (je Betreiber die nächste), Beispieldaten
+  function nearbyStations(n) {
+    var seen = {}, out = [];
+    mapStations.slice().sort(function (a, b) { return a.km - b.km; }).forEach(function (m) {
+      if (out.length < n && !seen[m.cpo]) { seen[m.cpo] = true; out.push(m); }
+    });
+    return out;
+  }
+
+  function renderKarte() {
+    var items = mapStations.map(function (m, i) { return { s: m, i: i }; })
+      .filter(function (o) { return state.mapFilter === 'mine' ? !!state.favCpos[o.s.cpo] : true; })
+      .sort(function (a, b) { return a.s.km - b.s.km; });
+    if (state.mapSel != null && !items.some(function (o) { return o.i === state.mapSel; })) state.mapSel = null;
+
+    // Top 3 günstigste (nach Preis), unabhängig von der Anzeige-Reihenfolge (die bleibt nach Entfernung)
+    var cheapIdx = {};
+    items.slice().sort(function (a, b) { return cpoMinPrice(a.s.cpo) - cpoMinPrice(b.s.cpo); })
+      .slice(0, 3).forEach(function (o) { cheapIdx[o.i] = true; });
+
+    var pins = items.slice().sort(function (a, b) { return (a.i === state.mapSel) - (b.i === state.mapSel); }).map(function (o) {
+      var cls = 'pin' + (state.favCpos[o.s.cpo] ? ' on' : '') + (o.i === state.mapSel ? ' sel' : '');
+      var badge = cheapIdx[o.i] ? '<g class="pin-badge" transform="translate(9,-9)"><circle r="6.5"/><text y="2.5" text-anchor="middle">€</text></g>' : '';
+      return '<g class="' + cls + '" data-i="' + o.i + '" transform="translate(' + o.s.x + ',' + o.s.y + ')"><rect x="-12" y="-12" width="24" height="24" rx="7"/><path transform="translate(-6.5,-6.5) scale(0.54)" d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/><text y="25" text-anchor="middle">' + cpoName(o.s.cpo) + '</text>' + badge + '</g>';
+    }).join('');
+    document.getElementById('mapCard').innerHTML = '<svg viewBox="0 0 400 300" role="img" aria-label="Beispielkarte mit Ladesäulen">' + mapBase + pins + '</svg>';
+
+    document.getElementById('mapCountHint').textContent = items.length + (items.length === 1 ? ' Säule' : ' Säulen');
+    var list = document.getElementById('mapList');
+    if (!items.length) {
+      list.innerHTML = '<div class="empty-note">Noch keine Ladesäulen ausgewählt. Im Tab „Tarife“ wählst du deine Ladesäulen aus.</div>';
+    } else {
+      list.innerHTML = items.map(function (o) {
+        var m = o.s, isSel = o.i === state.mapSel;
+        var ob = tariffs.filter(function (t) { return state.owned[t.id] && t.prices[m.cpo] != null; })
+          .sort(function (a, b) { return a.prices[m.cpo] - b.prices[m.cpo]; })[0];
+        var sub = m.kw + ' kW · ' + (ob ? ob.name + ' ' + fmtPrice(ob.prices[m.cpo]) : 'kein eigener Tarif hier');
+        if (cpoAvg(m.cpo)) sub += ' · ★ ' + fmtAvg(cpoAvg(m.cpo));
+        if (reportCount(m.cpo)) sub += ' · ⚠ ' + reportCount(m.cpo) + ' gemeldet';
+        var cheapBadge = cheapIdx[o.i] ? '<span class="mi-cheap-badge">€ Top-Preis</span>' : '';
+        return '<div class="map-item' + (isSel ? ' sel' : '') + '" data-i="' + o.i + '"><div class="mi-top"><div class="mi-name">' + cpoName(m.cpo) + cheapBadge + '</div><div class="mi-dist">' + m.km.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' km</div></div><div class="mi-sub">' + sub + '</div>' +
+          (isSel ? '<div class="mi-actions"><button class="primary" data-act="fav" data-cpo="' + m.cpo + '">' + (state.favCpos[m.cpo] ? 'Aus Schnellfinder entfernen' : 'Im Schnellfinder anzeigen') + '</button><button data-act="detail" data-cpo="' + m.cpo + '">Details &amp; Bewertung</button></div>' : '') + '</div>';
+      }).join('');
+    }
+
+    document.querySelectorAll('#mapCard .pin').forEach(function (g) {
+      g.addEventListener('click', function () { state.mapSel = parseInt(g.getAttribute('data-i'), 10); renderKarte(); });
+    });
+    document.querySelectorAll('#mapList .map-item').forEach(function (el) {
+      el.addEventListener('click', function () { state.mapSel = parseInt(el.getAttribute('data-i'), 10); renderKarte(); });
+    });
+    document.querySelectorAll('#mapList button').forEach(function (b) {
+      b.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var cpo = b.getAttribute('data-cpo');
+        if (b.getAttribute('data-act') === 'fav') { state.favCpos[cpo] = !state.favCpos[cpo]; renderSaeulen(); renderQuickFinder(); }
+        else { openCpoModal(cpo); }
+      });
+    });
+  }
+  var mapChips = document.querySelectorAll('#mapFilterRow .chip');
+  mapChips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      state.mapFilter = chip.getAttribute('data-filter');
+      mapChips.forEach(function (c) { c.classList.toggle('on', c === chip); });
+      renderKarte();
+    });
+  });
+
+  // ---- Anbieter-Suche (Lupe im Schnellfinder) ----
+  var searchOverlay = document.getElementById('searchOverlay');
+  var searchInput = document.getElementById('searchInput');
+  function renderSearchResults() {
+    var q = searchInput.value.trim().toLowerCase();
+    var nearIds = nearbyStations(3).map(function (n) { return n.cpo; });
+    var list = cpos.filter(function (c) { return c.name.toLowerCase().indexOf(q) >= 0; });
+    var wrap = document.getElementById('searchResults');
+    if (!list.length) { wrap.innerHTML = '<div class="empty-note">Kein Anbieter gefunden.</div>'; return; }
+    wrap.innerHTML = list.map(function (c) {
+      var tags = [];
+      if (state.favCpos[c.id]) tags.push('Favorit');
+      if (nearIds.indexOf(c.id) >= 0) tags.push('in der Nähe');
+      var km = nearestKm(c.id);
+      return '<div class="t-row" data-id="' + c.id + '"><div class="trow-text"><div class="tname">' + c.name + '</div><div class="tfee">' + (km != null ? fmtKm(km) + ' · ' : '') + 'ab ' + fmtPrice(cpoMinPrice(c.id)) + (tags.length ? ' · ' + tags.join(' · ') : '') + '</div></div><svg class="tchevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>';
+    }).join('');
+    wrap.querySelectorAll('.t-row').forEach(function (row) {
+      row.addEventListener('click', function () { pickProvider(row.getAttribute('data-id')); });
+    });
+  }
+  function closeSearch() { searchOverlay.classList.remove('open'); }
+  function pickProvider(id) {
+    var isNear = nearbyStations(3).some(function (n) { return n.cpo === id; });
+    if (!isNear && !state.favCpos[id]) state.quickPicked = id;
+    closeSearch();
+    state.quickCpo = null;
+    selectQuick(id);
+  }
+  document.getElementById('quickSearchBtn').addEventListener('click', function () {
+    searchInput.value = '';
+    renderSearchResults();
+    searchOverlay.classList.add('open');
+    searchInput.focus();
+  });
+  searchInput.addEventListener('input', renderSearchResults);
+  document.getElementById('searchClose').addEventListener('click', closeSearch);
+  searchOverlay.addEventListener('click', function (e) { if (e.target === searchOverlay) closeSearch(); });
+
+  // ---- Deterministic pseudo price history (6 months, example data) ----
+  function priceHistory(tariffId, currentPrice) {
+    var seed = 0;
+    (tariffId + '').split('').forEach(function (ch) { seed = (seed * 31 + ch.charCodeAt(0)) >>> 0; });
+    var vals = [];
+    for (var i = 0; i < 6; i++) {
+      seed = (seed * 1103515245 + 12345) >>> 0;
+      var noise = ((seed % 1000) / 1000 - 0.5) * 0.12;
+      var drift = (5 - i) * 0.012; // older months trend a bit lower
+      vals.push(Math.max(0.15, currentPrice * (1 - drift + noise)));
+    }
+    vals[5] = currentPrice;
+    return vals;
+  }
+  var monthLabels = ['Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep'];
+
+  // ---- Modal ----
+  var modalOverlay = document.getElementById('modalOverlay');
+  function openModal(tariffId) {
+    var t = tariffs.filter(function (x) { return x.id === tariffId; })[0];
+    if (!t) return;
+    state.modalTariffId = tariffId;
+    document.getElementById('modalTitle').textContent = t.name;
+    document.getElementById('modalFee').textContent = t.grundgebuehr > 0 ? fmtEUR(t.grundgebuehr) + ' Grundgebühr pro Monat' : 'Keine Grundgebühr';
+    document.getElementById('modalPriceGrid').innerHTML = cpos.map(function (c) {
+      var pr = t.prices[c.id];
+      return '<div class="pg-name">' + c.name + '</div><div class="pg-val">' + (pr != null ? fmtPrice(pr) : '—') + '</div>';
+    }).join('');
+    updateModalToggles();
+
+    // Price history chart
+    var histCpo = t.prices[state.cpo] != null ? state.cpo : Object.keys(t.prices)[0];
+    var current = t.prices[histCpo];
+    var hist = priceHistory(t.id + '_' + histCpo, current);
+    var maxVal = Math.max.apply(null, hist);
+    var chartEl = document.getElementById('modalHistoryChart');
+    chartEl.innerHTML = hist.map(function (v, i) {
+      var h = Math.max(6, Math.round((v / maxVal) * 68));
+      return '<div class="history-bar' + (i === 5 ? ' current' : '') + '"><div class="hb-fill" style="height:' + h + 'px;"></div><div class="hb-month">' + monthLabels[i] + '</div></div>';
+    }).join('');
+    var deltaPct = ((hist[5] - hist[0]) / hist[0]) * 100;
+    var deltaTxt = (deltaPct >= 0 ? '+' : '') + deltaPct.toFixed(0) + ' %';
+    document.getElementById('modalHistoryDelta').innerHTML = 'Bei <b>' + cpoName(histCpo) + '</b>: <b>' + deltaTxt + '</b> gegenüber vor 6 Monaten (' + fmtPrice(hist[0]) + ' → ' + fmtPrice(hist[5]) + ').';
+
+    // Blocking fee note (based on the CPO this price history refers to)
+    var bfCpo = cpoById(histCpo);
+    document.getElementById('modalBlockNote').innerHTML =
+      '<div class="bb-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Blockiergebühr bei ' + bfCpo.name + '</div>' +
+      '<div class="bb-text">Ab ' + bfCpo.blockGraceMin + ' Min. nach Ladeende ca. ' + bfCpo.blockFeePerMin.toFixed(2).replace('.', ',') + ' €/Min. Timer dafür: Ladesäule im Tab „Tarife“ auswählen, dann Startseite → Schnellfinder.</div>';
+
+    modalOverlay.classList.add('open');
+  }
+  function closeModal() { modalOverlay.classList.remove('open'); state.modalTariffId = null; }
+  function updateModalToggles() {
+    var id = state.modalTariffId;
+    document.getElementById('modalFavToggle').classList.toggle('on', !!state.favorites[id]);
+    document.getElementById('modalOwnToggle').classList.toggle('on', !!state.owned[id]);
+  }
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', function (e) { if (e.target === modalOverlay) closeModal(); });
+  document.getElementById('modalFavToggle').addEventListener('click', function () {
+    var id = state.modalTariffId; if (!id) return;
+    state.favorites[id] = !state.favorites[id];
+    updateModalToggles(); renderHome(); renderTarife();
+  });
+  document.getElementById('modalOwnToggle').addEventListener('click', function () {
+    var id = state.modalTariffId; if (!id) return;
+    state.owned[id] = !state.owned[id];
+    updateModalToggles(); renderHome(); renderTarife(); renderResults(); renderTips(); renderTrip(); renderAlltag(); renderKonto(); renderQuickFinder();
+  });
+
+  // ---- Konto: Profilbild (nutzt dasselbe Maskottchen wie "Jetzt laden") ----
+  var avatarVariants = [
+    { id: 1, cls: 'v-blue', face: 'default' },
+    { id: 2, cls: 'v-amber cheer', face: 'default' },
+    { id: 3, cls: 'v-purple', face: 'sleepy' },
+    { id: 4, cls: 'v-coral', face: 'wink' }
+  ];
+  function mascotFaceParts(face, topIcon) {
+    var icon = topIcon === 'lamp'
+      ? '<circle class="m-bolt" cx="48" cy="10" r="6"/><rect class="m-limb" x="45.5" y="15.5" width="5" height="3" rx="1"/>' +
+        '<path d="M45.5 10 L50.5 10 M46.2 12.5 L49.8 12.5" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/>'
+      : '<path class="m-bolt" transform="translate(41.5,1) scale(0.58)" d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/>';
+    if (face === 'sleepy') {
+      return '<path class="m-stem" d="M48 28V15" style="display:none"/>' +
+        '<path class="m-bolt" style="display:none"/>' +
+        '<path class="m-eye-closed" d="M35 48 Q40 44 45 48"/>' +
+        '<path class="m-eye-closed" d="M51 48 Q56 44 61 48"/>' +
+        '<circle class="m-cheek" cx="33" cy="58" r="3.2"/><circle class="m-cheek" cx="63" cy="58" r="3.2"/>' +
+        '<ellipse class="m-mouth-big" cx="48" cy="59" rx="3" ry="2.2" style="display:block"/>' +
+        '<text class="m-z" x="63" y="20" font-size="10">z</text><text class="m-z" x="70" y="12" font-size="7">z</text>';
+    }
+    if (face === 'wink') {
+      return '<path class="m-stem" d="M48 28V15"/>' + icon +
+        '<circle class="m-eye" cx="40" cy="49" r="3.6"/>' +
+        '<path class="m-eye-closed" d="M52 49 Q56 45.5 60 49"/>' +
+        '<circle class="m-cheek" cx="33" cy="58" r="3.2"/><circle class="m-cheek" cx="63" cy="58" r="3.2"/>' +
+        '<path class="m-mouth" d="M41 55 Q48 63 58 53"/>';
+    }
+    // default face
+    return '<path class="m-stem" d="M48 28V15"/>' + icon +
+      '<circle class="m-eye" cx="40" cy="49" r="3.6"/><circle class="m-eye" cx="56" cy="49" r="3.6"/>' +
+      '<circle class="m-cheek" cx="33" cy="58" r="3.2"/><circle class="m-cheek" cx="63" cy="58" r="3.2"/>' +
+      '<path class="m-mouth" d="M42 56 Q48 62 54 56"/>' +
+      '<path class="m-mouth-big" d="M41 55 Q48 67 55 55Z"/>';
+  }
+  function mascotInner(v) {
+    return '<ellipse class="m-shadow" cx="48" cy="90" rx="22" ry="4"/>' +
+      '<rect class="m-limb" x="10" y="48" width="9" height="18" rx="4.5"/>' +
+      '<rect class="m-limb arm" x="77" y="48" width="9" height="18" rx="4.5"/>' +
+      '<rect class="m-limb" x="32" y="78" width="13" height="8" rx="4"/>' +
+      '<rect class="m-limb" x="51" y="78" width="13" height="8" rx="4"/>' +
+      '<rect class="m-body" x="18" y="28" width="60" height="54" rx="20"/>' +
+      '<rect class="m-face" x="27" y="37" width="42" height="28" rx="13"/>' +
+      mascotFaceParts(v.face, v.topIcon) +
+      '<path class="m-spark" d="M86 14l1.8 4.6 4.6 1.8-4.6 1.8-1.8 4.6-1.8-4.6-4.6-1.8 4.6-1.8z"/>' +
+      '<path class="m-spark" d="M9 24l1.4 3.4 3.4 1.4-3.4 1.4-1.4 3.4-1.4-3.4-3.4-1.4 3.4-1.4z"/>';
+  }
+  function mascotSVG(v) {
+    return '<div class="mascot ' + v.cls + '">' +
+      '<svg viewBox="0 0 96 96" aria-hidden="true">' + mascotInner(v) + '</svg></div>';
+  }
+  function avatarSVG(n) {
+    var v = avatarVariants[Math.min(Math.max(n, 1), avatarVariants.length) - 1];
+    return mascotSVG(v);
+  }
+  var avatarGrid = document.getElementById('avatarGrid');
+  avatarVariants.forEach(function (v) {
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'avatar-opt'; btn.setAttribute('data-avatar', v.id);
+    btn.setAttribute('aria-label', 'Maskottchen Variante ' + v.id);
+    btn.innerHTML = mascotSVG(v);
+    btn.addEventListener('click', function () {
+      state.account.avatar = v.id;
+      renderAvatarSelection();
+    });
+    avatarGrid.appendChild(btn);
+  });
+  var headerAvatarEl = document.getElementById('headerAvatar');
+  function renderAvatarSelection() {
+    avatarGrid.querySelectorAll('.avatar-opt').forEach(function (b) {
+      b.classList.toggle('selected', parseInt(b.getAttribute('data-avatar'), 10) === state.account.avatar);
+    });
+    if (headerAvatarEl) headerAvatarEl.innerHTML = avatarSVG(state.account.avatar);
+  }
+  renderAvatarSelection();
+  var tipMascotEl = document.getElementById('tipMascot');
+  if (tipMascotEl) tipMascotEl.innerHTML = mascotSVG({ cls: '', face: 'default', topIcon: 'lamp' });
+
+  // ---- Konto ----
+  var vehicleSelect = document.getElementById('acctVehicle');
+  vehicles.forEach(function (v) {
+    var opt = document.createElement('option'); opt.value = v.id;
+    opt.textContent = v.label + (v.capacity ? ' · ' + v.capacity + ' kWh' : '');
+    vehicleSelect.appendChild(opt);
+  });
+  vehicleSelect.value = state.account.vehicle;
+  document.getElementById('acctName').value = state.account.name;
+  document.getElementById('acctCustomCapacity').value = state.account.customCapacity;
+  document.getElementById('acctCustomConsumption').value = state.account.customConsumption;
+  document.getElementById('acctCustomPower').value = state.account.customMaxPower;
+  document.getElementById('acctHomePrice').value = state.account.homePrice;
+
+  function syncVehicleCustomVisibility() {
+    document.getElementById('acctCustomWrap').style.display = (state.account.vehicle === 'custom') ? 'block' : 'none';
+  }
+  syncVehicleCustomVisibility();
+
+  function applyVehicleChangeEffects() {
+    state.trip.consumption = vehicleConsumption();
+    document.getElementById('tripConsSlider').value = state.trip.consumption;
+    document.getElementById('tripConsVal').innerHTML = state.trip.consumption.toLocaleString('de-DE') + ' <small>kWh/100km</small>';
+    renderVehicleStats();
+    renderResults(); renderTrip();
+  }
+
+  document.getElementById('acctName').addEventListener('input', function (e) { state.account.name = e.target.value; });
+  vehicleSelect.addEventListener('change', function () {
+    state.account.vehicle = vehicleSelect.value;
+    syncVehicleCustomVisibility();
+    applyVehicleChangeEffects();
+  });
+  document.getElementById('acctCustomCapacity').addEventListener('input', function (e) {
+    state.account.customCapacity = parseFloat(e.target.value) || 0;
+    if (state.account.vehicle === 'custom') applyVehicleChangeEffects();
+  });
+  document.getElementById('acctCustomConsumption').addEventListener('input', function (e) {
+    state.account.customConsumption = parseFloat(e.target.value) || 0;
+    if (state.account.vehicle === 'custom') applyVehicleChangeEffects();
+  });
+  document.getElementById('acctCustomPower').addEventListener('input', function (e) {
+    state.account.customMaxPower = parseFloat(e.target.value) || 0;
+    if (state.account.vehicle === 'custom') applyVehicleChangeEffects();
+  });
+  document.getElementById('acctHomePrice').addEventListener('input', function (e) {
+    state.account.homePrice = parseFloat(e.target.value) || 0;
+    renderTrip();
+  });
+  document.getElementById('acctReset').addEventListener('click', function () {
+    state.owned = {}; state.favorites = {}; state.favCpos = {}; state.ratings = {}; state.reports = []; state.quickCpo = null; state.quickPicked = null;
+    renderHome(); renderTarife(); renderSaeulen(); renderResults(); renderTips(); renderTrip(); renderKonto(); renderQuickFinder();
+  });
+
+  function renderVehicleStats() {
+    var cap = vehicleCapacity(), pow = vehicleMaxPower();
+    document.getElementById('vsCapacity').textContent = cap ? cap.toLocaleString('de-DE') : '—';
+    document.getElementById('vsRange').textContent = cap ? vehicleRangeAtFull().toLocaleString('de-DE') : '—';
+    document.getElementById('vsPower').textContent = pow ? pow.toLocaleString('de-DE') : '—';
+  }
+
+  function renderKonto() {
+    var ownedList = tariffs.filter(function (t) { return state.owned[t.id]; });
+    document.getElementById('statOwned').textContent = ownedList.length;
+    document.getElementById('statFav').textContent = tariffs.filter(function (t) { return state.favorites[t.id]; }).length;
+    var fix = ownedList.reduce(function (sum, t) { return sum + t.grundgebuehr; }, 0);
+    document.getElementById('statFix').textContent = fix.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '€';
+    renderVehicleStats();
+    renderKarte();
+  }
+
+  // ---- init ----
+  // Beim Öffnen: Anbieter in direkter Nähe im Schnellfinder vorauswählen
+  var initialNearest = nearbyStations(1)[0];
+  if (initialNearest) { state.quickCpo = initialNearest.cpo; state.cpo = initialNearest.cpo; cpoSelect.value = initialNearest.cpo; }
+  state.trip.consumption = vehicleConsumption();
+  document.getElementById('tripConsSlider').value = state.trip.consumption;
+  document.getElementById('tripConsVal').innerHTML = state.trip.consumption.toLocaleString('de-DE') + ' <small>kWh/100km</small>';
+  updateSocLabels();
+  renderTipsList();
+
+  renderResults();
+  renderTips();
+  renderChargeBlockBox();
+  renderTrip();
+  renderAlltag();
+  renderHome();
+  renderTarife();
+  renderSaeulen();
+  renderQuickFinder();
+  renderKonto();
+  showPage('home');
+})();
+</script>
+</body>
+</html>
