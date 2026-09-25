@@ -4,8 +4,10 @@
 const fs = require('fs');
 const path = require('path');
 
+// compact=true weggelassen: das entfernt sonst die OperatorInfo-Objekte
+// (Betreibername), die wir zum Zuordnen der cpo-ID brauchen.
 const OCM_URL =
-  'https://api.openchargemap.io/v3/poi/?output=json&countrycode=DE&maxresults=3000&compact=true&verbose=false';
+  'https://api.openchargemap.io/v3/poi/?output=json&countrycode=DE&maxresults=3000&verbose=false';
 
 // Zuordnung: Betreibername bei Open Charge Map -> deine internen cpo-IDs
 // (aus dem "cpos"-Array in index.html). Bei Bedarf ergänzen/anpassen.
