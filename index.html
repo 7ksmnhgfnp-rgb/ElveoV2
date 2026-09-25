@@ -393,6 +393,19 @@
   .bubble.sm .bubble-text { font-size: 12.5px; color: var(--ink); line-height: 1.5; }
   .mascot.hop svg { animation: mhop 0.5s ease; }
   @keyframes mhop { 0% { transform: translateY(0); } 40% { transform: translateY(-10px) scale(1.04); } 100% { transform: translateY(0); } }
+  .mascot.charge .m-bolt { transform-box: fill-box; transform-origin: center; animation: mboltpulse .5s ease-in-out infinite; }
+  .mascot.charge .m-body { animation: mglow 1s ease-in-out infinite; }
+  @keyframes mboltpulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.45); opacity: .7; } }
+  @keyframes mglow { 0%, 100% { filter: none; } 50% { filter: drop-shadow(0 0 7px var(--amber)); } }
+  .guide-visual { display: none; gap: 18px; justify-content: center; align-items: flex-end; margin: 2px 0 12px; }
+  .connector-card { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--teal); }
+  .connector-card .cc-label { font-weight: 700; font-size: 12.5px; color: var(--ink); }
+  .connector-card .cc-sub { font-size: 10.5px; color: var(--ink-soft); text-align: center; }
+  .tips-entry.big { padding: 18px 16px; gap: 14px; }
+  .tips-entry.big .te-label { font-size: 15px; }
+  .tips-entry.big .te-sub { font-size: 12.5px; margin-top: 2px; }
+  .te-mascot { flex-shrink: 0; width: 62px; height: 62px; }
+  .te-mascot .mascot { width: 100%; height: 100%; }
   .guide-help { margin-top: 14px; background: var(--teal-tint); border: 1px solid var(--teal-tint-line); border-radius: 14px; padding: 12px 14px; }
   .guide-help .gh-head { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--teal); margin-bottom: 5px; }
   .guide-help .gh-head svg { width: 14px; height: 14px; }
@@ -719,13 +732,13 @@
     </section>
     <section>
       <p class="section-label">Für Einsteiger</p>
-      <button class="tips-entry" id="startEntry">
-        <div class="te-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg></div>
+      <button class="tips-entry big" id="startEntry">
+        <div class="te-mascot" id="startEntryMascot"></div>
         <div>
-          <div class="te-label">E-Auto-Start</div>
-          <div class="te-sub">Tipps für Neulinge — in 8 Schritten startklar</div>
+          <div class="te-label">E-Auto-Start mit Volti</div>
+          <div class="te-sub">Dein Guide für die ersten Schritte — in 8 kurzen Schritten startklar</div>
         </div>
-        <svg class="te-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        <svg class="te-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
       </button>
     </section>
     <section>
@@ -1296,6 +1309,7 @@
       </div>
       <div class="bubble" id="guideBubble"></div>
     </div>
+    <div class="guide-visual" id="guideVisual"></div>
     <div class="guide-help" id="guideHelp"></div>
     <div class="guide-dots" id="guideDots"></div>
     <div class="guide-nav">
@@ -2171,6 +2185,9 @@
   });
 
   // ---- E-Auto-Start: Guide mit Maskottchen ----
+  var CONNECTOR_VISUAL =
+    '<div class="connector-card"><svg viewBox="0 0 60 60" width="42" height="42" fill="none" stroke="currentColor" stroke-width="3"><path d="M30 6a24 24 0 0 1 24 24v6a6 6 0 0 1-6 6H12a6 6 0 0 1-6-6v-6A24 24 0 0 1 30 6z"/><circle cx="20" cy="24" r="2.2" fill="currentColor" stroke="none"/><circle cx="30" cy="19" r="2.2" fill="currentColor" stroke="none"/><circle cx="40" cy="24" r="2.2" fill="currentColor" stroke="none"/><circle cx="18" cy="35" r="2.2" fill="currentColor" stroke="none"/><circle cx="30" cy="31" r="2.2" fill="currentColor" stroke="none"/><circle cx="42" cy="35" r="2.2" fill="currentColor" stroke="none"/><circle cx="30" cy="41" r="2.8" fill="currentColor" stroke="none"/></svg><div class="cc-label">Typ 2</div><div class="cc-sub">AC · zuhause &amp; normal</div></div>' +
+    '<div class="connector-card"><svg viewBox="0 0 60 74" width="42" height="50" fill="none" stroke="currentColor" stroke-width="3"><path d="M30 4a22 22 0 0 1 22 22v4a5 5 0 0 1-5 5H13a5 5 0 0 1-5-5v-4A22 22 0 0 1 30 4z"/><circle cx="20" cy="20" r="2.1" fill="currentColor" stroke="none"/><circle cx="30" cy="16" r="2.1" fill="currentColor" stroke="none"/><circle cx="40" cy="20" r="2.1" fill="currentColor" stroke="none"/><circle cx="30" cy="27" r="2.1" fill="currentColor" stroke="none"/><rect x="14" y="40" width="12" height="22" rx="6"/><rect x="34" y="40" width="12" height="22" rx="6"/></svg><div class="cc-label">CCS</div><div class="cc-sub">DC · Schnellladen</div></div>';
   var guideSteps = [
     { title: 'Hi, ich bin Volti!', mood: 'wave',
       text: 'Ich führe dich in acht kurzen Schritten durch die wichtigsten Punkte beim Einstieg ins E-Auto und zeige dir, wie dir Elveo dabei hilft.',
@@ -2178,6 +2195,7 @@
     { title: 'Ladearten und Stecker',
       text: 'Wechselstrom (AC) lädt langsamer, etwa an der Wallbox. Gleichstrom (DC) ist das Schnellladen an Autobahn und Ladeparks. In Europa passt meist Typ 2 für AC und CCS für DC. Ein Typ-2-Ladekabel gehört ins Auto.',
       help: 'Im Rechner stellst du die Ladeleistung der Säule ein und siehst, wie lange du bis 80 % und bis 100 % brauchst.',
+      visual: CONNECTOR_VISUAL,
       action: { label: 'Zum Ladungs-Rechner', go: 'charge' } },
     { title: 'Die passende Ladesäule wählen',
       text: function () { return stationAdviceText(); },
@@ -2203,10 +2221,10 @@
       text: 'Probiere Anstecken, Freischalten und Bezahlen einmal in Ruhe aus, nicht erst mit fast leerem Akku. Danach ist jede weitere Ladung Routine.',
       help: 'Auf „Jetzt laden“ zeigt dir der Schnellfinder Anbieter in der Nähe und sofort deinen günstigsten Tarif.',
       action: { label: 'Zum Schnellfinder', go: 'home' } },
-    { title: 'Rücksicht an der Ladesäule', mood: 'cheer',
-      text: 'Stelle das Auto nach dem Laden zügig um, damit die Säule frei wird. Nach einer Karenzzeit fallen bei vielen Betreibern Blockiergebühren an. Geschafft, du bist startklar!',
-      help: 'Im Schnellfinder startest du einen Timer, der dich an die Karenzzeit erinnert. Er läuft, solange die App geöffnet ist.',
-      action: { label: 'Zum Schnellfinder', go: 'home' } }
+    { title: 'Und jetzt: Wie möchtest du starten?', mood: 'charge',
+      text: 'Stelle das Auto nach dem Laden zügig um, damit die Säule frei wird — nach einer Karenzzeit fallen bei vielen Betreibern Blockiergebühren an. Geschafft, du bist startklar! ⚡',
+      help: 'Elveo zeigt dir sofort Ladesäulen in deiner Nähe oder hilft dir, zuerst den passenden Tarif auszuwählen.',
+      actions: [ { label: 'Ladesäule suchen', go: 'home' }, { label: 'Tarif auswählen', go: 'tarife' } ] }
   ];
   var guideStep = 0;
   var startOverlay = document.getElementById('startOverlay');
@@ -2224,11 +2242,27 @@
     bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop');
     var m = document.getElementById('guideMascot');
     m.classList.toggle('wave', st.mood === 'wave');
-    m.classList.toggle('cheer', st.mood === 'cheer');
+    m.classList.toggle('cheer', st.mood === 'cheer' || st.mood === 'charge');
+    m.classList.toggle('charge', st.mood === 'charge');
+    var visualEl = document.getElementById('guideVisual');
+    if (st.visual) { visualEl.innerHTML = st.visual; visualEl.style.display = 'flex'; }
+    else { visualEl.innerHTML = ''; visualEl.style.display = 'none'; }
     var help = document.getElementById('guideHelp');
-    help.innerHTML = '<div class="gh-head"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/></svg>So hilft dir Elveo</div><div class="gh-text">' + st.help + '</div>' +
-      (st.action ? '<button class="guide-action" id="guideAction">' + st.action.label + ' ›</button>' : '');
-    if (st.action) document.getElementById('guideAction').addEventListener('click', function () { closeGuide(); guideGo(st.action.go); });
+    var actionsHtml = '';
+    if (st.actions) {
+      actionsHtml = '<div class="guide-action-row" style="display:flex; gap:8px; margin-top:10px;">' +
+        st.actions.map(function (a, i) { return '<button class="guide-action" data-i="' + i + '" style="flex:1;">' + a.label + ' ›</button>'; }).join('') + '</div>';
+    } else if (st.action) {
+      actionsHtml = '<button class="guide-action" id="guideAction">' + st.action.label + ' ›</button>';
+    }
+    help.innerHTML = '<div class="gh-head"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/></svg>So hilft dir Elveo</div><div class="gh-text">' + st.help + '</div>' + actionsHtml;
+    if (st.actions) {
+      help.querySelectorAll('.guide-action').forEach(function (btn) {
+        btn.addEventListener('click', function () { var a = st.actions[parseInt(btn.getAttribute('data-i'), 10)]; closeGuide(); guideGo(a.go); });
+      });
+    } else if (st.action) {
+      document.getElementById('guideAction').addEventListener('click', function () { closeGuide(); guideGo(st.action.go); });
+    }
     var dots = document.getElementById('guideDots');
     dots.innerHTML = guideSteps.map(function (x, i) { return '<button class="gdot' + (i === guideStep ? ' on' : '') + '" data-i="' + i + '" aria-label="Schritt ' + (i + 1) + '"></button>'; }).join('');
     dots.querySelectorAll('.gdot').forEach(function (d) {
@@ -2247,6 +2281,7 @@
 
   // ---- Maskottchen auf der Startseite: kurzer Tipp, Antippen zeigt den nächsten ----
   document.getElementById('homeMascot').innerHTML = document.getElementById('guideMascot').innerHTML;
+  document.getElementById('startEntryMascot').innerHTML = '<div class="mascot te wave">' + document.getElementById('guideMascot').innerHTML + '</div>';
   var teaserIdx = Math.floor(Math.random() * 5);
   function teaserList() {
     var km = coffeeBreakKm();
