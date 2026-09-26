@@ -63,10 +63,10 @@
     "address": "Ratausplatz 1, 28844 Weyhe"
   },
   {
-    "cpo": "enbw",
-    "name": "EnBW (D)",
-    "lat": 48.01960285951412,
-    "lng": 7.791021419996241,
+    "cpo": "aral",
+    "name": "Aral pulse",
+    "lat": 47.991750874592185,
+    "lng": 7.789347171505483,
     "kw": 300,
     "title": "Aral pulse",
     "address": "Bötzinger Str. 19, 79111 Freiburg "
