@@ -267,12 +267,23 @@
   }
   .modal-overlay.open { display: flex; }
   .modal-card {
+    position: relative; overflow-x: hidden;
     width: 100%; max-width: 460px; background: var(--glass-bg-strong);
     -webkit-backdrop-filter: blur(32px) saturate(190%); backdrop-filter: blur(32px) saturate(190%);
     border-radius: 26px 26px 0 0; padding: 20px 20px calc(22px + env(safe-area-inset-bottom, 0px));
     max-height: 85vh; overflow-y: auto; border: 1px solid var(--glass-border); border-bottom: none;
     box-shadow: 0 -10px 40px rgba(19,36,32,0.18), inset 0 1px 0 var(--glass-shine);
   }
+  .confetti-layer { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 30; border-radius: 26px 26px 0 0; }
+  .confetti-piece { position: absolute; top: -12px; width: 8px; height: 14px; border-radius: 2px; opacity: 0.95; animation: confettiFall 1.9s ease-in forwards; }
+  @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(420px) rotate(600deg); opacity: 0; } }
+  .guide-finale .guide-stage { flex-direction: column; align-items: center; text-align: center; gap: 2px; }
+  .guide-finale .mascot { width: 172px; height: 172px; }
+  .guide-finale .bubble { flex: none; width: 100%; margin-top: 2px; }
+  .guide-finale .bubble::before { display: none; }
+  .guide-finale .bubble-title { font-size: 23px; text-align: center; }
+  .guide-finale .bubble-text { text-align: center; }
+  @media (prefers-reduced-motion: reduce) { .confetti-piece { animation: none; display: none; } }
   .modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
   .modal-head .mtitle { font-weight: 700; font-size: 19px; line-height: 1.25; }
   .modal-close {
@@ -1278,6 +1289,7 @@
 
 <div class="modal-overlay" id="startOverlay">
   <div class="modal-card">
+    <div class="confetti-layer" id="confettiLayer"></div>
     <div class="modal-head">
       <div class="mtitle">E-Auto-Start</div>
       <button class="modal-close" id="startClose" aria-label="Schließen">
@@ -1391,7 +1403,7 @@
   ];
 
   var vehicles = [
-    { id: "L03", label: "XPeng L03 Long Range", capacity: 71, consumption: 16, maxPower: 236 },
+    { id: "id3", label: "VW ID.3 Pro", capacity: 58, consumption: 16, maxPower: 120 },
     { id: "id4", label: "VW ID.4", capacity: 77, consumption: 18, maxPower: 135 },
     { id: "model3", label: "Tesla Model 3", capacity: 60, consumption: 15, maxPower: 170 },
     { id: "modely", label: "Tesla Model Y", capacity: 75, consumption: 16.5, maxPower: 190 },
@@ -1449,10 +1461,10 @@
     saeulenFilter: "all",
     quickCpo: null,
     quickPicked: null,
-    charge: { socFrom: 10, socTo: 80, stationPower: 150 },
+    charge: { socFrom: 20, socTo: 80, stationPower: 150 },
     trip: { distance: 500, roundTrip: true, consumption: 16, cpo: "ionity", otherKwh: 0, startPercent: 90, arrivalPercent: 20 },
     alltag: { km: 30, threshold: 20, duration: 30 },
-    account: { name: "Fabien", avatar: 1, vehicle: "L03", customCapacity: 60, customConsumption: 18, customMaxPower: 120, homePrice: 0.22 },
+    account: { name: "Fahrer", avatar: 1, vehicle: "id3", customCapacity: 60, customConsumption: 18, customMaxPower: 120, homePrice: 0.32 },
     blockTimer: { endTime: null, intervalId: null, cpo: null }
   };
 
@@ -2221,8 +2233,8 @@
       text: 'Probiere Anstecken, Freischalten und Bezahlen einmal in Ruhe aus, nicht erst mit fast leerem Akku. Danach ist jede weitere Ladung Routine.',
       help: 'Auf „Jetzt laden“ zeigt dir der Schnellfinder Anbieter in der Nähe und sofort deinen günstigsten Tarif.',
       action: { label: 'Zum Schnellfinder', go: 'home' } },
-    { title: 'Und jetzt: Wie möchtest du starten?', mood: 'charge',
-      text: 'Stelle das Auto nach dem Laden zügig um, damit die Säule frei wird — nach einer Karenzzeit fallen bei vielen Betreibern Blockiergebühren an. Geschafft, du bist startklar! ⚡',
+    { title: 'Geschafft! 🎉', mood: 'charge',
+      text: 'Jetzt kann\'s losgehen! Denk nur dran, das Auto nach dem Laden zügig umzustellen — nach einer Karenzzeit fallen bei vielen Betreibern sonst Blockiergebühren an.',
       help: 'Elveo zeigt dir sofort Ladesäulen in deiner Nähe oder hilft dir, zuerst den passenden Tarif auszuwählen.',
       actions: [ { label: 'Ladesäule suchen', go: 'home' }, { label: 'Tarif auswählen', go: 'tarife' } ] }
   ];
@@ -2234,8 +2246,27 @@
     else if (go === 'trip') { showPage('rechner'); showSub('trip'); }
     else { showPage(go); }
   }
+  function fireConfetti() {
+    var layer = document.getElementById('confettiLayer');
+    layer.innerHTML = '';
+    var colors = ['#0E6E63', '#E8A93C', '#C23B3B', '#7C3AA6', '#1C7FB0', '#3FA796'];
+    for (var i = 0; i < 40; i++) {
+      var p = document.createElement('div');
+      p.className = 'confetti-piece';
+      var left = Math.random() * 100;
+      var color = colors[Math.floor(Math.random() * colors.length)];
+      var delay = (Math.random() * 0.5).toFixed(2);
+      var dur = (1.5 + Math.random() * 0.9).toFixed(2);
+      var rot = Math.random() < 0.5 ? '2px' : '50%';
+      p.style.cssText = 'left:' + left + '%; background:' + color + '; border-radius:' + rot + '; animation-delay:' + delay + 's; animation-duration:' + dur + 's;';
+      layer.appendChild(p);
+    }
+    setTimeout(function () { layer.innerHTML = ''; }, 2600);
+  }
   function renderGuide() {
     var st = guideSteps[guideStep], last = guideStep === guideSteps.length - 1;
+    document.querySelector('.modal-card').classList.toggle('guide-finale', last);
+    if (last) fireConfetti(); else document.getElementById('confettiLayer').innerHTML = '';
     document.getElementById('guideCount').textContent = 'Schritt ' + (guideStep + 1) + ' von ' + guideSteps.length;
     var bubble = document.getElementById('guideBubble');
     bubble.innerHTML = '<div class="bubble-title">' + st.title + '</div><div class="bubble-text">' + (typeof st.text === 'function' ? st.text() : st.text) + '</div>';
