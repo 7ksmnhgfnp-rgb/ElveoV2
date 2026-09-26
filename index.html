@@ -397,6 +397,33 @@
   .mascot.v-coral .m-body { fill: #FBDEDE; stroke: #C23B3B; }
   .mascot.v-coral .m-limb, .mascot.v-coral .m-stem { fill: #C23B3B; stroke: #C23B3B; }
   .mascot.v-coral .m-bolt { fill: #0E6E63; }
+  .mascot.v-gold .m-body { fill: #FCEBB0; stroke: #B8860B; }
+  .mascot.v-gold .m-limb, .mascot.v-gold .m-stem { fill: #B8860B; stroke: #B8860B; }
+  .mascot.v-gold .m-bolt, .mascot.v-gold .m-spark { fill: #0E6E63; }
+  .mascot.v-gold .m-body { animation: goldshine 2.4s ease-in-out infinite; }
+  @keyframes goldshine { 0%, 100% { filter: none; } 50% { filter: drop-shadow(0 0 6px rgba(184,134,11,0.65)); } }
+
+  /* Elveo Pro */
+  .pro-card { position: relative; background: linear-gradient(135deg, rgba(245,214,123,0.22), rgba(184,134,11,0.06)); border: 1px solid #E8C25A; border-radius: var(--radius-lg, 18px); padding: 16px; }
+  .pro-card.pulse { animation: propulse 0.8s ease; }
+  @keyframes propulse { 0%, 100% { box-shadow: none; } 50% { box-shadow: 0 0 0 6px rgba(184,134,11,0.25); } }
+  .pro-card-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .pro-badge { background: linear-gradient(135deg,#F5D67B,#B8860B); color: #3A2A05; font-size: 10.5px; font-weight: 800; letter-spacing: 0.04em; padding: 3px 9px; border-radius: 999px; flex-shrink: 0; }
+  .pro-card-title { font-weight: 700; font-size: 14.5px; color: var(--ink); }
+  .pro-benefits { list-style: none; margin: 0 0 12px; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .pro-benefits li { font-size: 13px; color: var(--ink-soft); padding-left: 22px; position: relative; }
+  .pro-benefits li::before { content: "✓"; position: absolute; left: 0; top: 0; color: #B8860B; font-weight: 800; }
+  .pro-card-btn { width: 100%; border: none; border-radius: 999px; padding: 12px; font-size: 13.5px; font-weight: 700; cursor: pointer; background: linear-gradient(135deg,#F5D67B,#B8860B); color: #3A2A05; }
+  .pro-card.active .pro-card-btn { background: var(--surface); border: 1px solid var(--line); color: var(--ink-soft); }
+  .pro-note { font-size: 11px; color: var(--ink-soft); margin-top: 8px; text-align: center; }
+  .pro-lock { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 18px 10px; }
+  .pro-lock-icon { font-size: 26px; }
+  .pro-lock-text { font-size: 13px; color: var(--ink-soft); line-height: 1.5; max-width: 260px; }
+  .pro-lock-text b { color: var(--ink); }
+  .pro-lock-btn { border: 1px solid #B8860B; color: #8a660b; background: none; border-radius: 999px; padding: 8px 16px; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+  .pro-ribbon { position: absolute; top: 3px; right: 3px; background: linear-gradient(135deg,#F5D67B,#B8860B); color: #3A2A05; font-size: 8px; font-weight: 800; padding: 2px 5px; border-radius: 6px; letter-spacing: 0.03em; }
+  .avatar-opt { position: relative; }
+  .avatar-opt.locked { opacity: 0.55; }
   .m-eye-closed { fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; }
   .m-z { fill: var(--ink-soft); font-family: -apple-system, sans-serif; font-weight: 700; }
   @keyframes mbob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
@@ -1124,6 +1151,23 @@
       </div>
     </section>
 
+    <section id="proSection">
+      <p class="section-label">Elveo Pro</p>
+      <div class="pro-card" id="proCard">
+        <div class="pro-card-head">
+          <div class="pro-badge">PRO</div>
+          <div class="pro-card-title" id="proCardTitle">Hol dir mehr aus Elveo</div>
+        </div>
+        <ul class="pro-benefits">
+          <li>Goldener Volti als Profilbild</li>
+          <li>Preisverlauf &amp; Trend der letzten 6 Monate für jeden Tarif</li>
+          <li>Unterstützt die Weiterentwicklung von Elveo</li>
+        </ul>
+        <button class="pro-card-btn" id="proToggleBtn">Pro werden — 4,99 € / Monat</button>
+        <div class="pro-note">Jederzeit monatlich kündbar. Alle Hauptfunktionen bleiben für alle kostenlos.</div>
+      </div>
+    </section>
+
     <section>
       <p class="section-label">Mein Fahrzeug<span class="hint">für Reichweite, Kosten & Ladezeit</span></p>
       <div class="field">
@@ -1239,10 +1283,17 @@
     <div class="price-grid" id="modalPriceGrid"></div>
 
     <p class="modal-section-label">Preisverlauf (6 Monate)</p>
-    <div class="history-wrap">
-      <div class="history-chart" id="modalHistoryChart"></div>
-      <div class="history-delta" id="modalHistoryDelta"></div>
-      <div class="history-note">Beispielhafter Verlauf zur Orientierung — keine echten historischen Daten.</div>
+    <div class="history-wrap" id="historyWrap">
+      <div class="pro-lock" id="historyLocked" style="display:none;">
+        <div class="pro-lock-icon">🔒</div>
+        <div class="pro-lock-text">Der Preisverlauf der letzten 6 Monate ist Teil von <b>Elveo Pro</b>.</div>
+        <button class="pro-lock-btn" id="historyProBtn">Mehr zu Elveo Pro</button>
+      </div>
+      <div id="historyUnlocked">
+        <div class="history-chart" id="modalHistoryChart"></div>
+        <div class="history-delta" id="modalHistoryDelta"></div>
+        <div class="history-note">Beispielhafter Verlauf zur Orientierung — keine echten historischen Daten.</div>
+      </div>
     </div>
 
     <div class="modal-block-note" id="modalBlockNote"></div>
@@ -1483,7 +1534,7 @@
     charge: { socFrom: 20, socTo: 80, stationPower: 150 },
     trip: { distance: 500, roundTrip: true, consumption: 16, cpo: "ionity", otherKwh: 0, startPercent: 90, arrivalPercent: 20 },
     alltag: { km: 30, threshold: 20, duration: 30 },
-    account: { name: "Fahrer", avatar: 1, vehicle: "id3", customCapacity: 60, customConsumption: 18, customMaxPower: 120, homePrice: 0.32 },
+    account: { name: "Fahrer", avatar: 1, pro: false, vehicle: "id3", customCapacity: 60, customConsumption: 18, customMaxPower: 120, homePrice: 0.32 },
     blockTimer: { endTime: null, intervalId: null, cpo: null }
   };
 
@@ -2816,22 +2867,28 @@
     }).join('');
     updateModalToggles();
 
-    // Price history chart
-    var histCpo = t.prices[state.cpo] != null ? state.cpo : Object.keys(t.prices)[0];
-    var current = t.prices[histCpo];
-    var hist = priceHistory(t.id + '_' + histCpo, current);
-    var maxVal = Math.max.apply(null, hist);
-    var chartEl = document.getElementById('modalHistoryChart');
-    chartEl.innerHTML = hist.map(function (v, i) {
-      var h = Math.max(6, Math.round((v / maxVal) * 68));
-      return '<div class="history-bar' + (i === 5 ? ' current' : '') + '"><div class="hb-fill" style="height:' + h + 'px;"></div><div class="hb-month">' + monthLabels[i] + '</div></div>';
-    }).join('');
-    var deltaPct = ((hist[5] - hist[0]) / hist[0]) * 100;
-    var deltaTxt = (deltaPct >= 0 ? '+' : '') + deltaPct.toFixed(0) + ' %';
-    document.getElementById('modalHistoryDelta').innerHTML = 'Bei <b>' + cpoName(histCpo) + '</b>: <b>' + deltaTxt + '</b> gegenüber vor 6 Monaten (' + fmtPrice(hist[0]) + ' → ' + fmtPrice(hist[5]) + ').';
+    // Price history chart (Elveo Pro)
+    var histLocked = !state.account.pro;
+    document.getElementById('historyLocked').style.display = histLocked ? 'flex' : 'none';
+    document.getElementById('historyUnlocked').style.display = histLocked ? 'none' : 'block';
+    if (!histLocked) {
+      var histCpo = t.prices[state.cpo] != null ? state.cpo : Object.keys(t.prices)[0];
+      var current = t.prices[histCpo];
+      var hist = priceHistory(t.id + '_' + histCpo, current);
+      var maxVal = Math.max.apply(null, hist);
+      var chartEl = document.getElementById('modalHistoryChart');
+      chartEl.innerHTML = hist.map(function (v, i) {
+        var h = Math.max(6, Math.round((v / maxVal) * 68));
+        return '<div class="history-bar' + (i === 5 ? ' current' : '') + '"><div class="hb-fill" style="height:' + h + 'px;"></div><div class="hb-month">' + monthLabels[i] + '</div></div>';
+      }).join('');
+      var deltaPct = ((hist[5] - hist[0]) / hist[0]) * 100;
+      var deltaTxt = (deltaPct >= 0 ? '+' : '') + deltaPct.toFixed(0) + ' %';
+      document.getElementById('modalHistoryDelta').innerHTML = 'Bei <b>' + cpoName(histCpo) + '</b>: <b>' + deltaTxt + '</b> gegenüber vor 6 Monaten (' + fmtPrice(hist[0]) + ' → ' + fmtPrice(hist[5]) + ').';
+    }
+    var histCpoForBlock = t.prices[state.cpo] != null ? state.cpo : Object.keys(t.prices)[0];
 
     // Blocking fee note (based on the CPO this price history refers to)
-    var bfCpo = cpoById(histCpo);
+    var bfCpo = cpoById(histCpoForBlock);
     document.getElementById('modalBlockNote').innerHTML =
       '<div class="bb-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Blockiergebühr bei ' + bfCpo.name + '</div>' +
       '<div class="bb-text">Ab ' + bfCpo.blockGraceMin + ' Min. nach Ladeende ca. ' + bfCpo.blockFeePerMin.toFixed(2).replace('.', ',') + ' €/Min. Timer dafür: Ladesäule im Tab „Tarife“ auswählen, dann Startseite → Schnellfinder.</div>';
@@ -2862,7 +2919,8 @@
     { id: 1, cls: 'v-blue', face: 'default' },
     { id: 2, cls: 'v-amber cheer', face: 'default' },
     { id: 3, cls: 'v-purple', face: 'sleepy' },
-    { id: 4, cls: 'v-coral', face: 'wink' }
+    { id: 4, cls: 'v-coral', face: 'wink' },
+    { id: 5, cls: 'v-gold', face: 'default', pro: true }
   ];
   function mascotFaceParts(face, topIcon) {
     var icon = topIcon === 'lamp'
@@ -2913,12 +2971,18 @@
     return mascotSVG(v);
   }
   var avatarGrid = document.getElementById('avatarGrid');
+  var proCard = document.getElementById('proCard');
+  function showProLockHint() {
+    proCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    proCard.classList.remove('pulse'); void proCard.offsetWidth; proCard.classList.add('pulse');
+  }
   avatarVariants.forEach(function (v) {
     var btn = document.createElement('button');
     btn.type = 'button'; btn.className = 'avatar-opt'; btn.setAttribute('data-avatar', v.id);
-    btn.setAttribute('aria-label', 'Maskottchen Variante ' + v.id);
-    btn.innerHTML = mascotSVG(v);
+    btn.setAttribute('aria-label', 'Maskottchen Variante ' + v.id + (v.pro ? ' (Elveo Pro)' : ''));
+    btn.innerHTML = mascotSVG(v) + (v.pro ? '<span class="pro-ribbon">PRO</span>' : '');
     btn.addEventListener('click', function () {
+      if (v.pro && !state.account.pro) { showProLockHint(); return; }
       state.account.avatar = v.id;
       renderAvatarSelection();
     });
@@ -2927,11 +2991,34 @@
   var headerAvatarEl = document.getElementById('headerAvatar');
   function renderAvatarSelection() {
     avatarGrid.querySelectorAll('.avatar-opt').forEach(function (b) {
-      b.classList.toggle('selected', parseInt(b.getAttribute('data-avatar'), 10) === state.account.avatar);
+      var id = parseInt(b.getAttribute('data-avatar'), 10);
+      var v = avatarVariants[id - 1];
+      b.classList.toggle('selected', id === state.account.avatar);
+      b.classList.toggle('locked', !!v.pro && !state.account.pro);
     });
     if (headerAvatarEl) headerAvatarEl.innerHTML = avatarSVG(state.account.avatar);
   }
   renderAvatarSelection();
+  function renderProCard() {
+    var isPro = state.account.pro;
+    proCard.classList.toggle('active', isPro);
+    document.getElementById('proCardTitle').textContent = isPro ? 'Du bist Elveo Pro ⭐' : 'Hol dir mehr aus Elveo';
+    document.getElementById('proToggleBtn').textContent = isPro ? 'Pro-Mitgliedschaft beenden' : 'Pro werden — 4,99 € / Monat';
+  }
+  document.getElementById('proToggleBtn').addEventListener('click', function () {
+    state.account.pro = !state.account.pro;
+    if (!state.account.pro) {
+      var current = avatarVariants[state.account.avatar - 1];
+      if (current && current.pro) state.account.avatar = 1;
+    }
+    renderProCard();
+    renderAvatarSelection();
+  });
+  renderProCard();
+  document.getElementById('historyProBtn').addEventListener('click', function () {
+    closeModal(); showPage('konto');
+    setTimeout(showProLockHint, 60);
+  });
   var tipMascotEl = document.getElementById('tipMascot');
   if (tipMascotEl) tipMascotEl.innerHTML = mascotSVG({ cls: '', face: 'default', topIcon: 'lamp' });
 
