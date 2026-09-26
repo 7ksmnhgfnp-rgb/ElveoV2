@@ -274,15 +274,29 @@
     max-height: 85vh; overflow-y: auto; border: 1px solid var(--glass-border); border-bottom: none;
     box-shadow: 0 -10px 40px rgba(19,36,32,0.18), inset 0 1px 0 var(--glass-shine);
   }
-  .confetti-layer { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 30; border-radius: 26px 26px 0 0; }
+  .confetti-layer { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 30; border-radius: 26px; }
   .confetti-piece { position: absolute; top: -12px; width: 8px; height: 14px; border-radius: 2px; opacity: 0.95; animation: confettiFall 1.9s ease-in forwards; }
   @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(420px) rotate(600deg); opacity: 0; } }
-  .guide-finale .guide-stage { flex-direction: column; align-items: center; text-align: center; gap: 2px; }
-  .guide-finale .mascot { width: 172px; height: 172px; }
-  .guide-finale .bubble { flex: none; width: 100%; margin-top: 2px; }
-  .guide-finale .bubble::before { display: none; }
-  .guide-finale .bubble-title { font-size: 23px; text-align: center; }
-  .guide-finale .bubble-text { text-align: center; }
+
+  /* E-Auto-Start: eigenständiges, zentriertes Popup (unabhängig von den Mini-Teasern) */
+  #startOverlay { align-items: center; justify-content: center; padding: 20px 14px; }
+  #startOverlay .modal-card {
+    max-width: 420px; width: 100%; height: auto; max-height: 88vh;
+    border-radius: 26px; padding: 20px 22px calc(18px + env(safe-area-inset-bottom, 0px));
+    display: flex; flex-direction: column;
+  }
+  .guide-modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .guide-modal-head .g-progress { display: flex; align-items: center; gap: 10px; }
+  .guide-modal-head .g-count { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11.5px; color: var(--ink-soft); }
+  .guide-title { text-align: center; font-weight: 800; font-size: 18px; line-height: 1.3; color: var(--ink); margin: 2px 0 6px; }
+  .guide-mascot-wrap { display: flex; justify-content: center; margin: 2px 0 8px; }
+  .guide-mascot-wrap .mascot { width: 92px; height: 92px; }
+  .guide-desc { text-align: center; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); padding: 0 4px; }
+  .guide-title.pop, .guide-desc.pop { animation: bpop 0.3s ease; }
+  .is-finale .guide-title { font-size: 26px; margin-top: 4px; }
+  .is-finale .guide-mascot-wrap { margin: 8px 0 12px; }
+  .is-finale .guide-mascot-wrap .mascot { width: 168px; height: 168px; }
+  .is-finale .guide-desc { font-size: 14px; color: var(--ink); }
   @media (prefers-reduced-motion: reduce) { .confetti-piece { animation: none; display: none; } }
   .modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
   .modal-head .mtitle { font-weight: 700; font-size: 19px; line-height: 1.25; }
@@ -408,10 +422,12 @@
   .mascot.charge .m-body { animation: mglow 1s ease-in-out infinite; }
   @keyframes mboltpulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.45); opacity: .7; } }
   @keyframes mglow { 0%, 100% { filter: none; } 50% { filter: drop-shadow(0 0 7px var(--amber)); } }
-  .guide-visual { display: none; gap: 18px; justify-content: center; align-items: flex-end; margin: 2px 0 12px; }
-  .connector-card { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--teal); }
-  .connector-card .cc-label { font-weight: 700; font-size: 12.5px; color: var(--ink); }
-  .connector-card .cc-sub { font-size: 10.5px; color: var(--ink-soft); text-align: center; }
+  .guide-visual { display: none; flex-direction: column; gap: 14px; margin: 4px 0 14px; }
+  .connector-row { display: flex; align-items: flex-start; gap: 14px; text-align: left; }
+  .connector-row .cc-icon { flex-shrink: 0; width: 44px; height: 44px; }
+  .connector-row .cc-icon svg { width: 100%; height: 100%; overflow: visible; }
+  .connector-row .cc-label { font-weight: 700; font-size: 13.5px; color: var(--ink); margin-bottom: 2px; }
+  .connector-row .cc-sub { font-size: 12px; color: var(--ink-soft); line-height: 1.45; }
   .tips-entry.big { padding: 18px 16px; gap: 14px; }
   .tips-entry.big .te-label { font-size: 15px; }
   .tips-entry.big .te-sub { font-size: 12.5px; margin-top: 2px; }
@@ -422,7 +438,7 @@
   .guide-help .gh-head svg { width: 14px; height: 14px; }
   .guide-help .gh-text { font-size: 12.5px; line-height: 1.5; color: var(--ink); }
   .guide-action { margin-top: 10px; background: var(--surface); border: 1px solid var(--teal-tint-line); border-radius: 999px; padding: 7px 13px; font-size: 12.5px; font-weight: 600; color: var(--teal); cursor: pointer; }
-  .guide-dots { display: flex; justify-content: center; gap: 6px; margin: 16px 0 4px; }
+  .guide-dots { display: flex; gap: 5px; margin: 0; }
   .gdot { width: 7px; height: 7px; border-radius: 999px; border: none; background: var(--line); padding: 0; cursor: pointer; transition: width 0.2s ease, background 0.2s ease; }
   .gdot.on { width: 20px; background: var(--teal); }
   .guide-nav { display: flex; gap: 8px; margin-top: 12px; }
@@ -1290,14 +1306,17 @@
 <div class="modal-overlay" id="startOverlay">
   <div class="modal-card">
     <div class="confetti-layer" id="confettiLayer"></div>
-    <div class="modal-head">
-      <div class="mtitle">E-Auto-Start</div>
+    <div class="guide-modal-head">
+      <div class="g-progress">
+        <span class="g-count" id="guideCount"></span>
+        <div class="guide-dots" id="guideDots"></div>
+      </div>
       <button class="modal-close" id="startClose" aria-label="Schließen">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </div>
-    <p class="modal-fee" id="guideCount"></p>
-    <div class="guide-stage">
+    <div class="guide-title" id="guideTitle"></div>
+    <div class="guide-mascot-wrap">
       <div class="mascot" id="guideMascot">
         <svg viewBox="0 0 96 96" aria-hidden="true">
           <ellipse class="m-shadow" cx="48" cy="90" rx="22" ry="4"/>
@@ -1319,16 +1338,16 @@
           <path class="m-spark" d="M9 24l1.4 3.4 3.4 1.4-3.4 1.4-1.4 3.4-1.4-3.4-3.4-1.4 3.4-1.4z"/>
         </svg>
       </div>
-      <div class="bubble" id="guideBubble"></div>
     </div>
+    <div class="guide-desc" id="guideDesc"></div>
     <div class="guide-visual" id="guideVisual"></div>
     <div class="guide-help" id="guideHelp"></div>
-    <div class="guide-dots" id="guideDots"></div>
     <div class="guide-nav">
       <button class="guide-prev" id="guidePrev">Zurück</button>
       <button class="guide-next" id="guideNext">Weiter</button>
     </div>
   </div>
+
 </div>
 
 <div class="modal-overlay" id="tipsOverlay">
@@ -2198,14 +2217,16 @@
 
   // ---- E-Auto-Start: Guide mit Maskottchen ----
   var CONNECTOR_VISUAL =
-    '<div class="connector-card"><svg viewBox="0 0 60 60" width="42" height="42" fill="none" stroke="currentColor" stroke-width="3"><path d="M30 6a24 24 0 0 1 24 24v6a6 6 0 0 1-6 6H12a6 6 0 0 1-6-6v-6A24 24 0 0 1 30 6z"/><circle cx="20" cy="24" r="2.2" fill="currentColor" stroke="none"/><circle cx="30" cy="19" r="2.2" fill="currentColor" stroke="none"/><circle cx="40" cy="24" r="2.2" fill="currentColor" stroke="none"/><circle cx="18" cy="35" r="2.2" fill="currentColor" stroke="none"/><circle cx="30" cy="31" r="2.2" fill="currentColor" stroke="none"/><circle cx="42" cy="35" r="2.2" fill="currentColor" stroke="none"/><circle cx="30" cy="41" r="2.8" fill="currentColor" stroke="none"/></svg><div class="cc-label">Typ 2</div><div class="cc-sub">AC · zuhause &amp; normal</div></div>' +
-    '<div class="connector-card"><svg viewBox="0 0 60 74" width="42" height="50" fill="none" stroke="currentColor" stroke-width="3"><path d="M30 4a22 22 0 0 1 22 22v4a5 5 0 0 1-5 5H13a5 5 0 0 1-5-5v-4A22 22 0 0 1 30 4z"/><circle cx="20" cy="20" r="2.1" fill="currentColor" stroke="none"/><circle cx="30" cy="16" r="2.1" fill="currentColor" stroke="none"/><circle cx="40" cy="20" r="2.1" fill="currentColor" stroke="none"/><circle cx="30" cy="27" r="2.1" fill="currentColor" stroke="none"/><rect x="14" y="40" width="12" height="22" rx="6"/><rect x="34" y="40" width="12" height="22" rx="6"/></svg><div class="cc-label">CCS</div><div class="cc-sub">DC · Schnellladen</div></div>';
+    '<div class="connector-row"><div class="cc-icon" style="color:var(--teal);"><svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M30 8a20 20 0 0 1 20 20v4a5 5 0 0 1-5 5H15a5 5 0 0 1-5-5v-4A20 20 0 0 1 30 8z"/><circle cx="21" cy="24" r="1.9" fill="currentColor" stroke="none"/><circle cx="30" cy="20" r="1.9" fill="currentColor" stroke="none"/><circle cx="39" cy="24" r="1.9" fill="currentColor" stroke="none"/><circle cx="19" cy="33" r="1.9" fill="currentColor" stroke="none"/><circle cx="30" cy="30" r="1.9" fill="currentColor" stroke="none"/><circle cx="41" cy="33" r="1.9" fill="currentColor" stroke="none"/><circle cx="30" cy="38" r="2.3" fill="currentColor" stroke="none"/></svg></div><div><div class="cc-label">Typ 2 (AC)</div><div class="cc-sub">Der europäische Standardstecker für Wechselstrom – an Wallboxen, Laternenparkplätzen und den meisten normalen öffentlichen Ladepunkten. Jedes E-Auto in Europa hat diese Buchse.</div></div></div>' +
+    '<div class="connector-row"><div class="cc-icon" style="color:var(--amber);"><svg viewBox="0 0 60 72" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M30 6a18 18 0 0 1 18 18v3a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4v-3A18 18 0 0 1 30 6z"/><circle cx="22" cy="20" r="1.7" fill="currentColor" stroke="none"/><circle cx="30" cy="17" r="1.7" fill="currentColor" stroke="none"/><circle cx="38" cy="20" r="1.7" fill="currentColor" stroke="none"/><circle cx="30" cy="26" r="1.7" fill="currentColor" stroke="none"/><rect x="15" y="38" width="11" height="20" rx="5.5"/><rect x="34" y="38" width="11" height="20" rx="5.5"/></svg></div><div><div class="cc-label">CCS (Combo 2)</div><div class="cc-sub">Setzt oben auf Typ 2 zwei dicke Gleichstrom-Pins drauf. Der Standard fürs Schnellladen an Autobahn und Ladepark – meist 50 bis 350 kW, je nach Auto und Säule.</div></div></div>' +
+    '<div class="connector-row"><div class="cc-icon" style="color:#7C3AA6;"><svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="30" cy="32" r="20"/><path d="M23 9h14v7h-14z" fill="currentColor" stroke="none"/><circle cx="22" cy="30" r="4" fill="currentColor" stroke="none"/><circle cx="38" cy="30" r="4" fill="currentColor" stroke="none"/><circle cx="30" cy="42" r="1.8" fill="currentColor" stroke="none"/></svg></div><div><div class="cc-label">CHAdeMO</div><div class="cc-sub">Runder Gleichstrom-Stecker aus Japan, vor allem bei älteren asiatischen Modellen (z.B. frühe Nissan Leaf) verbaut. In neueren Autos und Säulen in Europa immer seltener zu finden.</div></div></div>' +
+    '<div class="connector-row"><div class="cc-icon" style="color:#C23B3B;"><svg viewBox="0 0 60 46" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="44" height="30" rx="12"/><circle cx="22" cy="20" r="1.9" fill="currentColor" stroke="none"/><circle cx="30" cy="16" r="1.9" fill="currentColor" stroke="none"/><circle cx="38" cy="20" r="1.9" fill="currentColor" stroke="none"/><circle cx="22" cy="28" r="1.9" fill="currentColor" stroke="none"/><circle cx="38" cy="28" r="1.9" fill="currentColor" stroke="none"/></svg></div><div><div class="cc-label">Supercharger</div><div class="cc-sub">Teslas eigener, kompakter Stecker fürs Schnellladen am markeneigenen Supercharger-Netz. Neuere Teslas in Europa nutzen inzwischen meist CCS statt dieses Steckers.</div></div></div>';
   var guideSteps = [
     { title: 'Hi, ich bin Volti!', mood: 'wave',
       text: 'Ich führe dich in acht kurzen Schritten durch die wichtigsten Punkte beim Einstieg ins E-Auto und zeige dir, wie dir Elveo dabei hilft.',
       help: 'Elveo vergleicht Ladetarife, rechnet Ladezeit und Reisen durch und zeigt dir Ladesäulen in der Nähe.' },
     { title: 'Ladearten und Stecker',
-      text: 'Wechselstrom (AC) lädt langsamer, etwa an der Wallbox. Gleichstrom (DC) ist das Schnellladen an Autobahn und Ladeparks. In Europa passt meist Typ 2 für AC und CCS für DC. Ein Typ-2-Ladekabel gehört ins Auto.',
+      text: 'Wechselstrom (AC) lädt langsamer, Gleichstrom (DC) ist das Schnellladen. So sehen die gängigen Stecker aus:',
       help: 'Im Rechner stellst du die Ladeleistung der Säule ein und siehst, wie lange du bis 80 % und bis 100 % brauchst.',
       visual: CONNECTOR_VISUAL,
       action: { label: 'Zum Ladungs-Rechner', go: 'charge' } },
@@ -2233,8 +2254,8 @@
       text: 'Probiere Anstecken, Freischalten und Bezahlen einmal in Ruhe aus, nicht erst mit fast leerem Akku. Danach ist jede weitere Ladung Routine.',
       help: 'Auf „Jetzt laden“ zeigt dir der Schnellfinder Anbieter in der Nähe und sofort deinen günstigsten Tarif.',
       action: { label: 'Zum Schnellfinder', go: 'home' } },
-    { title: 'Geschafft! 🎉', mood: 'charge',
-      text: 'Jetzt kann\'s losgehen! Denk nur dran, das Auto nach dem Laden zügig umzustellen — nach einer Karenzzeit fallen bei vielen Betreibern sonst Blockiergebühren an.',
+    { title: 'Jetzt kann\'s losgehen! 🎉', mood: 'charge',
+      text: 'Du bist bestens vorbereitet. Denk nur dran, das Auto nach dem Laden zügig umzustellen — nach einer Karenzzeit fallen bei vielen Betreibern sonst Blockiergebühren an.',
       help: 'Elveo zeigt dir sofort Ladesäulen in deiner Nähe oder hilft dir, zuerst den passenden Tarif auszuwählen.',
       actions: [ { label: 'Ladesäule suchen', go: 'home' }, { label: 'Tarif auswählen', go: 'tarife' } ] }
   ];
@@ -2265,12 +2286,15 @@
   }
   function renderGuide() {
     var st = guideSteps[guideStep], last = guideStep === guideSteps.length - 1;
-    document.querySelector('.modal-card').classList.toggle('guide-finale', last);
+    var card = startOverlay.querySelector('.modal-card');
+    card.classList.toggle('is-finale', last);
     if (last) fireConfetti(); else document.getElementById('confettiLayer').innerHTML = '';
     document.getElementById('guideCount').textContent = 'Schritt ' + (guideStep + 1) + ' von ' + guideSteps.length;
-    var bubble = document.getElementById('guideBubble');
-    bubble.innerHTML = '<div class="bubble-title">' + st.title + '</div><div class="bubble-text">' + (typeof st.text === 'function' ? st.text() : st.text) + '</div>';
-    bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop');
+    var titleEl = document.getElementById('guideTitle'), descEl = document.getElementById('guideDesc');
+    titleEl.textContent = st.title;
+    descEl.textContent = typeof st.text === 'function' ? st.text() : st.text;
+    titleEl.classList.remove('pop'); void titleEl.offsetWidth; titleEl.classList.add('pop');
+    descEl.classList.remove('pop'); void descEl.offsetWidth; descEl.classList.add('pop');
     var m = document.getElementById('guideMascot');
     m.classList.toggle('wave', st.mood === 'wave');
     m.classList.toggle('cheer', st.mood === 'cheer' || st.mood === 'charge');
