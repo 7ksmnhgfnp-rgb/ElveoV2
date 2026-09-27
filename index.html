@@ -333,6 +333,9 @@
   .modal-block-note {
     margin-top: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 14px;
   }
+  .modal-block-note .bb-head { display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+  .modal-block-note .bb-head svg { width: 14px; height: 14px; flex-shrink: 0; color: var(--amber); }
+  .modal-block-note .bb-text { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
 
   /* Bewertung Ladesäulen */
   .rate-list { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 2px 14px; }
@@ -402,6 +405,41 @@
   .mascot.v-gold .m-bolt, .mascot.v-gold .m-spark { fill: #0E6E63; }
   .mascot.v-gold .m-body { animation: goldshine 2.4s ease-in-out infinite; }
   @keyframes goldshine { 0%, 100% { filter: none; } 50% { filter: drop-shadow(0 0 6px rgba(184,134,11,0.65)); } }
+
+  /* Elveo Pro: alle Voltis werden golden */
+  body.is-pro .mascot .m-body { fill: #FCEBB0 !important; stroke: #B8860B !important; animation: goldshine 2.4s ease-in-out infinite; }
+  body.is-pro .mascot .m-limb, body.is-pro .mascot .m-stem { fill: #B8860B !important; stroke: #B8860B !important; }
+  body.is-pro .mascot .m-bolt, body.is-pro .mascot .m-spark { fill: #0E6E63 !important; }
+
+  /* Werbebanner (nur ohne Elveo Pro sichtbar) */
+  .ad-banner {
+    border-radius: var(--radius-lg); padding: 14px; margin-top: 14px;
+    background: var(--surface-sunken); border: 1px dashed var(--line); position: relative;
+  }
+  .ad-banner .ad-tag {
+    position: absolute; top: 10px; right: 12px; font-size: 9.5px; font-weight: 700;
+    letter-spacing: 0.06em; color: var(--ink-soft); text-transform: uppercase;
+  }
+  .ad-banner .ad-row { display: flex; align-items: center; gap: 12px; }
+  .ad-banner .ad-icon {
+    flex-shrink: 0; width: 42px; height: 42px; border-radius: 12px; background: var(--surface);
+    border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--ink-soft);
+  }
+  .ad-banner .ad-body { flex: 1; min-width: 0; }
+  .ad-banner .ad-title { font-weight: 700; font-size: 13.5px; margin-bottom: 2px; }
+  .ad-banner .ad-text { font-size: 12px; color: var(--ink-soft); line-height: 1.4; }
+
+  /* Reise-Rechner: gesperrt ohne Elveo Pro */
+  .trip-locked-wrap { position: relative; }
+  .trip-blur { filter: blur(7px); pointer-events: none; user-select: none; }
+  .trip-pro-overlay {
+    position: absolute; inset: 0; display: flex; justify-content: center; padding: 0 14px; z-index: 5;
+  }
+  .trip-pro-overlay .pro-lock {
+    position: sticky; top: 90px; margin-top: 20px;
+    background: var(--glass-bg-strong); border: 1px solid var(--glass-border); border-radius: var(--radius-lg);
+    box-shadow: var(--glass-shadow); max-width: 300px;
+  }
 
   /* Elveo Pro */
   .pro-card { position: relative; background: linear-gradient(135deg, rgba(245,214,123,0.22), rgba(184,134,11,0.06)); border: 1px solid #E8C25A; border-radius: var(--radius-lg, 18px); padding: 16px; }
@@ -799,6 +837,19 @@
       <p class="section-label">Deine Favoriten<span class="hint" id="favCountHint"></span></p>
       <div id="favList"></div>
     </section>
+    <section id="adBannerSection">
+      <div class="ad-banner">
+        <span class="ad-tag">Anzeige</span>
+        <div class="ad-row">
+          <div class="ad-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="15" height="12" rx="2"/><path d="M16 10h3l3 3v3h-6z"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="17.5" cy="18.5" r="2"/></svg></div>
+          <div class="ad-body">
+            <div class="ad-title">Kfz-Versicherung fürs E-Auto vergleichen</div>
+            <div class="ad-text">Jetzt in 2 Minuten Tarife vergleichen und bis zu 30 % sparen. Beispielanzeige.</div>
+          </div>
+        </div>
+      </div>
+      <div class="pro-note">Mit Elveo Pro siehst du keine Werbung mehr.</div>
+    </section>
     <footer class="foot-note">Tippe auf einen Tarif für Details. Favoriten und Besitzstatus verwaltest du im Tab „Tarife“, dort wählst du auch die Ladesäulen für den Schnellfinder.</footer>
   </div>
 
@@ -894,6 +945,8 @@
 
     <!-- SUB: REISE -->
     <div class="subpage" id="sub-trip">
+      <div class="trip-locked-wrap">
+      <div class="trip-blur" id="tripScope">
       <section style="margin-top:0;">
         <p class="section-label">Strecke</p>
         <div class="slider-card">
@@ -985,6 +1038,25 @@
         <div id="tripHomeCompare"></div>
         <div id="tripReco"></div>
       </section>
+
+      <section>
+        <p class="section-label">Bester Anbieter für diese Reise<span class="hint">automatisch über alle Anbieter</span></p>
+        <div class="pro-lock" id="tripAutoLocked" style="display:none;">
+          <div class="pro-lock-icon">🔒</div>
+          <div class="pro-lock-text">Der automatische Vergleich über <b>alle</b> Ladesäulen-Anbieter und Tarife ist Teil von <b>Elveo Pro</b>. Du wählst sonst manuell oben unter „Wo lädst du unterwegs?“.</div>
+          <button class="pro-lock-btn" id="tripAutoProBtn">Mehr zu Elveo Pro</button>
+        </div>
+        <div class="compare-card" id="tripAutoCard" style="display:none;"></div>
+      </section>
+      </div>
+      <div class="trip-pro-overlay" id="tripProOverlay" style="display:none;">
+        <div class="pro-lock">
+          <div class="pro-lock-icon">🔒</div>
+          <div class="pro-lock-text">Der <b>Reise-Rechner</b> ist Teil von <b>Elveo Pro</b>. Schalte ihn frei, um Ladezeit, Kosten und den besten Anbieter für deine Reise zu berechnen.</div>
+          <button class="pro-lock-btn" id="tripLockProBtn">Mehr zu Elveo Pro</button>
+        </div>
+      </div>
+      </div>
     </div>
 
     <!-- SUB: ALLTAG -->
@@ -1159,8 +1231,13 @@
           <div class="pro-card-title" id="proCardTitle">Hol dir mehr aus Elveo</div>
         </div>
         <ul class="pro-benefits">
-          <li>Goldener Volti als Profilbild</li>
+          <li>Unbegrenzt viele Tarife als Favoriten &amp; „besitze ich“ markieren (statt max. 3)</li>
+          <li>Unbegrenzt viele Ladesäulen im Schnellfinder speichern (statt max. 3)</li>
+          <li>Voller Zugriff auf den Reise-Rechner inkl. automatischem Anbieter-Vergleich</li>
+          <li>Freie Fahrzeugauswahl aus der vollständigen Modellliste (statt nur Beispielfahrzeuge)</li>
           <li>Preisverlauf &amp; Trend der letzten 6 Monate für jeden Tarif</li>
+          <li>Werbefrei</li>
+          <li>Alle Voltis erstrahlen golden</li>
           <li>Unterstützt die Weiterentwicklung von Elveo</li>
         </ul>
         <button class="pro-card-btn" id="proToggleBtn">Pro werden — 4,99 € / Monat</button>
@@ -1173,6 +1250,7 @@
       <div class="field">
         <label for="acctVehicle">Modell</label>
         <select id="acctVehicle"></select>
+        <div class="field-note" id="vehicleProNote"></div>
       </div>
       <div id="acctCustomWrap" style="display:none;">
         <div class="field">
@@ -1472,8 +1550,18 @@
       prices: { allego: 0.58, enbw: 0.59, ionity: 0.77, aral: 0.57, shell: 0.42, ewe: 0.57 } }
   ];
 
+  // Kostenlose Version: nur generische Beispielfahrzeuge wählbar (keine echten Modelle).
   var vehicles = [
-    { id: "XPengL03LR", label: "XPeng L03 Long Range", capacity: 71.2, consumption: 16, maxPower: 236 },
+    { id: "beispiel_klein", label: "Beispiel: Kleinwagen", capacity: 45, consumption: 15.5, maxPower: 90 },
+    { id: "beispiel_kompakt", label: "Beispiel: Kompaktklasse", capacity: 58, consumption: 16, maxPower: 120 },
+    { id: "beispiel_suv", label: "Beispiel: SUV", capacity: 77, consumption: 18, maxPower: 180 },
+    { id: "beispiel_lang", label: "Beispiel: Langstrecke", capacity: 85, consumption: 17, maxPower: 220 },
+    { id: "custom", label: "Eigenes Fahrzeug …", capacity: null, consumption: null, maxPower: null }
+  ];
+
+  // Vollständige Liste echter Fahrzeugmodelle — Teil von Elveo Pro
+  var proVehicles = [
+    { id: "id3", label: "VW ID.3 Pro", capacity: 58, consumption: 16, maxPower: 120 },
     { id: "id4", label: "VW ID.4", capacity: 77, consumption: 18, maxPower: 135 },
     { id: "model3", label: "Tesla Model 3", capacity: 60, consumption: 15, maxPower: 170 },
     { id: "modely", label: "Tesla Model Y", capacity: 75, consumption: 16.5, maxPower: 190 },
@@ -1481,8 +1569,20 @@
     { id: "ev6", label: "Kia EV6", capacity: 77, consumption: 17.5, maxPower: 230 },
     { id: "megane", label: "Renault Mégane E-Tech", capacity: 60, consumption: 16, maxPower: 130 },
     { id: "500e", label: "Fiat 500e", capacity: 42, consumption: 15, maxPower: 85 },
-    { id: "custom", label: "Eigenes Fahrzeug …", capacity: null, consumption: null, maxPower: null }
+    { id: "e208", label: "Peugeot e-208", capacity: 51, consumption: 15.5, maxPower: 100 },
+    { id: "cooper_se", label: "Mini Cooper SE", capacity: 49, consumption: 16.5, maxPower: 95 },
+    { id: "enyaq", label: "Škoda Enyaq", capacity: 82, consumption: 17, maxPower: 175 },
+    { id: "q4_etron", label: "Audi Q4 e-tron", capacity: 82, consumption: 18.5, maxPower: 175 },
+    { id: "eqa", label: "Mercedes EQA", capacity: 66, consumption: 17.5, maxPower: 100 },
+    { id: "i4", label: "BMW i4", capacity: 83, consumption: 17, maxPower: 205 },
+    { id: "polestar2", label: "Polestar 2", capacity: 79, consumption: 17.5, maxPower: 205 },
+    { id: "byd_atto3", label: "BYD Atto 3", capacity: 60, consumption: 16.5, maxPower: 88 },
+    { id: "cupra_born", label: "Cupra Born", capacity: 77, consumption: 16.5, maxPower: 135 },
+    { id: "zoe", label: "Renault Zoe", capacity: 52, consumption: 17.5, maxPower: 46 },
+    { id: "leaf", label: "Nissan Leaf", capacity: 59, consumption: 17, maxPower: 100 },
+    { id: "taycan", label: "Porsche Taycan", capacity: 93, consumption: 20.5, maxPower: 270 }
   ];
+  var allVehicles = vehicles.concat(proVehicles);
 
   var tipsData = [
     { icon: 'M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2z', title: '20–80 % im Alltag', text: 'Für die tägliche Nutzung ist der Bereich zwischen 20 % und 80 % am akkuschonendsten. Volle 100 % nur kurz vor langen Fahrten laden.' },
@@ -1534,11 +1634,29 @@
     charge: { socFrom: 20, socTo: 80, stationPower: 150 },
     trip: { distance: 500, roundTrip: true, consumption: 16, cpo: "ionity", otherKwh: 0, startPercent: 90, arrivalPercent: 20 },
     alltag: { km: 30, threshold: 20, duration: 30 },
-    account: { name: "Fahrer", avatar: 1, pro: false, vehicle: "XPengL03LR", customCapacity: 71.2, customConsumption: 16, customMaxPower: 236, homePrice: 0.22 },
+    account: { name: "Fahrer", avatar: 1, pro: false, vehicle: "beispiel_kompakt", customCapacity: 60, customConsumption: 18, customMaxPower: 120, homePrice: 0.32 },
     blockTimer: { endTime: null, intervalId: null, cpo: null }
   };
 
-  function currentVehicle() { return vehicles.filter(function (v) { return v.id === state.account.vehicle; })[0]; }
+  function currentVehicle() { return allVehicles.filter(function (v) { return v.id === state.account.vehicle; })[0] || vehicles[0]; }
+  var FREE_FAV_LIMIT = 3;
+  var FREE_OWN_LIMIT = 3;
+  var FREE_CPO_LIMIT = 3;
+  function favoriteCount() { return Object.keys(state.favorites).filter(function (id) { return state.favorites[id]; }).length; }
+  function toggleFavorite(id) {
+    if (!state.favorites[id] && !state.account.pro && favoriteCount() >= FREE_FAV_LIMIT) { showProLockHint(); return; }
+    state.favorites[id] = !state.favorites[id];
+  }
+  function ownedCount() { return Object.keys(state.owned).filter(function (id) { return state.owned[id]; }).length; }
+  function toggleOwned(id) {
+    if (!state.owned[id] && !state.account.pro && ownedCount() >= FREE_OWN_LIMIT) { showProLockHint(); return; }
+    state.owned[id] = !state.owned[id];
+  }
+  function favCpoCount() { return Object.keys(state.favCpos).filter(function (id) { return state.favCpos[id]; }).length; }
+  function toggleFavCpo(id) {
+    if (!state.favCpos[id] && !state.account.pro && favCpoCount() >= FREE_CPO_LIMIT) { showProLockHint(); return; }
+    state.favCpos[id] = !state.favCpos[id];
+  }
   function vehicleCapacity() { var v = currentVehicle(); return v.id === 'custom' ? state.account.customCapacity : v.capacity; }
   function vehicleConsumption() { var v = currentVehicle(); return v.id === 'custom' ? state.account.customConsumption : v.consumption; }
   function vehicleMaxPower() { var v = currentVehicle(); return v.id === 'custom' ? state.account.customMaxPower : v.maxPower; }
@@ -1880,6 +1998,12 @@
 
   // ---- Reise ----
   function renderTrip() {
+    var tripScopeEl = document.getElementById('tripScope');
+    var tripOverlayEl = document.getElementById('tripProOverlay');
+    if (tripScopeEl && tripOverlayEl) {
+      tripScopeEl.classList.toggle('trip-blur', !state.account.pro);
+      tripOverlayEl.style.display = state.account.pro ? 'none' : 'flex';
+    }
     var t = state.trip;
     var totalDistance = t.roundTrip ? t.distance * 2 : t.distance;
     var tripKwh = totalDistance * (t.consumption / 100);
@@ -1945,6 +2069,30 @@
         banner.innerHTML = '<div class="tip-banner-row">' + mascotHtml + '<div class="tip-banner-body"><div class="reco-head">Lohnt sich nicht</div><p>Dein vorhandener Tarif bleibt für diese Reise die günstigere Wahl.</p></div></div>';
       }
       reco.appendChild(banner);
+    }
+
+    var autoLocked = document.getElementById('tripAutoLocked');
+    var autoCard = document.getElementById('tripAutoCard');
+    if (state.account.pro) {
+      autoLocked.style.display = 'none';
+      autoCard.style.display = 'block';
+      var allCombos = [];
+      tariffs.forEach(function (x) {
+        cpos.forEach(function (c) {
+          if (x.prices[c.id] != null) {
+            var owned = !!state.owned[x.id];
+            allCombos.push({ t: x, cpoId: c.id, owned: owned, cost: (owned ? 0 : x.grundgebuehr) + x.prices[c.id] * monthTotalKwh });
+          }
+        });
+      });
+      allCombos.sort(function (a, b) { return a.cost - b.cost; });
+      var best = allCombos[0];
+      if (best) {
+        autoCard.innerHTML = '<div class="cc-tag">GÜNSTIGSTE KOMBINATION INSGESAMT</div><div class="cc-name">' + best.t.name + ' · ' + cpoName(best.cpoId) + '</div><div class="cc-price">' + fmtEUR(best.cost) + '</div><div class="cc-sub">' + fmtPrice(best.t.prices[best.cpoId]) + (best.owned ? ' · Tarif hast du bereits' : (best.t.grundgebuehr > 0 ? ' + ' + fmtEUR(best.t.grundgebuehr) + ' Grundgebühr' : ', keine Grundgebühr')) + '</div>';
+      }
+    } else {
+      autoLocked.style.display = 'flex';
+      autoCard.style.display = 'none';
     }
   }
 
@@ -2126,12 +2274,12 @@
       '<svg class="tchevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
     row.querySelector('.star').addEventListener('click', function (e) {
       e.stopPropagation();
-      state.favorites[t.id] = !state.favorites[t.id];
+      toggleFavorite(t.id);
       renderHome(); renderTarife();
     });
     row.querySelector('.own').addEventListener('click', function (e) {
       e.stopPropagation();
-      state.owned[t.id] = !state.owned[t.id];
+      toggleOwned(t.id);
       renderHome(); renderTarife(); renderResults(); renderTips(); renderTrip(); renderAlltag(); renderKonto(); renderQuickFinder();
     });
     row.addEventListener('click', function () { openModal(t.id); });
@@ -2143,7 +2291,10 @@
     var favWrap = document.getElementById('favList');
     favWrap.innerHTML = '';
     var favTariffs = tariffs.filter(function (t) { return state.favorites[t.id]; });
-    document.getElementById('favCountHint').textContent = favTariffs.length > 0 ? (favTariffs.length + (favTariffs.length === 1 ? ' Tarif' : ' Tarife')) : '';
+    var favHintEl = document.getElementById('favCountHint');
+    favHintEl.textContent = state.account.pro
+      ? (favTariffs.length > 0 ? (favTariffs.length + (favTariffs.length === 1 ? ' Tarif' : ' Tarife')) : '')
+      : (favTariffs.length + ' / ' + FREE_FAV_LIMIT);
     if (favTariffs.length === 0) {
       var empty = document.createElement('div');
       empty.className = 'empty-note';
@@ -2152,6 +2303,20 @@
     } else {
       favTariffs.forEach(function (t) { favWrap.appendChild(makeTariffRow(t)); });
     }
+    if (!state.account.pro && favTariffs.length >= FREE_FAV_LIMIT) {
+      var upsell = document.createElement('div');
+      upsell.className = 'pro-note';
+      upsell.style.cssText = 'text-align:left;margin-top:10px;';
+      upsell.textContent = 'Maximal ' + FREE_FAV_LIMIT + ' Favoriten kostenlos — mit Elveo Pro beliebig viele speichern.';
+      favWrap.appendChild(upsell);
+    }
+    renderAdBanner();
+  }
+
+  // ---- Werbebanner (nur ohne Elveo Pro) ----
+  function renderAdBanner() {
+    var el = document.getElementById('adBannerSection');
+    if (el) el.style.display = state.account.pro ? 'none' : '';
   }
 
   // ---- Tips modal ----
@@ -2436,6 +2601,13 @@
       return;
     }
     list.forEach(function (t) { wrap.appendChild(makeTariffRow(t)); });
+    if (!state.account.pro && (favoriteCount() >= FREE_FAV_LIMIT || ownedCount() >= FREE_OWN_LIMIT)) {
+      var upsell = document.createElement('div');
+      upsell.className = 'pro-note';
+      upsell.style.cssText = 'text-align:left;margin-top:10px;';
+      upsell.textContent = 'Maximal ' + FREE_FAV_LIMIT + ' Favoriten und ' + FREE_OWN_LIMIT + ' eigene Tarife kostenlos — mit Elveo Pro beliebig viele markieren.';
+      wrap.appendChild(upsell);
+    }
   }
 
   // ---- Ladesäulen (Liste mit Auswahl, wirkt auf den Schnellfinder) ----
@@ -2507,7 +2679,7 @@
       '<svg class="tchevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
     row.querySelector('.star').addEventListener('click', function (e) {
       e.stopPropagation();
-      state.favCpos[c.id] = !state.favCpos[c.id];
+      toggleFavCpo(c.id);
       renderSaeulen(); renderQuickFinder();
     });
     row.addEventListener('click', function () { openCpoModal(c.id); });
@@ -2534,6 +2706,13 @@
       return;
     }
     list.forEach(function (c) { wrap.appendChild(makeCpoRow(c)); });
+    if (!state.account.pro && favCpoCount() >= FREE_CPO_LIMIT) {
+      var upsell = document.createElement('div');
+      upsell.className = 'pro-note';
+      upsell.style.cssText = 'text-align:left;margin-top:10px;';
+      upsell.textContent = 'Maximal ' + FREE_CPO_LIMIT + ' Ladesäulen im Schnellfinder kostenlos — mit Elveo Pro beliebig viele speichern.';
+      wrap.appendChild(upsell);
+    }
   }
 
   var cpoOverlay = document.getElementById('cpoOverlay');
@@ -2565,7 +2744,7 @@
   cpoOverlay.addEventListener('click', function (e) { if (e.target === cpoOverlay) closeCpoModal(); });
   document.getElementById('cpoFavToggle').addEventListener('click', function () {
     var id = state.modalCpoId; if (!id) return;
-    state.favCpos[id] = !state.favCpos[id];
+    toggleFavCpo(id);
     updateCpoModalToggle(); renderSaeulen(); renderQuickFinder();
   });
 
@@ -2782,7 +2961,7 @@
         var act = b.getAttribute('data-act');
         if (act === 'maps') return; // Link öffnet normal in neuem Tab
         var cpo = b.getAttribute('data-cpo');
-        if (act === 'fav') { state.favCpos[cpo] = !state.favCpos[cpo]; renderSaeulen(); renderQuickFinder(); }
+        if (act === 'fav') { toggleFavCpo(cpo); renderSaeulen(); renderQuickFinder(); }
         else { openCpoModal(cpo); }
       });
     });
@@ -2905,12 +3084,12 @@
   modalOverlay.addEventListener('click', function (e) { if (e.target === modalOverlay) closeModal(); });
   document.getElementById('modalFavToggle').addEventListener('click', function () {
     var id = state.modalTariffId; if (!id) return;
-    state.favorites[id] = !state.favorites[id];
+    toggleFavorite(id);
     updateModalToggles(); renderHome(); renderTarife();
   });
   document.getElementById('modalOwnToggle').addEventListener('click', function () {
     var id = state.modalTariffId; if (!id) return;
-    state.owned[id] = !state.owned[id];
+    toggleOwned(id);
     updateModalToggles(); renderHome(); renderTarife(); renderResults(); renderTips(); renderTrip(); renderAlltag(); renderKonto(); renderQuickFinder();
   });
 
@@ -2973,6 +3152,7 @@
   var avatarGrid = document.getElementById('avatarGrid');
   var proCard = document.getElementById('proCard');
   function showProLockHint() {
+    showPage('konto');
     proCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
     proCard.classList.remove('pulse'); void proCard.offsetWidth; proCard.classList.add('pulse');
   }
@@ -3007,16 +3187,35 @@
   }
   document.getElementById('proToggleBtn').addEventListener('click', function () {
     state.account.pro = !state.account.pro;
+    document.body.classList.toggle('is-pro', state.account.pro);
     if (!state.account.pro) {
       var current = avatarVariants[state.account.avatar - 1];
       if (current && current.pro) state.account.avatar = 1;
+      if (proVehicles.some(function (v) { return v.id === state.account.vehicle; })) {
+        state.account.vehicle = 'beispiel_kompakt';
+        syncVehicleCustomVisibility();
+        applyVehicleChangeEffects();
+      }
     }
     renderProCard();
     renderAvatarSelection();
+    populateVehicleSelect();
+    renderHome();
+    renderTarife();
+    renderTrip();
   });
   renderProCard();
+  document.body.classList.toggle('is-pro', state.account.pro);
   document.getElementById('historyProBtn').addEventListener('click', function () {
     closeModal(); showPage('konto');
+    setTimeout(showProLockHint, 60);
+  });
+  document.getElementById('tripAutoProBtn').addEventListener('click', function () {
+    showPage('konto');
+    setTimeout(showProLockHint, 60);
+  });
+  document.getElementById('tripLockProBtn').addEventListener('click', function () {
+    showPage('konto');
     setTimeout(showProLockHint, 60);
   });
   var tipMascotEl = document.getElementById('tipMascot');
@@ -3024,12 +3223,38 @@
 
   // ---- Konto ----
   var vehicleSelect = document.getElementById('acctVehicle');
-  vehicles.forEach(function (v) {
-    var opt = document.createElement('option'); opt.value = v.id;
-    opt.textContent = v.label + (v.capacity ? ' · ' + v.capacity + ' kWh' : '');
-    vehicleSelect.appendChild(opt);
-  });
-  vehicleSelect.value = state.account.vehicle;
+  function populateVehicleSelect() {
+    vehicleSelect.innerHTML = '';
+    vehicles.forEach(function (v) {
+      if (v.id === 'custom') return;
+      var opt = document.createElement('option'); opt.value = v.id;
+      opt.textContent = v.label + (v.capacity ? ' · ' + v.capacity + ' kWh' : '');
+      vehicleSelect.appendChild(opt);
+    });
+    if (state.account.pro) {
+      var proGroup = document.createElement('optgroup'); proGroup.label = 'Echte Fahrzeugmodelle (Elveo Pro)';
+      proVehicles.forEach(function (v) {
+        var opt = document.createElement('option'); opt.value = v.id;
+        opt.textContent = v.label + ' · ' + v.capacity + ' kWh';
+        proGroup.appendChild(opt);
+      });
+      vehicleSelect.appendChild(proGroup);
+    } else {
+      var lockOpt = document.createElement('option'); lockOpt.disabled = true;
+      lockOpt.textContent = '🔒 ' + proVehicles.length + ' echte Fahrzeugmodelle mit Elveo Pro';
+      vehicleSelect.appendChild(lockOpt);
+    }
+    var customOpt = document.createElement('option'); customOpt.value = 'custom'; customOpt.textContent = 'Eigenes Fahrzeug …';
+    vehicleSelect.appendChild(customOpt);
+    vehicleSelect.value = state.account.vehicle;
+    var vpn = document.getElementById('vehicleProNote');
+    if (vpn) {
+      vpn.innerHTML = state.account.pro
+        ? 'Elveo Pro aktiv — du kannst aus der vollständigen Liste echter Fahrzeugmodelle wählen.'
+        : 'Ohne Elveo Pro stehen nur Beispielfahrzeuge (Richtwerte) zur Auswahl. Mit Pro wählst du aus ' + proVehicles.length + ' echten Modellen.';
+    }
+  }
+  populateVehicleSelect();
   document.getElementById('acctName').value = state.account.name;
   document.getElementById('acctCustomCapacity').value = state.account.customCapacity;
   document.getElementById('acctCustomConsumption').value = state.account.customConsumption;
