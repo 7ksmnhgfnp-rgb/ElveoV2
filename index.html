@@ -411,6 +411,21 @@
   body.is-pro .mascot .m-limb, body.is-pro .mascot .m-stem { fill: #B8860B !important; stroke: #B8860B !important; }
   body.is-pro .mascot .m-bolt, body.is-pro .mascot .m-spark { fill: #0E6E63 !important; }
 
+  /* Ausnahme: Profilbild-Auswahl behält ihre eigenen Volti-Farben, auch mit Elveo Pro */
+  body.is-pro .avatar-grid .mascot.v-blue .m-body { fill: #DCEEF8 !important; stroke: #1C7FB0 !important; animation: none !important; }
+  body.is-pro .avatar-grid .mascot.v-blue .m-limb, body.is-pro .avatar-grid .mascot.v-blue .m-stem { fill: #1C7FB0 !important; stroke: #1C7FB0 !important; }
+  body.is-pro .avatar-grid .mascot.v-amber .m-body { fill: #FBEBD2 !important; stroke: #B8790E !important; animation: none !important; }
+  body.is-pro .avatar-grid .mascot.v-amber .m-limb, body.is-pro .avatar-grid .mascot.v-amber .m-stem { fill: #B8790E !important; stroke: #B8790E !important; }
+  body.is-pro .avatar-grid .mascot.v-amber .m-bolt, body.is-pro .avatar-grid .mascot.v-amber .m-spark { fill: #0E6E63 !important; }
+  body.is-pro .avatar-grid .mascot.v-purple .m-body { fill: #F0E1F7 !important; stroke: #7C3AA6 !important; animation: none !important; }
+  body.is-pro .avatar-grid .mascot.v-purple .m-limb, body.is-pro .avatar-grid .mascot.v-purple .m-stem { fill: #7C3AA6 !important; stroke: #7C3AA6 !important; }
+  body.is-pro .avatar-grid .mascot.v-coral .m-body { fill: #FBDEDE !important; stroke: #C23B3B !important; animation: none !important; }
+  body.is-pro .avatar-grid .mascot.v-coral .m-limb, body.is-pro .avatar-grid .mascot.v-coral .m-stem { fill: #C23B3B !important; stroke: #C23B3B !important; }
+  body.is-pro .avatar-grid .mascot.v-coral .m-bolt { fill: #0E6E63 !important; }
+  body.is-pro .avatar-grid .mascot.v-gold .m-body { fill: #FCEBB0 !important; stroke: #B8860B !important; animation: goldshine 2.4s ease-in-out infinite !important; }
+  body.is-pro .avatar-grid .mascot.v-gold .m-limb, body.is-pro .avatar-grid .mascot.v-gold .m-stem { fill: #B8860B !important; stroke: #B8860B !important; }
+  body.is-pro .avatar-grid .mascot.v-gold .m-bolt, body.is-pro .avatar-grid .mascot.v-gold .m-spark { fill: #0E6E63 !important; }
+
   /* Werbebanner (nur ohne Elveo Pro sichtbar) */
   .ad-banner {
     border-radius: var(--radius-lg); padding: 14px; margin-top: 14px;
@@ -433,13 +448,19 @@
   .trip-locked-wrap { position: relative; }
   .trip-blur { filter: blur(7px); pointer-events: none; user-select: none; }
   .trip-pro-overlay {
-    position: absolute; inset: 0; display: flex; justify-content: center; padding: 0 14px; z-index: 5;
+    position: absolute; inset: 0; display: flex; justify-content: center; align-items: flex-start; padding: 0 14px; z-index: 5;
   }
   .trip-pro-overlay .pro-lock {
     position: sticky; top: 90px; margin-top: 20px;
-    background: var(--glass-bg-strong); border: 1px solid var(--glass-border); border-radius: var(--radius-lg);
-    box-shadow: var(--glass-shadow); max-width: 300px;
+    background: linear-gradient(135deg, rgba(245,214,123,0.32), rgba(184,134,11,0.10)), var(--glass-bg-strong);
+    border: 1px solid #E8C25A; border-radius: var(--radius-lg);
+    box-shadow: var(--glass-shadow); max-width: 270px; padding: 12px 14px 13px; gap: 5px;
   }
+  .trip-pro-overlay .pro-lock-icon { font-size: 17px; }
+  .trip-pro-overlay .pro-lock-text { font-size: 11px; max-width: 240px; }
+  .trip-pro-overlay .pro-lock-btn { padding: 6px 13px; font-size: 11.5px; }
+  .trip-pro-overlay .pro-lock-mascot { width: 42px; height: 42px; }
+  .trip-pro-overlay .pro-lock-mascot .mascot { width: 100%; height: 100%; }
 
   /* Elveo Pro */
   .pro-card { position: relative; background: linear-gradient(135deg, rgba(245,214,123,0.22), rgba(184,134,11,0.06)); border: 1px solid #E8C25A; border-radius: var(--radius-lg, 18px); padding: 16px; }
@@ -1051,6 +1072,7 @@
       </div>
       <div class="trip-pro-overlay" id="tripProOverlay" style="display:none;">
         <div class="pro-lock">
+          <div class="pro-lock-mascot" id="tripProLockMascot"></div>
           <div class="pro-lock-icon">🔒</div>
           <div class="pro-lock-text">Der <b>Reise-Rechner</b> ist Teil von <b>Elveo Pro</b>. Schalte ihn frei, um Ladezeit, Kosten und den besten Anbieter für deine Reise zu berechnen.</div>
           <button class="pro-lock-btn" id="tripLockProBtn">Mehr zu Elveo Pro</button>
@@ -1188,6 +1210,7 @@
 
 
       <p class="section-label">In der Nähe<span class="hint" id="mapCountHint"></span></p>
+      <div class="pro-note" id="mapProNote" style="display:none; text-align:left; margin:-2px 0 10px;"></div>
       <div id="mapList"></div>
     </section>
     <section class="tips-card">
@@ -2893,11 +2916,19 @@
     var minKw = parseFloat(document.getElementById('mapKwSelect').value) || 0;
     var pxPerKm = MAP_MAX_RADIUS_PX / radiusKm;
 
-    var items = mapStations.map(function (m, i) { return { s: m, i: i }; })
+    var allItems = mapStations.map(function (m, i) { return { s: m, i: i }; })
       .filter(function (o) { return state.mapFilter === 'mine' ? !!state.favCpos[o.s.cpo] : true; })
       .filter(function (o) { return o.s.km <= radiusKm; })
       .filter(function (o) { return (o.s.kw || 0) >= minKw; })
       .sort(function (a, b) { return a.s.km - b.s.km; });
+
+    var FREE_MAP_LIMIT = 10;
+    var mapLockedCount = 0;
+    var items = allItems;
+    if (!state.account.pro && allItems.length > FREE_MAP_LIMIT) {
+      mapLockedCount = allItems.length - FREE_MAP_LIMIT;
+      items = allItems.slice(0, FREE_MAP_LIMIT);
+    }
     if (state.mapSel != null && !items.some(function (o) { return o.i === state.mapSel; })) state.mapSel = null;
 
     // Top 3 günstigste (nach Preis), nur unter Säulen mit bekannten Tarifdaten
@@ -2916,12 +2947,21 @@
     }).join('');
     document.getElementById('mapCard').innerHTML = '<svg viewBox="0 0 400 300" role="img" aria-label="Karte mit Ladesäulen">' + buildMapBase(radiusKm) + pins + '</svg>';
 
-    document.getElementById('mapCountHint').textContent = items.length + (items.length === 1 ? ' Säule' : ' Säulen');
+    document.getElementById('mapCountHint').textContent = items.length + (items.length === 1 ? ' Säule' : ' Säulen') + (mapLockedCount ? ' · ' + (allItems.length) + ' in der Umgebung' : '');
+    var mapProNote = document.getElementById('mapProNote');
+    if (mapProNote) {
+      if (mapLockedCount > 0) {
+        mapProNote.style.display = 'block';
+        mapProNote.textContent = 'Maximal ' + FREE_MAP_LIMIT + ' Säulen in der Umgebung kostenlos — mit Elveo Pro siehst du alle Säulen.';
+      } else {
+        mapProNote.style.display = 'none';
+      }
+    }
     var list = document.getElementById('mapList');
     if (!items.length) {
       list.innerHTML = '<div class="empty-note">Keine Ladesäulen im gewählten Umkreis/Filter gefunden. Radius oder kW-Filter oben anpassen.</div>';
     } else {
-      var shown = items.slice(0, state.mapListLimit);
+      var shown = state.account.pro ? items.slice(0, state.mapListLimit) : items;
       list.innerHTML = shown.map(function (o) {
         var m = o.s, isSel = o.i === state.mapSel, name = m.name || cpoName(m.cpo);
         var ob = tariffs.filter(function (t) { return state.owned[t.id] && t.prices[m.cpo] != null; })
@@ -2944,8 +2984,17 @@
       }).join('');
       if (items.length > shown.length) {
         list.innerHTML += '<button id="mapShowMoreBtn" style="width:100%; margin-top:10px; padding:10px; border-radius:10px; border:1px solid var(--line); background:var(--surface); font-weight:600; cursor:pointer;">Weitere ' + Math.min(10, items.length - shown.length) + ' anzeigen (' + shown.length + ' von ' + items.length + ')</button>';
+      } else if (mapLockedCount > 0) {
+        list.innerHTML += '<div class="pro-lock" style="margin-top:10px; background:linear-gradient(135deg, rgba(245,214,123,0.32), rgba(184,134,11,0.10)), var(--glass-bg-strong); border:1px solid #E8C25A; border-radius:var(--radius-lg);">' +
+          '<div class="pro-lock-icon">🔒</div>' +
+          '<div class="pro-lock-text">' + mapLockedCount + ' weitere ' + (mapLockedCount === 1 ? 'Säule' : 'Säulen') + ' in der Umgebung sind Teil von <b>Elveo Pro</b>. Ohne Pro werden maximal 10 Säulen angezeigt.</div>' +
+          '<button class="pro-lock-btn" id="mapProBtn">Mehr zu Elveo Pro</button>' +
+          '</div>';
       }
     }
+
+    var mapProBtn = document.getElementById('mapProBtn');
+    if (mapProBtn) mapProBtn.addEventListener('click', function () { showPage('konto'); setTimeout(showProLockHint, 60); });
 
     var showMoreBtn = document.getElementById('mapShowMoreBtn');
     if (showMoreBtn) showMoreBtn.addEventListener('click', function (e) { e.stopPropagation(); state.mapListLimit += 10; renderKarte(); });
@@ -3203,6 +3252,7 @@
     renderHome();
     renderTarife();
     renderTrip();
+    renderSaeulen();
   });
   renderProCard();
   document.body.classList.toggle('is-pro', state.account.pro);
@@ -3220,6 +3270,8 @@
   });
   var tipMascotEl = document.getElementById('tipMascot');
   if (tipMascotEl) tipMascotEl.innerHTML = mascotSVG({ cls: '', face: 'default', topIcon: 'lamp' });
+  var tripProLockMascotEl = document.getElementById('tripProLockMascot');
+  if (tripProLockMascotEl) tripProLockMascotEl.innerHTML = mascotSVG({ cls: 'v-gold', face: 'default', topIcon: 'lamp' });
 
   // ---- Konto ----
   var vehicleSelect = document.getElementById('acctVehicle');
