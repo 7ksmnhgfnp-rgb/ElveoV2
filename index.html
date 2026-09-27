@@ -563,24 +563,28 @@
   .guide-next { flex: 1; border: none; background: var(--teal); color: #fff; border-radius: var(--radius-sm); padding: 12px; font-size: 13.5px; font-weight: 600; cursor: pointer; }
 
   /* Karte */
-  .map-card { position: relative; background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; height: 300px; z-index: 0; }
+  .map-card { background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; height: 300px; z-index: 0; }
   .map-card .leaflet-container { background: var(--surface-sunken); font-family: inherit; }
-  .map-card .leaflet-tile-pane { filter: grayscale(0.45) saturate(1.05) brightness(1.06) contrast(0.96) hue-rotate(6deg); }
-  .map-card .leaflet-control-attribution { font-size: 9px; }
   .leaflet-pin-wrap { background: none; border: none; }
   .leaflet-pin { position: relative; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
-  .leaflet-pin .lp-box { width: 26px; height: 26px; border-radius: 8px; background: var(--ink-soft); border: 2px solid var(--surface); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(19, 36, 32, 0.28); }
+  .leaflet-pin .lp-box { width: 24px; height: 24px; border-radius: 7px; background: var(--ink-soft); border: 2px solid var(--surface); display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.25); }
   .leaflet-pin.on .lp-box { background: var(--teal); }
   .leaflet-pin.sel .lp-box { outline: 3px solid var(--amber); outline-offset: 1px; }
-  .leaflet-pin .lp-box svg { width: 14px; height: 14px; fill: #fff; }
-  .leaflet-pin .lp-label { margin-top: 3px; font-size: 9.5px; font-weight: 700; color: var(--ink); background: var(--glass-bg-strong); padding: 1px 5px; border-radius: 5px; white-space: nowrap; box-shadow: 0 1px 3px rgba(19, 36, 32, 0.14); }
-  .leaflet-pin .lp-badge { position: absolute; top: -6px; right: -3px; width: 15px; height: 15px; border-radius: 50%; background: var(--amber); color: #fff; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 1.5px solid var(--surface); box-shadow: 0 1px 3px rgba(19, 36, 32, 0.2); }
-  .map-me-wrap { display: flex; flex-direction: column; align-items: center; pointer-events: none; transform: translate(-50%, -50%); }
-  .map-me-wrap .mm { width: 34px; height: 34px; filter: drop-shadow(0 2px 6px rgba(19, 36, 32, 0.3)); }
-  .map-me-wrap .map-me-label { margin-top: 3px; font-size: 9.5px; font-weight: 700; color: var(--ink); background: var(--glass-bg-strong); padding: 1px 6px; border-radius: 5px; white-space: nowrap; }
-  .karte-ring { stroke: var(--ink-soft) !important; stroke-opacity: .5 !important; }
-  .map-ring-lbl-wrap { transform: translate(-50%, -50%); }
-  .map-lbl { font-size: 10px; font-weight: 700; color: var(--ink-soft); background: var(--glass-bg-strong); padding: 1px 6px; border-radius: 5px; white-space: nowrap; }
+  .leaflet-pin .lp-box svg { width: 13px; height: 13px; fill: var(--bg); }
+  .leaflet-pin .lp-label { margin-top: 2px; font-size: 9px; font-weight: 600; color: var(--ink); background: var(--surface-sunken); padding: 0 3px; border-radius: 4px; white-space: nowrap; }
+  .leaflet-pin .lp-box-wrap { position: relative; }
+  .leaflet-pin .lp-badge { position: absolute; top: -6px; right: -6px; width: 13px; height: 13px; border-radius: 50%; background: var(--amber); color: #fff; font-size: 8px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 1.5px solid var(--surface); }
+  .leaflet-me-icon { width: 34px !important; height: 34px !important; }
+  .leaflet-me-icon .mm { width: 100%; height: 100%; }
+  .map-bg { fill: var(--surface-sunken); }
+  .map-park { fill: var(--teal-tint); }
+  .map-water { fill: none; stroke: var(--teal-tint-line); stroke-width: 16; stroke-linecap: round; }
+  .map-road { fill: none; stroke: var(--line); stroke-width: 6; stroke-linecap: round; }
+  .map-road.minor { stroke-width: 3.5; }
+  .map-ring { fill: none; stroke: var(--ink-soft); stroke-opacity: .35; stroke-dasharray: 3 4; }
+  .map-lbl { font-size: 9px; fill: var(--ink-soft); }
+  .map-me-ring { fill: var(--amber); fill-opacity: .22; }
+  .map-me { fill: var(--amber); stroke: #fff; stroke-width: 2.5; }
   .mascot-bob { transform-box: fill-box; transform-origin: 50% 50%; animation: mbob 2.8s ease-in-out infinite; }
   .pin { cursor: pointer; }
   .pin rect { fill: var(--ink-soft); stroke: var(--surface); stroke-width: 2; }
@@ -1764,6 +1768,7 @@
     document.getElementById('headerAvatar').classList.toggle('show', key === 'home');
     moveTabIndicator();
     if (key === 'home') renderHomeTeaser();
+    if (key === 'karte' && typeof ensureKarteMap === 'function') { ensureKarteMap(); setTimeout(function () { if (karteMap) karteMap.invalidateSize(); }, 60); }
     window.scrollTo({ top: 0 });
   }
   var tabIndicator = document.getElementById('tabIndicator'), tabIndicatorReady = false, tabIndicatorLeft = 0;
@@ -2887,18 +2892,20 @@
     if (typeof renderResults === 'function') renderResults();
   }
 
-  // Zeigt den aktuellen Standort über der Karte an: immer als Ortsname
-  // (nächstliegender Ort per Reverse-Geocoding), nie als reine Koordinaten.
+  // Zeigt den aktuellen Standort über der Karte an (Adresse per Reverse-Geocoding,
+  // Fallback auf Koordinaten falls der Dienst nicht erreichbar ist).
   function showCurrentLocation(lat, lng, approx) {
     var el = document.getElementById('mapCurrentLocation');
     if (!el) return;
+    var coordTxt = lat.toFixed(3) + ', ' + lng.toFixed(3);
+    el.textContent = (approx ? 'Angenommener Standort: ' : 'Standort: ') + coordTxt;
     fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + lat + '&longitude=' + lng + '&localityLanguage=de')
       .then(function (r) { if (!r.ok) throw new Error('geocode failed'); return r.json(); })
       .then(function (d) {
         var place = d.city || d.locality || d.principalSubdivision;
-        if (place) el.textContent = (approx ? 'In der Nähe von ' : '') + place;
+        if (place) el.textContent = (approx ? 'Angenommener Standort: ' : 'Standort: ') + place;
       })
-      .catch(function () { /* Ortsname bleibt wie zuletzt angezeigt, keine Koordinaten anzeigen */ });
+      .catch(function () { /* Koordinaten bleiben als Anzeige stehen */ });
   }
 
   function loadRealStations() {
@@ -2932,76 +2939,24 @@
     var dLng = (s.km * Math.sin(s.bearingRad)) / (111.32 * Math.cos(toRad(userLoc.lat)) || 1);
     return { lat: userLoc.lat + dLat, lng: userLoc.lng + dLng };
   }
-  // Echtes Kartenmaterial (OpenStreetMap via Leaflet), aber im hellen, ruhigen
-  // Elveo-Look eingefärbt: Standard-OpenStreetMap-Kacheln (kein API-Key nötig) +
-  // Farbfilter, eigene Pins/Maskottchen, gestrichelte Distanzringe mit Label.
-  var karteMap = null, karteMarkers = [], karteUserMarker = null, karteRingCircles = [], karteRingLabels = [];
-  function destPoint(lat, lng, bearingRad, km) {
-    var dLat = (km * Math.cos(bearingRad)) / 111.32;
-    var dLng = (km * Math.sin(bearingRad)) / (111.32 * Math.cos(toRad(lat)) || 1);
-    return { lat: lat + dLat, lng: lng + dLng };
-  }
+  var karteMap = null, karteMarkers = [], karteUserMarker = null, karteRadiusCircle = null;
   function ensureKarteMap() {
     if (karteMap || typeof L === 'undefined') return karteMap;
     var container = document.getElementById('mapCard');
     if (!container) return null;
-    karteMap = L.map(container, { attributionControl: true, zoomControl: true }).setView([userLoc.lat, userLoc.lng], 12);
+    karteMap = L.map(container, { attributionControl: true }).setView([userLoc.lat, userLoc.lng], 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>-Mitwirkende'
     }).addTo(karteMap);
     var meIcon = L.divIcon({
       className: 'leaflet-me-icon',
-      html: '<div class="map-me-wrap"><svg viewBox="0 0 96 96" class="mm"><g class="mascot-bob">' + mascotInner({ face: 'default' }) + '</g></svg><span class="map-me-label">Du</span></div>',
-      iconSize: [0, 0]
+      html: '<svg viewBox="0 0 96 96" class="mm"><g class="mascot-bob">' + mascotInner({ face: 'default' }) + '</g></svg>',
+      iconSize: [34, 34], iconAnchor: [17, 17]
     });
     karteUserMarker = L.marker([userLoc.lat, userLoc.lng], { icon: meIcon, zIndexOffset: 1000, interactive: false }).addTo(karteMap);
+    karteRadiusCircle = L.circle([userLoc.lat, userLoc.lng], { radius: 15000, color: '#0E6E63', weight: 1.5, fillColor: '#0E6E63', fillOpacity: 0.06 }).addTo(karteMap);
     return karteMap;
-  }
-  function updateKarteRings(radiusKm) {
-    if (!karteMap) return;
-    karteRingCircles.forEach(function (c) { karteMap.removeLayer(c); });
-    karteRingLabels.forEach(function (m) { karteMap.removeLayer(m); });
-    karteRingCircles = []; karteRingLabels = [];
-    [radiusKm / 2, radiusKm].forEach(function (r) {
-      var circle = L.circle([userLoc.lat, userLoc.lng], {
-        radius: r * 1000, className: 'karte-ring',
-        weight: 1.3, opacity: .55, dashArray: '3 5', fill: false
-      }).addTo(karteMap);
-      karteRingCircles.push(circle);
-      var lp = destPoint(userLoc.lat, userLoc.lng, Math.PI / 4, r);
-      var lbl = L.marker([lp.lat, lp.lng], {
-        icon: L.divIcon({ className: 'map-ring-lbl-wrap', html: '<span class="map-lbl">' + fmtRingKm(r) + '</span>', iconSize: [0, 0] }),
-        interactive: false, zIndexOffset: 400
-      }).addTo(karteMap);
-      karteRingLabels.push(lbl);
-    });
-  }
-  function renderKarteMap(items, cheapIdx, radiusKm) {
-    var map = ensureKarteMap();
-    if (!map) return;
-    karteUserMarker.setLatLng([userLoc.lat, userLoc.lng]);
-    updateKarteRings(radiusKm);
-    karteMarkers.forEach(function (mk) { map.removeLayer(mk); });
-    karteMarkers = items.map(function (o) {
-      var ll = stationLatLng(o.s);
-      var label = o.s.name || cpoName(o.s.cpo);
-      var cls = 'leaflet-pin' + (state.favCpos[o.s.cpo] ? ' on' : '') + (o.i === state.mapSel ? ' sel' : '');
-      var badge = cheapIdx[o.i] ? '<span class="lp-badge">€</span>' : '';
-      var html = '<div class="' + cls + '">' + badge +
-        '<div class="lp-box"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/></svg></div>' +
-        '<span class="lp-label">' + esc(label) + '</span></div>';
-      var icon = L.divIcon({ className: 'leaflet-pin-wrap', html: html, iconSize: [70, 46], iconAnchor: [35, 30] });
-      var mk = L.marker([ll.lat, ll.lng], { icon: icon, zIndexOffset: o.i === state.mapSel ? 500 : 0 }).addTo(map);
-      mk.on('click', function () { state.mapSel = o.i; renderKarte(); });
-      return mk;
-    });
-    if (!state.karteMapFitted) {
-      var pts = [[userLoc.lat, userLoc.lng]].concat(items.slice(0, 20).map(function (o) { var ll = stationLatLng(o.s); return [ll.lat, ll.lng]; }));
-      if (pts.length > 1) map.fitBounds(pts, { padding: [24, 24], maxZoom: 15 });
-      state.karteMapFitted = true;
-    }
-    setTimeout(function () { map.invalidateSize(); }, 0);
   }
 
   // Nächstgelegene Ladesäulen (je Betreiber die nächste), Beispieldaten
@@ -3040,7 +2995,31 @@
       .sort(function (a, b) { return cpoMinPrice(a.s.cpo) - cpoMinPrice(b.s.cpo); })
       .slice(0, 3).forEach(function (o) { cheapIdx[o.i] = true; });
 
-    renderKarteMap(items, cheapIdx, radiusKm);
+    var map = ensureKarteMap();
+    if (map) {
+      karteUserMarker.setLatLng([userLoc.lat, userLoc.lng]);
+      karteRadiusCircle.setLatLng([userLoc.lat, userLoc.lng]).setRadius(radiusKm * 1000);
+      karteMarkers.forEach(function (mk) { map.removeLayer(mk); });
+      karteMarkers = items.map(function (o) {
+        var ll = stationLatLng(o.s);
+        var label = o.s.name || cpoName(o.s.cpo);
+        var cls = 'leaflet-pin' + (state.favCpos[o.s.cpo] ? ' on' : '') + (o.i === state.mapSel ? ' sel' : '');
+        var badge = cheapIdx[o.i] ? '<span class="lp-badge">€</span>' : '';
+        var html = '<div class="' + cls + '">' +
+          '<div class="lp-box-wrap"><div class="lp-box"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/></svg></div>' + badge + '</div>' +
+          '<span class="lp-label">' + esc(label) + '</span></div>';
+        var icon = L.divIcon({ className: 'leaflet-pin-wrap', html: html, iconSize: [70, 46], iconAnchor: [35, 30] });
+        var mk = L.marker([ll.lat, ll.lng], { icon: icon, zIndexOffset: o.i === state.mapSel ? 500 : 0 }).addTo(map);
+        mk.on('click', function () { state.mapSel = o.i; renderKarte(); });
+        return mk;
+      });
+      if (!state.karteMapFitted) {
+        var pts = [[userLoc.lat, userLoc.lng]].concat(items.slice(0, 20).map(function (o) { var ll = stationLatLng(o.s); return [ll.lat, ll.lng]; }));
+        if (pts.length > 1) map.fitBounds(pts, { padding: [24, 24], maxZoom: 15 });
+        state.karteMapFitted = true;
+      }
+      setTimeout(function () { map.invalidateSize(); }, 0);
+    }
 
     document.getElementById('mapCountHint').textContent = items.length + (items.length === 1 ? ' Säule' : ' Säulen') + (mapLockedCount ? ' · ' + (allItems.length) + ' in der Umgebung' : '');
     var list = document.getElementById('mapList');
@@ -3088,6 +3067,9 @@
 
     var showMoreBtn = document.getElementById('mapShowMoreBtn');
     if (showMoreBtn) showMoreBtn.addEventListener('click', function (e) { e.stopPropagation(); state.mapListLimit += 10; renderKarte(); });
+    document.querySelectorAll('#mapCard .pin').forEach(function (g) {
+      g.addEventListener('click', function () { state.mapSel = parseInt(g.getAttribute('data-i'), 10); renderKarte(); });
+    });
     document.querySelectorAll('#mapList .map-item').forEach(function (el) {
       el.addEventListener('click', function () { state.mapSel = parseInt(el.getAttribute('data-i'), 10); renderKarte(); });
     });
