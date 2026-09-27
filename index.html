@@ -572,7 +572,7 @@
   .leaflet-pin.sel .lp-box { outline: 3px solid var(--amber); outline-offset: 1px; }
   .leaflet-pin .lp-box svg { width: 13px; height: 13px; fill: var(--bg); }
   .leaflet-pin .lp-label { margin-top: 2px; font-size: 9px; font-weight: 600; color: var(--ink); background: var(--surface-sunken); padding: 0 3px; border-radius: 4px; white-space: nowrap; }
-  .leaflet-pin .lp-badge { position: absolute; top: -7px; right: -7px; width: 13px; height: 13px; border-radius: 50%; background: var(--amber); color: #fff; font-size: 8px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 1.5px solid var(--surface); z-index: 1; }
+  .leaflet-pin .lp-badge { position: absolute; top: -7px; right: -7px; width: 14px; height: 14px; line-height: 1; border-radius: 50%; background: var(--amber); color: #fff; font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 8.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0; border: 1.5px solid var(--surface); z-index: 1; }
   .leaflet-me-icon { width: 34px !important; height: 34px !important; }
   .leaflet-me-icon .mm { width: 100%; height: 100%; }
   .map-bg { fill: var(--surface-sunken); }
@@ -2935,7 +2935,7 @@
     var dLng = (s.km * Math.sin(s.bearingRad)) / (111.32 * Math.cos(toRad(userLoc.lat)) || 1);
     return { lat: userLoc.lat + dLat, lng: userLoc.lng + dLng };
   }
-  var karteMap = null, karteMarkers = [], karteUserMarker = null, karteRadiusCircle = null;
+  var karteMap = null, karteMarkers = [], karteUserMarker = null, karteRadiusCircle = null, karteLastCenteredSel = null;
   function ensureKarteMap() {
     if (karteMap || typeof L === 'undefined') return karteMap;
     var container = document.getElementById('mapCard');
@@ -3013,6 +3013,16 @@
         var pts = [[userLoc.lat, userLoc.lng]].concat(items.slice(0, 20).map(function (o) { var ll = stationLatLng(o.s); return [ll.lat, ll.lng]; }));
         if (pts.length > 1) map.fitBounds(pts, { padding: [24, 24], maxZoom: 15 });
         state.karteMapFitted = true;
+      }
+      if (state.mapSel != null && state.mapSel !== karteLastCenteredSel) {
+        var selItem = items.filter(function (o) { return o.i === state.mapSel; })[0];
+        if (selItem) {
+          var sll = stationLatLng(selItem.s);
+          map.setView([sll.lat, sll.lng], Math.max(map.getZoom(), 15), { animate: true });
+        }
+        karteLastCenteredSel = state.mapSel;
+      } else if (state.mapSel == null) {
+        karteLastCenteredSel = null;
       }
       setTimeout(function () { map.invalidateSize(); }, 0);
     }
