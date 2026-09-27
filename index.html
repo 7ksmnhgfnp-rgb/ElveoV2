@@ -11,6 +11,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Elveo">
 <title>Elveo</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 <style>
   :root {
     --bg: #E8ECEA;
@@ -390,6 +392,9 @@
   .mascot.cheer .m-mouth { display: none; }
   .mascot.cheer .m-mouth-big { display: block; }
   .mascot.wave .arm { transform-box: fill-box; transform-origin: 50% 12%; animation: mwave 1.1s ease-in-out infinite; }
+  .mascot.dance svg { animation: mdance 1.4s ease-in-out infinite; transform-origin: 50% 88%; }
+  .m-wink-open { animation: winkOpen 3.6s ease-in-out infinite; }
+  .m-wink-closed { opacity: 0; animation: winkClosed 3.6s ease-in-out infinite; }
   .mascot.v-green .m-body { fill: #E3F1EE; stroke: #0E6E63; }
   .mascot.v-green .m-limb, .mascot.v-green .m-stem { fill: #0E6E63; stroke: #0E6E63; }
   .mascot.v-blue .m-body { fill: #DCEEF8; stroke: #1C7FB0; }
@@ -501,11 +506,22 @@
   .m-eye-closed { fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; }
   .m-z { fill: var(--ink-soft); font-family: -apple-system, sans-serif; font-weight: 700; }
   @keyframes mbob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  @keyframes mdance {
+    0% { transform: translateY(0) rotate(0deg); }
+    15% { transform: translateY(-4px) rotate(-9deg); }
+    30% { transform: translateY(0) rotate(7deg); }
+    45% { transform: translateY(-4px) rotate(-7deg); }
+    60% { transform: translateY(0) rotate(9deg); }
+    75% { transform: translateY(-4px) rotate(-5deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+  }
+  @keyframes winkOpen { 0%, 82%, 92%, 100% { opacity: 1; } 86%, 89% { opacity: 0; } }
+  @keyframes winkClosed { 0%, 82%, 92%, 100% { opacity: 0; } 86%, 89% { opacity: 1; } }
   @keyframes mblink { 0%, 92%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.1); } }
   @keyframes mwave { 0%, 100% { transform: rotate(0deg); } 20% { transform: rotate(-108deg); } 40% { transform: rotate(-84deg); } 60% { transform: rotate(-108deg); } 80% { transform: rotate(-84deg); } }
   @keyframes mtwinkle { 0%, 100% { transform: scale(0.7); opacity: .6; } 50% { transform: scale(1.15); opacity: 1; } }
   @keyframes bpop { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
-  @media (prefers-reduced-motion: reduce) { .mascot svg, .m-eye, .m-spark, .mascot.wave .arm, .bubble.pop { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .mascot svg, .m-eye, .m-spark, .mascot.wave .arm, .m-wink-open, .m-wink-closed, .mascot.dance svg, .bubble.pop { animation: none; } }
   .bubble { position: relative; flex: 1; min-height: 116px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 13px 14px; }
   .bubble::before { content: ""; position: absolute; left: -7px; bottom: 24px; width: 12px; height: 12px; background: var(--surface); border-left: 1px solid var(--line); border-bottom: 1px solid var(--line); transform: rotate(45deg); }
   .bubble.pop { animation: bpop 0.3s ease; }
@@ -547,8 +563,18 @@
   .guide-next { flex: 1; border: none; background: var(--teal); color: #fff; border-radius: var(--radius-sm); padding: 12px; font-size: 13.5px; font-weight: 600; cursor: pointer; }
 
   /* Karte */
-  .map-card { background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
-  .map-card svg { display: block; width: 100%; height: auto; }
+  .map-card { background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; height: 300px; z-index: 0; }
+  .map-card .leaflet-container { background: var(--surface-sunken); font-family: inherit; }
+  .leaflet-pin-wrap { background: none; border: none; }
+  .leaflet-pin { position: relative; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+  .leaflet-pin .lp-box { width: 24px; height: 24px; border-radius: 7px; background: var(--ink-soft); border: 2px solid var(--surface); display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.25); }
+  .leaflet-pin.on .lp-box { background: var(--teal); }
+  .leaflet-pin.sel .lp-box { outline: 3px solid var(--amber); outline-offset: 1px; }
+  .leaflet-pin .lp-box svg { width: 13px; height: 13px; fill: var(--bg); }
+  .leaflet-pin .lp-label { margin-top: 2px; font-size: 9px; font-weight: 600; color: var(--ink); background: var(--surface-sunken); padding: 0 3px; border-radius: 4px; white-space: nowrap; }
+  .leaflet-pin .lp-badge { position: absolute; top: -6px; right: -2px; width: 13px; height: 13px; border-radius: 50%; background: var(--amber); color: #fff; font-size: 8px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 1.5px solid var(--surface); }
+  .leaflet-me-icon { width: 34px !important; height: 34px !important; }
+  .leaflet-me-icon .mm { width: 100%; height: 100%; }
   .map-bg { fill: var(--surface-sunken); }
   .map-park { fill: var(--teal-tint); }
   .map-water { fill: none; stroke: var(--teal-tint-line); stroke-width: 16; stroke-linecap: round; }
@@ -1662,6 +1688,7 @@
     mapFilter: 'all',
     mapSel: null,
     mapListLimit: 10,
+    karteMapFitted: false,
     modalTariffId: null,
     modalCpoId: null,
     tarifeFilter: "all",
@@ -2801,6 +2828,7 @@
 
   // ---- Karte (schematische Beispielkarte) ----
   var MAP_CX = 200, MAP_CY = 150, MAP_MAX_RADIUS_PX = 140;
+  var userLoc = { lat: 51.1657, lng: 10.4515 };
   // Fallback-Demodaten (fest x/y), falls data/stations.json (noch) nicht geladen werden kann.
   // Werden unten in km + Richtung umgerechnet, damit dieselbe Render-Logik wie bei echten Daten greift.
   var mapStationsFallbackXY = [
@@ -2841,6 +2869,7 @@
   var dynamicCpoNames = {};
 
   function applyRealStations(userLat, userLng, list) {
+    userLoc = { lat: userLat, lng: userLng };
     mapStations = list.map(function (s) {
       var km = haversineKm(userLat, userLng, s.lat, s.lng);
       var bearingRad = toRad(bearingDeg(userLat, userLng, s.lat, s.lng));
@@ -2853,6 +2882,8 @@
       state.quickCpo = nearest.cpo; state.cpo = nearest.cpo;
       if (typeof cpoSelect !== 'undefined' && cpoSelect) cpoSelect.value = nearest.cpo;
     }
+    if (karteMap) karteMap.setView([userLat, userLng], karteMap.getZoom() < 12 ? 13 : karteMap.getZoom());
+    state.karteMapFitted = false;
     if (typeof renderKarte === 'function') renderKarte();
     if (typeof renderSaeulen === 'function') renderSaeulen();
     if (typeof renderQuickFinder === 'function') renderQuickFinder();
@@ -2899,19 +2930,31 @@
   function fmtRingKm(v) {
     return (Math.round(v * 10) / 10).toLocaleString('de-DE') + ' km';
   }
-  function buildMapBase(radiusKm) {
-    var r1 = MAP_MAX_RADIUS_PX * 0.5, r2 = MAP_MAX_RADIUS_PX;
-    return '<rect class="map-bg" width="400" height="300"/>' +
-    '<path class="map-water" d="M-10 268 C 70 238, 140 298, 230 268 S 350 234, 410 256"/>' +
-    '<rect class="map-park" x="18" y="118" width="70" height="44" rx="14"/>' +
-    '<rect class="map-park" x="288" y="112" width="60" height="36" rx="12"/>' +
-    '<path class="map-road minor" d="M120 -10 V310 M300 -10 V310 M-10 90 H410 M-10 210 H410"/>' +
-    '<path class="map-road" d="M-10 150 H410 M200 -10 V310 M-10 56 C 120 36, 280 116, 410 96"/>' +
-    '<circle class="map-ring" cx="200" cy="150" r="' + r1 + '"/><circle class="map-ring" cx="200" cy="150" r="' + r2 + '"/>' +
-    '<text class="map-lbl" x="' + (200 + r1 + 3) + '" y="146">' + fmtRingKm(radiusKm / 2) + '</text><text class="map-lbl" x="' + (200 + r2 - 30) + '" y="146">' + fmtRingKm(radiusKm) + '</text>' +
-    '<circle class="map-me-ring" cx="200" cy="150" r="17"/>' +
-    '<g transform="translate(182,124) scale(0.38)"><g class="mascot-bob">' + mascotInner({ face: 'default' }) + '</g></g>' +
-    '<text class="map-lbl" x="200" y="179" text-anchor="middle">Du</text>';
+  // Echte Koordinaten je Station: aus stations.json, sonst aus km/Richtung um userLoc angenähert.
+  function stationLatLng(s) {
+    if (s.lat != null && s.lng != null) return { lat: s.lat, lng: s.lng };
+    var dLat = (s.km * Math.cos(s.bearingRad)) / 111.32;
+    var dLng = (s.km * Math.sin(s.bearingRad)) / (111.32 * Math.cos(toRad(userLoc.lat)) || 1);
+    return { lat: userLoc.lat + dLat, lng: userLoc.lng + dLng };
+  }
+  var karteMap = null, karteMarkers = [], karteUserMarker = null, karteRadiusCircle = null;
+  function ensureKarteMap() {
+    if (karteMap || typeof L === 'undefined') return karteMap;
+    var container = document.getElementById('mapCard');
+    if (!container) return null;
+    karteMap = L.map(container, { attributionControl: true }).setView([userLoc.lat, userLoc.lng], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>-Mitwirkende'
+    }).addTo(karteMap);
+    var meIcon = L.divIcon({
+      className: 'leaflet-me-icon',
+      html: '<svg viewBox="0 0 96 96" class="mm"><g class="mascot-bob">' + mascotInner({ face: 'default' }) + '</g></svg>',
+      iconSize: [34, 34], iconAnchor: [17, 17]
+    });
+    karteUserMarker = L.marker([userLoc.lat, userLoc.lng], { icon: meIcon, zIndexOffset: 1000, interactive: false }).addTo(karteMap);
+    karteRadiusCircle = L.circle([userLoc.lat, userLoc.lng], { radius: 15000, color: '#0E6E63', weight: 1.5, fillColor: '#0E6E63', fillOpacity: 0.06 }).addTo(karteMap);
+    return karteMap;
   }
 
   // Nächstgelegene Ladesäulen (je Betreiber die nächste), Beispieldaten
@@ -2928,7 +2971,6 @@
     var radiusKm = parseFloat(document.getElementById('mapRadiusSlider').value) || 15;
     document.getElementById('mapRadiusValue').textContent = 'bis ' + radiusKm + ' km';
     var minKw = parseFloat(document.getElementById('mapKwSelect').value) || 0;
-    var pxPerKm = MAP_MAX_RADIUS_PX / radiusKm;
 
     var allItems = mapStations.map(function (m, i) { return { s: m, i: i }; })
       .filter(function (o) { return state.mapFilter === 'mine' ? !!state.favCpos[o.s.cpo] : true; })
@@ -2951,15 +2993,31 @@
       .sort(function (a, b) { return cpoMinPrice(a.s.cpo) - cpoMinPrice(b.s.cpo); })
       .slice(0, 3).forEach(function (o) { cheapIdx[o.i] = true; });
 
-    var pins = items.slice().sort(function (a, b) { return (a.i === state.mapSel) - (b.i === state.mapSel); }).map(function (o) {
-      var r = Math.min(o.s.km * pxPerKm, MAP_MAX_RADIUS_PX);
-      var x = MAP_CX + r * Math.sin(o.s.bearingRad), y = MAP_CY - r * Math.cos(o.s.bearingRad);
-      var label = o.s.name || cpoName(o.s.cpo);
-      var cls = 'pin' + (state.favCpos[o.s.cpo] ? ' on' : '') + (o.i === state.mapSel ? ' sel' : '');
-      var badge = cheapIdx[o.i] ? '<g class="pin-badge" transform="translate(9,-9)"><circle r="6.5"/><text y="2.5" text-anchor="middle">€</text></g>' : '';
-      return '<g class="' + cls + '" data-i="' + o.i + '" transform="translate(' + x + ',' + y + ')"><rect x="-12" y="-12" width="24" height="24" rx="7"/><path transform="translate(-6.5,-6.5) scale(0.54)" d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/><text y="25" text-anchor="middle">' + esc(label) + '</text>' + badge + '</g>';
-    }).join('');
-    document.getElementById('mapCard').innerHTML = '<svg viewBox="0 0 400 300" role="img" aria-label="Karte mit Ladesäulen">' + buildMapBase(radiusKm) + pins + '</svg>';
+    var map = ensureKarteMap();
+    if (map) {
+      karteUserMarker.setLatLng([userLoc.lat, userLoc.lng]);
+      karteRadiusCircle.setLatLng([userLoc.lat, userLoc.lng]).setRadius(radiusKm * 1000);
+      karteMarkers.forEach(function (mk) { map.removeLayer(mk); });
+      karteMarkers = items.map(function (o) {
+        var ll = stationLatLng(o.s);
+        var label = o.s.name || cpoName(o.s.cpo);
+        var cls = 'leaflet-pin' + (state.favCpos[o.s.cpo] ? ' on' : '') + (o.i === state.mapSel ? ' sel' : '');
+        var badge = cheapIdx[o.i] ? '<span class="lp-badge">€</span>' : '';
+        var html = '<div class="' + cls + '">' + badge +
+          '<div class="lp-box"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/></svg></div>' +
+          '<span class="lp-label">' + esc(label) + '</span></div>';
+        var icon = L.divIcon({ className: 'leaflet-pin-wrap', html: html, iconSize: [70, 46], iconAnchor: [35, 30] });
+        var mk = L.marker([ll.lat, ll.lng], { icon: icon, zIndexOffset: o.i === state.mapSel ? 500 : 0 }).addTo(map);
+        mk.on('click', function () { state.mapSel = o.i; renderKarte(); });
+        return mk;
+      });
+      if (!state.karteMapFitted) {
+        var pts = [[userLoc.lat, userLoc.lng]].concat(items.slice(0, 20).map(function (o) { var ll = stationLatLng(o.s); return [ll.lat, ll.lng]; }));
+        if (pts.length > 1) map.fitBounds(pts, { padding: [24, 24], maxZoom: 15 });
+        state.karteMapFitted = true;
+      }
+      setTimeout(function () { map.invalidateSize(); }, 0);
+    }
 
     document.getElementById('mapCountHint').textContent = items.length + (items.length === 1 ? ' Säule' : ' Säulen') + (mapLockedCount ? ' · ' + (allItems.length) + ' in der Umgebung' : '');
     var list = document.getElementById('mapList');
@@ -3031,6 +3089,7 @@
     chip.addEventListener('click', function () {
       state.mapFilter = chip.getAttribute('data-filter');
       state.mapListLimit = 10;
+      state.karteMapFitted = false;
       mapChips.forEach(function (c) { c.classList.toggle('on', c === chip); });
       renderKarte();
     });
@@ -3156,7 +3215,7 @@
     { id: 1, cls: 'v-green', face: 'default' },
     { id: 2, cls: 'v-blue wave', face: 'default' },
     { id: 3, cls: 'v-purple', face: 'wink' },
-    { id: 4, cls: 'v-coral', face: 'bolteye' },
+    { id: 4, cls: 'v-coral', face: 'hearteyes' },
     { id: 5, cls: 'v-gold', face: 'default', pro: true }
   ];
   function mascotFaceParts(face, topIcon) {
@@ -3184,9 +3243,18 @@
     if (face === 'wink') {
       return '<path class="m-stem" d="M48 28V15"/>' + icon +
         '<circle class="m-eye" cx="40" cy="49" r="3.6"/>' +
-        '<path class="m-eye-closed" d="M52 49 Q56 45.5 60 49"/>' +
+        '<circle class="m-eye m-wink-open" cx="56" cy="49" r="3.6"/>' +
+        '<path class="m-eye-closed m-wink-closed" d="M52 49 Q56 45.5 60 49"/>' +
         '<circle class="m-cheek" cx="33" cy="58" r="3.2"/><circle class="m-cheek" cx="63" cy="58" r="3.2"/>' +
         '<path class="m-mouth" d="M41 55 Q48 63 58 53"/>';
+    }
+    if (face === 'hearteyes') {
+      return '<path class="m-stem" d="M48 28V15"/>' + icon +
+        '<path fill="#E4483A" transform="translate(34.6,43.6) scale(0.37)" d="M12 21s-6.7-4.35-9.5-8.5C.5 9.5 2 6 5.5 6c2 0 3.5 1.5 4.5 3 1-1.5 2.5-3 4.5-3 3.5 0 5 3.5 3 6.5C18.7 16.65 12 21 12 21z"/>' +
+        '<path fill="#E4483A" transform="translate(50.6,43.6) scale(0.37)" d="M12 21s-6.7-4.35-9.5-8.5C.5 9.5 2 6 5.5 6c2 0 3.5 1.5 4.5 3 1-1.5 2.5-3 4.5-3 3.5 0 5 3.5 3 6.5C18.7 16.65 12 21 12 21z"/>' +
+        '<circle class="m-cheek" cx="33" cy="58" r="3.2"/><circle class="m-cheek" cx="63" cy="58" r="3.2"/>' +
+        '<path class="m-mouth" d="M42 56 Q48 62 54 56"/>' +
+        '<path class="m-mouth-big" d="M41 55 Q48 67 55 55Z"/>';
     }
     if (face === 'bolteye') {
       return '<path class="m-stem" d="M48 28V15"/>' + icon +
