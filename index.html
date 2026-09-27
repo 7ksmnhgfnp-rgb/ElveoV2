@@ -565,7 +565,7 @@
   /* Karte */
   .map-card { position: relative; background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; height: 300px; z-index: 0; }
   .map-card .leaflet-container { background: var(--surface-sunken); font-family: inherit; }
-  .map-card .leaflet-tile-pane { filter: saturate(0.82) brightness(1.03) hue-rotate(4deg); }
+  .map-card .leaflet-tile-pane { filter: grayscale(0.45) saturate(1.05) brightness(1.06) contrast(0.96) hue-rotate(6deg); }
   .map-card .leaflet-control-attribution { font-size: 9px; }
   .leaflet-pin-wrap { background: none; border: none; }
   .leaflet-pin { position: relative; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
@@ -2933,7 +2933,7 @@
     return { lat: userLoc.lat + dLat, lng: userLoc.lng + dLng };
   }
   // Echtes Kartenmaterial (OpenStreetMap via Leaflet), aber im hellen, ruhigen
-  // Elveo-Look eingefärbt: dezente CARTO-Positron-Kacheln (Datenbasis OSM) +
+  // Elveo-Look eingefärbt: Standard-OpenStreetMap-Kacheln (kein API-Key nötig) +
   // Farbfilter, eigene Pins/Maskottchen, gestrichelte Distanzringe mit Label.
   var karteMap = null, karteMarkers = [], karteUserMarker = null, karteRingCircles = [], karteRingLabels = [];
   function destPoint(lat, lng, bearingRad, km) {
@@ -2946,9 +2946,9 @@
     var container = document.getElementById('mapCard');
     if (!container) return null;
     karteMap = L.map(container, { attributionControl: true, zoomControl: true }).setView([userLoc.lat, userLoc.lng], 12);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      maxZoom: 20, subdomains: 'abcd',
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>-Mitwirkende, Karte &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>-Mitwirkende'
     }).addTo(karteMap);
     var meIcon = L.divIcon({
       className: 'leaflet-me-icon',
