@@ -2890,20 +2890,18 @@
     if (typeof renderResults === 'function') renderResults();
   }
 
-  // Zeigt den aktuellen Standort über der Karte an (Adresse per Reverse-Geocoding,
-  // Fallback auf Koordinaten falls der Dienst nicht erreichbar ist).
+  // Zeigt den aktuellen Standort über der Karte an: immer als Ortsname
+  // (nächstliegender Ort per Reverse-Geocoding), nie als reine Koordinaten.
   function showCurrentLocation(lat, lng, approx) {
     var el = document.getElementById('mapCurrentLocation');
     if (!el) return;
-    var coordTxt = lat.toFixed(3) + ', ' + lng.toFixed(3);
-    el.textContent = (approx ? 'Angenommener Standort: ' : 'Standort: ') + coordTxt;
     fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + lat + '&longitude=' + lng + '&localityLanguage=de')
       .then(function (r) { if (!r.ok) throw new Error('geocode failed'); return r.json(); })
       .then(function (d) {
         var place = d.city || d.locality || d.principalSubdivision;
-        if (place) el.textContent = (approx ? 'Angenommener Standort: ' : 'Standort: ') + place;
+        if (place) el.textContent = (approx ? 'In der Nähe von ' : '') + place;
       })
-      .catch(function () { /* Koordinaten bleiben als Anzeige stehen */ });
+      .catch(function () { /* Ortsname bleibt wie zuletzt angezeigt, keine Koordinaten anzeigen */ });
   }
 
   function loadRealStations() {
