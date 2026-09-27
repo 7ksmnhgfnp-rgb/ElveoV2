@@ -390,6 +390,8 @@
   .mascot.cheer .m-mouth { display: none; }
   .mascot.cheer .m-mouth-big { display: block; }
   .mascot.wave .arm { transform-box: fill-box; transform-origin: 50% 12%; animation: mwave 1.1s ease-in-out infinite; }
+  .mascot.v-green .m-body { fill: #E3F1EE; stroke: #0E6E63; }
+  .mascot.v-green .m-limb, .mascot.v-green .m-stem { fill: #0E6E63; stroke: #0E6E63; }
   .mascot.v-blue .m-body { fill: #DCEEF8; stroke: #1C7FB0; }
   .mascot.v-blue .m-limb, .mascot.v-blue .m-stem { fill: #1C7FB0; stroke: #1C7FB0; }
   .mascot.v-amber .m-body { fill: #FBEBD2; stroke: #B8790E; }
@@ -412,6 +414,8 @@
   body.is-pro .mascot .m-bolt, body.is-pro .mascot .m-spark { fill: #0E6E63 !important; }
 
   /* Ausnahme: Profilbild-Auswahl behält ihre eigenen Volti-Farben, auch mit Elveo Pro */
+  body.is-pro .avatar-grid .mascot.v-green .m-body { fill: #E3F1EE !important; stroke: #0E6E63 !important; animation: none !important; }
+  body.is-pro .avatar-grid .mascot.v-green .m-limb, body.is-pro .avatar-grid .mascot.v-green .m-stem { fill: #0E6E63 !important; stroke: #0E6E63 !important; }
   body.is-pro .avatar-grid .mascot.v-blue .m-body { fill: #DCEEF8 !important; stroke: #1C7FB0 !important; animation: none !important; }
   body.is-pro .avatar-grid .mascot.v-blue .m-limb, body.is-pro .avatar-grid .mascot.v-blue .m-stem { fill: #1C7FB0 !important; stroke: #1C7FB0 !important; }
   body.is-pro .avatar-grid .mascot.v-amber .m-body { fill: #FBEBD2 !important; stroke: #B8790E !important; animation: none !important; }
@@ -480,6 +484,17 @@
   .pro-lock-text { font-size: 13px; color: var(--ink-soft); line-height: 1.5; max-width: 260px; }
   .pro-lock-text b { color: var(--ink); }
   .pro-lock-btn { border: 1px solid #B8860B; color: #8a660b; background: none; border-radius: 999px; padding: 8px 16px; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+  .map-pro-row {
+    display: flex; align-items: center; gap: 10px; margin-top: 10px; padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, rgba(245,214,123,0.32), rgba(184,134,11,0.12)), var(--surface);
+    border: 1px solid #E8C25A; cursor: pointer;
+  }
+  .map-pro-row .mp-mascot { width: 34px; height: 34px; flex-shrink: 0; }
+  .map-pro-row .mp-mascot .mascot { width: 100%; height: 100%; }
+  .map-pro-row .mp-text { font-size: 12.5px; color: var(--ink-soft); line-height: 1.4; }
+  .map-pro-row .mp-text b { color: var(--ink); }
+  .map-pro-row .mp-arrow { margin-left: auto; flex-shrink: 0; color: #8a660b; }
   .pro-ribbon { position: absolute; top: 3px; right: 3px; background: linear-gradient(135deg,#F5D67B,#B8860B); color: #3A2A05; font-size: 8px; font-weight: 800; padding: 2px 5px; border-radius: 6px; letter-spacing: 0.03em; }
   .avatar-opt { position: relative; }
   .avatar-opt.locked { opacity: 0.55; }
@@ -487,7 +502,7 @@
   .m-z { fill: var(--ink-soft); font-family: -apple-system, sans-serif; font-weight: 700; }
   @keyframes mbob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
   @keyframes mblink { 0%, 92%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.1); } }
-  @keyframes mwave { 0%, 100% { transform: rotate(0deg); } 30% { transform: rotate(-38deg); } 60% { transform: rotate(10deg); } }
+  @keyframes mwave { 0%, 100% { transform: rotate(0deg); } 20% { transform: rotate(-108deg); } 40% { transform: rotate(-84deg); } 60% { transform: rotate(-108deg); } 80% { transform: rotate(-84deg); } }
   @keyframes mtwinkle { 0%, 100% { transform: scale(0.7); opacity: .6; } 50% { transform: scale(1.15); opacity: 1; } }
   @keyframes bpop { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .mascot svg, .m-eye, .m-spark, .mascot.wave .arm, .bubble.pop { animation: none; } }
@@ -812,6 +827,19 @@
       <div id="quickPickWrap"></div>
       <div id="quickResultWrap"></div>
     </section>
+    <section id="adBannerSection">
+      <div class="ad-banner">
+        <span class="ad-tag">Anzeige</span>
+        <div class="ad-row">
+          <div class="ad-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="15" height="12" rx="2"/><path d="M16 10h3l3 3v3h-6z"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="17.5" cy="18.5" r="2"/></svg></div>
+          <div class="ad-body">
+            <div class="ad-title">Kfz-Versicherung fürs E-Auto vergleichen</div>
+            <div class="ad-text">Jetzt in 2 Minuten Tarife vergleichen und bis zu 30 % sparen. Beispielanzeige.</div>
+          </div>
+        </div>
+      </div>
+      <div class="pro-note">Mit Elveo Pro siehst du keine Werbung mehr.</div>
+    </section>
     <section>
       <p class="section-label">Rechner<span class="hint">Kosten & Ladezeit</span></p>
       <div class="quicklinks">
@@ -857,19 +885,6 @@
     <section>
       <p class="section-label">Deine Favoriten<span class="hint" id="favCountHint"></span></p>
       <div id="favList"></div>
-    </section>
-    <section id="adBannerSection">
-      <div class="ad-banner">
-        <span class="ad-tag">Anzeige</span>
-        <div class="ad-row">
-          <div class="ad-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="15" height="12" rx="2"/><path d="M16 10h3l3 3v3h-6z"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="17.5" cy="18.5" r="2"/></svg></div>
-          <div class="ad-body">
-            <div class="ad-title">Kfz-Versicherung fürs E-Auto vergleichen</div>
-            <div class="ad-text">Jetzt in 2 Minuten Tarife vergleichen und bis zu 30 % sparen. Beispielanzeige.</div>
-          </div>
-        </div>
-      </div>
-      <div class="pro-note">Mit Elveo Pro siehst du keine Werbung mehr.</div>
     </section>
     <footer class="foot-note">Tippe auf einen Tarif für Details. Favoriten und Besitzstatus verwaltest du im Tab „Tarife“, dort wählst du auch die Ladesäulen für den Schnellfinder.</footer>
   </div>
@@ -1210,7 +1225,6 @@
 
 
       <p class="section-label">In der Nähe<span class="hint" id="mapCountHint"></span></p>
-      <div class="pro-note" id="mapProNote" style="display:none; text-align:left; margin:-2px 0 10px;"></div>
       <div id="mapList"></div>
     </section>
     <section class="tips-card">
@@ -2948,15 +2962,6 @@
     document.getElementById('mapCard').innerHTML = '<svg viewBox="0 0 400 300" role="img" aria-label="Karte mit Ladesäulen">' + buildMapBase(radiusKm) + pins + '</svg>';
 
     document.getElementById('mapCountHint').textContent = items.length + (items.length === 1 ? ' Säule' : ' Säulen') + (mapLockedCount ? ' · ' + (allItems.length) + ' in der Umgebung' : '');
-    var mapProNote = document.getElementById('mapProNote');
-    if (mapProNote) {
-      if (mapLockedCount > 0) {
-        mapProNote.style.display = 'block';
-        mapProNote.textContent = 'Maximal ' + FREE_MAP_LIMIT + ' Säulen in der Umgebung kostenlos — mit Elveo Pro siehst du alle Säulen.';
-      } else {
-        mapProNote.style.display = 'none';
-      }
-    }
     var list = document.getElementById('mapList');
     if (!items.length) {
       list.innerHTML = '<div class="empty-note">Keine Ladesäulen im gewählten Umkreis/Filter gefunden. Radius oder kW-Filter oben anpassen.</div>';
@@ -2985,16 +2990,20 @@
       if (items.length > shown.length) {
         list.innerHTML += '<button id="mapShowMoreBtn" style="width:100%; margin-top:10px; padding:10px; border-radius:10px; border:1px solid var(--line); background:var(--surface); font-weight:600; cursor:pointer;">Weitere ' + Math.min(10, items.length - shown.length) + ' anzeigen (' + shown.length + ' von ' + items.length + ')</button>';
       } else if (mapLockedCount > 0) {
-        list.innerHTML += '<div class="pro-lock" style="margin-top:10px; background:linear-gradient(135deg, rgba(245,214,123,0.32), rgba(184,134,11,0.10)), var(--glass-bg-strong); border:1px solid #E8C25A; border-radius:var(--radius-lg);">' +
-          '<div class="pro-lock-icon">🔒</div>' +
-          '<div class="pro-lock-text">' + mapLockedCount + ' weitere ' + (mapLockedCount === 1 ? 'Säule' : 'Säulen') + ' in der Umgebung sind Teil von <b>Elveo Pro</b>. Ohne Pro werden maximal 10 Säulen angezeigt.</div>' +
-          '<button class="pro-lock-btn" id="mapProBtn">Mehr zu Elveo Pro</button>' +
+        list.innerHTML += '<div class="map-pro-row" id="mapProRow">' +
+          '<div class="mp-mascot" id="mapProRowMascot"></div>' +
+          '<div class="mp-text">' + mapLockedCount + ' weitere ' + (mapLockedCount === 1 ? 'Säule' : 'Säulen') + ' in der Umgebung — mit <b>Elveo Pro</b> siehst du alle.</div>' +
+          '<span class="mp-arrow">›</span>' +
           '</div>';
       }
     }
 
-    var mapProBtn = document.getElementById('mapProBtn');
-    if (mapProBtn) mapProBtn.addEventListener('click', function () { showPage('konto'); setTimeout(showProLockHint, 60); });
+    var mapProRow = document.getElementById('mapProRow');
+    if (mapProRow) {
+      var mapProRowMascotEl = document.getElementById('mapProRowMascot');
+      if (mapProRowMascotEl) mapProRowMascotEl.innerHTML = mascotSVG({ cls: 'v-gold', face: 'default', topIcon: 'lamp' });
+      mapProRow.addEventListener('click', function () { showPage('konto'); setTimeout(showProLockHint, 60); });
+    }
 
     var showMoreBtn = document.getElementById('mapShowMoreBtn');
     if (showMoreBtn) showMoreBtn.addEventListener('click', function (e) { e.stopPropagation(); state.mapListLimit += 10; renderKarte(); });
@@ -3144,16 +3153,24 @@
 
   // ---- Konto: Profilbild (nutzt dasselbe Maskottchen wie "Jetzt laden") ----
   var avatarVariants = [
-    { id: 1, cls: 'v-blue', face: 'default' },
-    { id: 2, cls: 'v-amber cheer', face: 'default' },
-    { id: 3, cls: 'v-purple', face: 'sleepy' },
-    { id: 4, cls: 'v-coral', face: 'wink' },
+    { id: 1, cls: 'v-green', face: 'default' },
+    { id: 2, cls: 'v-blue wave', face: 'default' },
+    { id: 3, cls: 'v-purple', face: 'wink' },
+    { id: 4, cls: 'v-coral', face: 'bolteye' },
     { id: 5, cls: 'v-gold', face: 'default', pro: true }
   ];
   function mascotFaceParts(face, topIcon) {
     var icon = topIcon === 'lamp'
       ? '<circle class="m-bolt" cx="48" cy="10" r="6"/><rect class="m-limb" x="45.5" y="15.5" width="5" height="3" rx="1"/>' +
         '<path d="M45.5 10 L50.5 10 M46.2 12.5 L49.8 12.5" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/>'
+      : topIcon === 'rainbow'
+      ? '<g class="m-rainbow" fill="none" stroke-linecap="round">' +
+        '<path d="M35 15 A13 13 0 0 1 61 15" stroke="#E4483A" stroke-width="2.3"/>' +
+        '<path d="M37.3 15 A10.7 10.7 0 0 1 58.7 15" stroke="#F2A83E" stroke-width="2.3"/>' +
+        '<path d="M39.6 15 A8.4 8.4 0 0 1 56.4 15" stroke="#F0D23E" stroke-width="2.3"/>' +
+        '<path d="M41.9 15 A6.1 6.1 0 0 1 54.1 15" stroke="#3FA85C" stroke-width="2.3"/>' +
+        '<path d="M44.2 15 A3.8 3.8 0 0 1 51.8 15" stroke="#3B82C4" stroke-width="2.3"/>' +
+        '</g>'
       : '<path class="m-bolt" transform="translate(41.5,1) scale(0.58)" d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/>';
     if (face === 'sleepy') {
       return '<path class="m-stem" d="M48 28V15" style="display:none"/>' +
@@ -3170,6 +3187,14 @@
         '<path class="m-eye-closed" d="M52 49 Q56 45.5 60 49"/>' +
         '<circle class="m-cheek" cx="33" cy="58" r="3.2"/><circle class="m-cheek" cx="63" cy="58" r="3.2"/>' +
         '<path class="m-mouth" d="M41 55 Q48 63 58 53"/>';
+    }
+    if (face === 'bolteye') {
+      return '<path class="m-stem" d="M48 28V15"/>' + icon +
+        '<circle class="m-eye" cx="40" cy="49" r="3.6"/>' +
+        '<path class="m-bolt" transform="translate(51.6,44.8) scale(0.34)" d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/>' +
+        '<circle class="m-cheek" cx="33" cy="58" r="3.2"/><circle class="m-cheek" cx="63" cy="58" r="3.2"/>' +
+        '<path class="m-mouth" d="M42 56 Q48 62 54 56"/>' +
+        '<path class="m-mouth-big" d="M41 55 Q48 67 55 55Z"/>';
     }
     // default face
     return '<path class="m-stem" d="M48 28V15"/>' + icon +
