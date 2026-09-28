@@ -608,6 +608,16 @@
   /* Karte */
   .map-card { background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; height: 300px; z-index: 0; }
   .map-card .leaflet-container { background: var(--surface-sunken); font-family: inherit; }
+  .map-fabs { position: absolute; left: 8px; bottom: 26px; z-index: 500; display: flex; flex-direction: column; gap: 8px; }
+  .map-fab {
+    width: 40px; height: 40px; border-radius: 50%; padding: 0; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; color: var(--teal);
+    background: var(--glass-bg-strong); border: 1px solid var(--glass-border);
+    -webkit-backdrop-filter: blur(18px) saturate(180%); backdrop-filter: blur(18px) saturate(180%);
+    box-shadow: 0 4px 14px rgba(19,36,32,0.18), inset 0 1px 0 var(--glass-shine);
+  }
+  .map-fab svg { width: 20px; height: 20px; }
+  .map-fab:active { transform: scale(0.94); }
   .leaflet-pin-wrap { background: none; border: none; }
   .leaflet-pin { position: relative; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
   .leaflet-pin .lp-box { position: relative; width: 24px; height: 24px; border-radius: 7px; background: var(--ink-soft); border: 2px solid var(--surface); display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.25); }
@@ -1333,9 +1343,17 @@
     </div>
     <div style="position:relative;">
       <div class="map-card" id="mapCard"></div>
-      <div id="mapLocationBadge" style="position:absolute; right:8px; bottom:8px; display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.92); border-radius:999px; padding:5px 10px; font-size:12px; color:var(--ink,#222); box-shadow:0 1px 4px rgba(0,0,0,0.18); pointer-events:none;">
+      <div id="mapLocationBadge" style="position:absolute; right:8px; top:8px; z-index:500; display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.92); border-radius:999px; padding:5px 10px; font-size:12px; color:var(--ink,#222); box-shadow:0 1px 4px rgba(0,0,0,0.18); pointer-events:none;">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="flex:none;"><path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
         <span id="mapCurrentLocation">Standort wird ermittelt…</span>
+      </div>
+      <div class="map-fabs">
+        <button class="map-fab" id="mapNearestBtn" aria-label="Nächste Ladesäule finden">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/></svg>
+        </button>
+        <button class="map-fab" id="mapRecenterBtn" aria-label="Auf meinen Standort zentrieren">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="12" r="7.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+        </button>
       </div>
     </div>
     <div class="map-legend"><span><i class="on"></i>im Schnellfinder</span><span><i></i>weitere</span><span><i class="cheap"></i>Top-3 günstigste</span></div>
@@ -3325,6 +3343,29 @@
       });
     });
   }
+  document.getElementById('mapRecenterBtn').addEventListener('click', function () {
+    var map = ensureKarteMap(); if (!map) return;
+    map.setView([userLoc.lat, userLoc.lng], Math.max(map.getZoom(), 14), { animate: true });
+  });
+  document.getElementById('mapNearestBtn').addEventListener('click', function () {
+    var minKw = parseFloat(document.getElementById('mapKwSelect').value) || 0;
+    var nearest = mapStations.slice()
+      .filter(function (m) { return (m.kw || 0) >= minKw; })
+      .sort(function (a, b) { return a.km - b.km; })[0];
+    if (!nearest) return;
+    var slider = document.getElementById('mapRadiusSlider');
+    if (nearest.km > parseFloat(slider.value)) slider.value = Math.min(50, Math.ceil(nearest.km));
+    if (state.mapFilter === 'mine' && !state.favCpos[nearest.cpo]) {
+      state.mapFilter = 'all';
+      mapChips.forEach(function (c) { c.classList.toggle('on', c.getAttribute('data-filter') === 'all'); });
+    }
+    state.mapSel = mapStations.indexOf(nearest);
+    state.mapListLimit = Math.max(state.mapListLimit, 10);
+    state.karteMapFitted = true;
+    renderKarte();
+    var el = document.querySelector('#mapList .map-item.sel');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
   document.getElementById('mapRadiusSlider').addEventListener('input', function () { state.mapListLimit = 10; renderKarte(); });
   document.getElementById('mapKwSelect').addEventListener('change', function () { state.mapListLimit = 10; renderKarte(); });
   var mapChips = document.querySelectorAll('#mapFilterRow .chip');
