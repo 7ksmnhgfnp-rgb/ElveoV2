@@ -961,6 +961,54 @@
   /* Standort-Anzeige darf die Buttons rechts nie überdecken */
   #mapLocationBadge { bottom: 74px !important; max-width: calc(100% - 96px); min-width: 0; }
   #mapCurrentLocation { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  /* Karte: kein Überlappen mit "In der Nähe" */
+  #page-karte section.sheet { margin-top: 14px !important; z-index: auto !important; }
+  #page-karte section.sheet::before { display: none !important; }
+  .map-card .leaflet-bottom.leaflet-right { bottom: 0 !important; }
+  .map-fabs { bottom: 30px !important; }
+  #mapLocationBadge { bottom: 30px !important; }
+  /* Karte: Filter-Kästchen als Liquid Glass */
+  .map-controls {
+    background: var(--glass-bg) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(190%) !important; backdrop-filter: blur(22px) saturate(190%) !important;
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: 0 8px 24px rgba(19, 36, 32, 0.16), inset 0 1px 0 var(--glass-shine) !important;
+  }
+  .map-controls select { background-color: var(--glass-bg-strong); border-color: var(--glass-border); }
+  /* Karte: Überschrift "In der Nähe" größer */
+  #page-karte section.sheet .section-label { font-size: 21px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 12px; }
+  #page-karte section.sheet .section-label span.hint { font-size: 13.5px; }
+  /* Karte: größer */
+  .map-card { height: min(72vh, 660px) !important; min-height: 480px !important; }
+  /* Karte: Zoom-Buttons tiefer, im App-Design (Liquid Glass) */
+  .map-card .leaflet-top { top: 132px !important; }
+  .map-card .leaflet-control-zoom.leaflet-bar {
+    border: 1px solid var(--glass-border) !important; border-radius: 26px !important; overflow: hidden;
+    background: var(--glass-bg-strong) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(190%); backdrop-filter: blur(22px) saturate(190%);
+    box-shadow: 0 8px 24px rgba(19, 36, 32, 0.18), inset 0 1px 0 var(--glass-shine) !important;
+  }
+  .map-card .leaflet-control-zoom a {
+    width: 44px !important; height: 44px !important; line-height: 42px !important;
+    background: transparent !important; color: var(--teal) !important;
+    font-family: inherit; font-size: 24px !important; font-weight: 600; border: none !important; border-radius: 0 !important;
+  }
+  .map-card .leaflet-control-zoom a + a { border-top: 1px solid var(--line) !important; }
+  .map-card .leaflet-control-zoom a:active { background: var(--glass-tint) !important; }
+  .map-card .leaflet-control-zoom a.leaflet-disabled { color: var(--ink-soft) !important; opacity: .5; }
+  /* Karte: kW-Filter, Schrift kleiner, Platz für den Pfeil */
+  #mapKwSelect { font-size: 13px !important; font-weight: 600; padding: 8px 26px 8px 10px !important; background-position: right 9px center !important; background-size: 10px 7px; text-overflow: ellipsis; }
+  /* Dark Mode: Voltis in Tipps/Karte sehen aus wie die Profilbilder */
+  @media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) body.volti-green .mascot:not([class*=" v-"]) .m-body, :root:not([data-theme="light"]) body.volti-green .leaflet-me-icon .m-body { fill: #E3F1EE; stroke: #0E6E63; }
+  :root:not([data-theme="light"]) body.volti-green .mascot:not([class*=" v-"]) .m-limb, :root:not([data-theme="light"]) body.volti-green .mascot:not([class*=" v-"]) .m-stem, :root:not([data-theme="light"]) body.volti-green .leaflet-me-icon .m-limb, :root:not([data-theme="light"]) body.volti-green .leaflet-me-icon .m-stem { fill: #0E6E63; stroke: #0E6E63; }
+    :root:not([data-theme="light"]) body.volti-green .mascot:not([class*=" v-"]) .m-stem, :root:not([data-theme="light"]) body.volti-green .leaflet-me-icon .m-stem { fill: none; }
+  }
+  :root[data-theme="dark"] body.volti-green .mascot:not([class*=" v-"]) .m-body, :root[data-theme="dark"] body.volti-green .leaflet-me-icon .m-body { fill: #E3F1EE; stroke: #0E6E63; }
+  :root[data-theme="dark"] body.volti-green .mascot:not([class*=" v-"]) .m-limb, :root[data-theme="dark"] body.volti-green .mascot:not([class*=" v-"]) .m-stem, :root[data-theme="dark"] body.volti-green .leaflet-me-icon .m-limb, :root[data-theme="dark"] body.volti-green .leaflet-me-icon .m-stem { fill: #0E6E63; stroke: #0E6E63; }
+  :root[data-theme="dark"] body.volti-green .mascot:not([class*=" v-"]) .m-stem, :root[data-theme="dark"] body.volti-green .leaflet-me-icon .m-stem { fill: none; }
+  /* Karte: Buttons, Standort & Filter bleiben beim Scrollen unter der Menüleiste */
+  .map-wrap { isolation: isolate; z-index: 0; }
 </style>
 </head>
 <body>
@@ -1392,6 +1440,7 @@
       </div>
       <div id="saeulenList"></div>
     </section>
+    <section id="tarifeProSection" style="display:none;"></section>
     <section class="tips-card">
       <p class="section-label">Tipps von Volti</p>
       <div class="guide-stage tip-teaser" id="tarifeTeaser">
@@ -2590,8 +2639,9 @@
     var head = mine
       ? '<div class="qr-tag">GÜNSTIGSTER EIGENER TARIF · ' + cn.toUpperCase() + '</div><div class="qr-name">' + mine.name + '</div><div class="qr-price">' + pf(mine.prices[cpo]) + '<small> €/kWh</small></div>'
       : '<div class="qr-tag">' + cn.toUpperCase() + '</div><div class="qr-name">Keinen eigenen Tarif hier</div>';
-    var list = allSorted.slice(0, 5);
-    if (mine && list.indexOf(mine) < 0) list.push(mine);
+    var list = allSorted.slice(0, 3);
+    if (mine && list.indexOf(mine) < 0) list[2] = mine;
+    list.sort(function (a, b) { return a.prices[cpo] - b.prices[cpo]; });
     var mx = Math.max.apply(null, list.map(function (t) { return t.prices[cpo]; })), base = mine ? mine.prices[cpo] : null;
     var rows = list.map(function (t) {
       var p = t.prices[cpo], own = !!state.owned[t.id], cheaper = base != null && p < base - 0.0001;
@@ -3000,6 +3050,14 @@
     row.addEventListener('click', function () { showPage('konto'); setTimeout(showProLockHint, 60); });
     wrap.appendChild(row);
   }
+  function renderTarifeProBox(html) {
+    var sec = document.getElementById('tarifeProSection');
+    if (!sec) return;
+    sec.style.display = state.account.pro ? 'none' : '';
+    if (state.account.pro) { sec.innerHTML = ''; return; }
+    sec.innerHTML = '';
+    appendProHint(sec, html);
+  }
   function renderTarife() {
     var wrap = document.getElementById('tarifeList');
     wrap.innerHTML = '';
@@ -3008,17 +3066,14 @@
       if (state.tarifeFilter === 'fav') return !!state.favorites[t.id];
       return true;
     });
-    var tarifeHint = 'Kostenlos: bis zu ' + FREE_FAV_LIMIT + ' Favoriten und ' + FREE_OWN_LIMIT + ' eigene Tarife — mit <b>Elveo Pro</b> beliebig viele markieren, plus Preisverlauf der letzten 6 Monate.';
     if (list.length === 0) {
       var empty = document.createElement('div');
       empty.className = 'empty-note';
       empty.textContent = state.tarifeFilter === 'mine' ? 'Noch keine eigenen Tarife markiert.' : 'Noch keine Favoriten markiert.';
       wrap.appendChild(empty);
-      appendProHint(wrap, tarifeHint);
       return;
     }
     list.forEach(function (t) { wrap.appendChild(makeTariffRow(t)); });
-    appendProHint(wrap, tarifeHint);
   }
 
   // ---- Ladesäulen (Liste mit Auswahl, wirkt auf den Schnellfinder) ----
@@ -3109,17 +3164,17 @@
     var wrap = document.getElementById('saeulenList');
     wrap.innerHTML = '';
     var list = cpos.filter(function (c) { return state.saeulenFilter === 'fav' ? !!state.favCpos[c.id] : true; });
-    var saeulenHint = 'Kostenlos: bis zu ' + FREE_CPO_LIMIT + ' Ladesäulen im Schnellfinder — mit <b>Elveo Pro</b> beliebig viele speichern.';
+    var saeulenHint = 'Kostenlos: bis zu ' + FREE_FAV_LIMIT + ' Favoriten, ' + FREE_OWN_LIMIT + ' eigene Tarife und ' + FREE_CPO_LIMIT + ' Ladesäulen im Schnellfinder — mit <b>Elveo Pro</b> beliebig viele, plus Preisverlauf der letzten 6 Monate.';
     if (list.length === 0) {
       var empty = document.createElement('div');
       empty.className = 'empty-note';
       empty.textContent = 'Noch keine Ladesäulen ausgewählt. Tippe bei „Alle“ auf den Stern.';
       wrap.appendChild(empty);
-      appendProHint(wrap, saeulenHint);
+      renderTarifeProBox(saeulenHint);
       return;
     }
     list.forEach(function (c) { wrap.appendChild(makeCpoRow(c)); });
-    appendProHint(wrap, saeulenHint);
+    renderTarifeProBox(saeulenHint);
   }
 
   var cpoOverlay = document.getElementById('cpoOverlay');
@@ -3440,6 +3495,8 @@
   }
   document.getElementById('mapRecenterBtn').addEventListener('click', function () {
     var map = ensureKarteMap(); if (!map) return;
+    map.stop();
+    karteLastCenteredSel = null;
     map.setView([userLoc.lat, userLoc.lng], Math.max(map.getZoom(), 14), { animate: true });
   });
   document.getElementById('mapNearestBtn').addEventListener('click', function () {
@@ -3457,7 +3514,15 @@
     state.mapSel = mapStations.indexOf(nearest);
     state.mapListLimit = Math.max(state.mapListLimit, 10);
     state.karteMapFitted = true;
+    karteLastCenteredSel = null;
     renderKarte();
+    var map = ensureKarteMap();
+    if (map) {
+      var nll = stationLatLng(nearest);
+      map.stop();
+      map.setView([nll.lat, nll.lng], Math.max(map.getZoom(), 15), { animate: true });
+      karteLastCenteredSel = state.mapSel;
+    }
     var el = document.querySelector('#mapList .map-item.sel');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
