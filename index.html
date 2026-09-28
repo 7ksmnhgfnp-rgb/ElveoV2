@@ -3336,6 +3336,7 @@
       b.addEventListener('click', function (e) {
         e.stopPropagation();
         var act = b.getAttribute('data-act');
+        if (!act) return; // z. B. „Weitere anzeigen“ hat einen eigenen Handler
         if (act === 'maps') return; // Link öffnet normal in neuem Tab
         var cpo = b.getAttribute('data-cpo');
         if (act === 'fav') { toggleFavCpo(cpo); renderSaeulen(); renderQuickFinder(); }
