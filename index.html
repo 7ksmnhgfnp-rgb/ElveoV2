@@ -681,7 +681,7 @@
   .leaflet-pin .lp-box svg { width: 13px; height: 13px; fill: var(--bg); }
   .leaflet-pin .lp-label { margin-top: 2px; font-size: 9px; font-weight: 600; color: var(--ink); background: var(--surface-sunken); padding: 0 3px; border-radius: 4px; white-space: nowrap; }
   .leaflet-pin .lp-badge { position: absolute; top: -7px; right: -7px; width: 14px; height: 14px; line-height: 1; border-radius: 50%; background: var(--amber); color: #fff; font-family: ui-monospace, 'SF Mono', 'Menlo', monospace; font-size: 8.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0; border: 1.5px solid var(--surface); z-index: 1; }
-  .leaflet-me-icon { width: 34px !important; height: 34px !important; }
+  .leaflet-me-icon { width: 54px !important; height: 54px !important; }
   .leaflet-me-icon .mm { width: 100%; height: 100%; }
   .map-bg { fill: var(--surface-sunken); }
   .map-park { fill: var(--teal-tint); }
@@ -932,6 +932,35 @@
   }
   .tab-btn.tab-home::before { left: -1.5px; }
   .tab-btn.tab-home::after { right: -1.5px; }
+
+  /* ===== Karte: schwebendes Panel, Buttons, Bottom-Sheet ===== */
+  .map-wrap { position: relative; }
+  .map-card { height: min(60vh, 520px); min-height: 380px; border-radius: 36px; }
+  .map-controls {
+    position: absolute; top: 10px; left: 10px; right: 10px; z-index: 500;
+    padding: 10px 12px; border-radius: 28px; display: flex; flex-direction: column; gap: 8px;
+    background: var(--surface); box-shadow: 0 8px 24px rgba(19, 36, 32, 0.18);
+  }
+  .map-controls .filter-row { margin: -3px; padding: 3px; overflow-x: auto; }
+  .map-controls .chip { padding: 8px 14px; }
+  .map-card .leaflet-top { top: 104px; }                 /* Zoom-Buttons unter das Panel */
+  .map-card .leaflet-bottom.leaflet-right { bottom: 38px; } /* Quellenangabe über dem Sheet */
+  .map-fabs { left: auto; right: 12px; bottom: 64px; }
+  .map-fab { width: 48px; height: 48px; background: var(--surface); border: 0; box-shadow: 0 6px 18px rgba(19, 36, 32, 0.22); }
+  #mapLocationBadge {
+    top: auto !important; bottom: 64px !important; left: 12px !important; right: auto !important;
+    background: var(--surface) !important; box-shadow: 0 6px 18px rgba(19, 36, 32, 0.22) !important;
+  }
+  #page-karte section.sheet { margin-top: -34px; position: relative; z-index: 2; padding-top: 30px; border-radius: 36px; background: var(--surface); }
+  #page-karte section.sheet::before {
+    content: ""; position: absolute; top: 10px; left: 50%; width: 44px; height: 5px; margin-left: -22px;
+    border-radius: 3px; background: var(--ink-soft); opacity: .35;
+  }
+  .sheet .map-legend { margin: 0 2px 14px; }
+  .map-item .mi-actions button, .map-item .mi-actions a { border-radius: 999px; }
+  /* Standort-Anzeige darf die Buttons rechts nie überdecken */
+  #mapLocationBadge { bottom: 74px !important; max-width: calc(100% - 96px); min-width: 0; }
+  #mapCurrentLocation { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 </style>
 </head>
 <body>
@@ -1383,6 +1412,8 @@
 
   <!-- PAGE: KARTE -->
   <div class="page" id="page-karte">
+    <div class="map-wrap">
+      <div class="map-controls">
     <div class="filter-row" id="mapFilterRow">
       <div class="chip on" data-filter="all">Alle</div>
       <div class="chip" data-filter="mine">Meine Ladesäulen</div>
@@ -1399,7 +1430,7 @@
         <option value="300">ab 300 kW</option>
       </select>
     </div>
-    <div style="position:relative;">
+      </div>
       <div class="map-card" id="mapCard"></div>
       <div id="mapLocationBadge" style="position:absolute; right:8px; top:8px; z-index:500; display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.92); border-radius:999px; padding:5px 10px; font-size:12px; color:var(--ink,#222); box-shadow:0 1px 4px rgba(0,0,0,0.18); pointer-events:none;">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="flex:none;"><path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
@@ -1414,11 +1445,11 @@
         </button>
       </div>
     </div>
-    <div class="map-legend"><span><i class="on"></i>im Schnellfinder</span><span><i></i>weitere</span><span><i class="cheap"></i>Top-3 günstigste</span></div>
-    <section>
+    <section class="sheet">
 
 
       <p class="section-label">In der Nähe<span class="hint" id="mapCountHint"></span></p>
+      <div class="map-legend"><span><i class="on"></i>im Schnellfinder</span><span><i></i>weitere</span><span><i class="cheap"></i>Top-3 günstigste</span></div>
       <div id="mapList"></div>
     </section>
     <section class="tips-card">
@@ -3260,7 +3291,7 @@
     var meIcon = L.divIcon({
       className: 'leaflet-me-icon',
       html: '<svg viewBox="0 0 96 96" class="mm"><g class="mascot-bob">' + mascotInner({ face: 'default' }) + '</g></svg>',
-      iconSize: [34, 34], iconAnchor: [17, 17]
+      iconSize: [54, 54], iconAnchor: [27, 27]
     });
     karteUserMarker = L.marker([userLoc.lat, userLoc.lng], { icon: meIcon, zIndexOffset: 1000, interactive: false }).addTo(karteMap);
     karteRadiusCircle = L.circle([userLoc.lat, userLoc.lng], { radius: 15000, color: '#0E6E63', weight: 1.5, fillColor: '#0E6E63', fillOpacity: 0.06 }).addTo(karteMap);
