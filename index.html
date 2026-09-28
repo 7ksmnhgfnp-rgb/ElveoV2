@@ -314,6 +314,24 @@
   .rc-act small { display: block; color: var(--ink-soft); font-size: 11px; } .rc-act-r { text-align: right; }
   .rc-act.hi { background: var(--teal-tint); border-color: var(--teal); }
   .rc-assume { margin-top: 14px; padding: 10px 14px; font-size: 12px; line-height: 1.5; color: var(--ink-soft); background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-sm); }
+  .qr-cmp { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--teal-tint-line); }
+  .qr-cmp-h { font-size: 11.5px; font-weight: 700; color: var(--ink-soft); letter-spacing: .03em; text-transform: uppercase; margin-bottom: 4px; }
+  .qr-cmp-row { display: grid; grid-template-columns: 1fr auto; gap: 3px 10px; padding: 7px 0; align-items: center; }
+  .qr-cmp-row + .qr-cmp-row { border-top: 1px solid rgba(14,110,99,0.12); }
+  .qr-cmp-n { font-size: 13px; font-weight: 600; } .qr-cmp-n small { display: block; font-weight: 400; font-size: 10.5px; color: var(--ink-soft); }
+  .qr-cmp-n em { font-style: normal; font-size: 9.5px; font-weight: 700; color: var(--teal); border: 1px solid var(--teal); border-radius: 99px; padding: 0 5px; margin-left: 6px; vertical-align: 1px; }
+  .qr-cmp-r { display: flex; align-items: center; gap: 6px; } .qr-cmp-r b { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 14px; }
+  .qr-cmp-r u { text-decoration: none; font-size: 10.5px; font-weight: 700; color: #fff; background: var(--amber); border-radius: 99px; padding: 1px 6px; }
+  .qr-cmp-bar { grid-column: 1 / 3; height: 5px; border-radius: 99px; background: rgba(14,110,99,0.10); overflow: hidden; }
+  .qr-cmp-bar i { display: block; height: 100%; border-radius: 99px; background: var(--teal-tint-line); }
+  .qr-cmp-row.me .qr-cmp-bar i { background: var(--teal); } .qr-cmp-row.cheaper .qr-cmp-bar i { background: var(--amber); }
+  .qr-sum { margin-top: 8px; font-size: 12.5px; line-height: 1.5; color: var(--ink); } .qr-sum.warn { background: rgba(242,168,62,0.16); border-radius: 10px; padding: 8px 10px; }
+  .qr-cta { width: 100%; margin-top: 14px; display: flex; align-items: center; gap: 10px; border: none; cursor: pointer; background: var(--teal); color: #fff; border-radius: 14px; padding: 13px 14px; font-family: inherit; font-size: 14px; font-weight: 700; box-shadow: 0 6px 16px rgba(14,110,99,0.28); text-align: left; }
+  .qr-cta span { flex: 1; } .qr-cta svg { width: 18px; height: 18px; flex-shrink: 0; } .qr-cta:active { transform: scale(0.98); }
+  .block-box.bb-compact { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 7px 10px; margin-top: 10px; background: transparent; }
+  .bb-line { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--ink-soft); } .bb-line svg { width: 13px; height: 13px; color: var(--amber); flex-shrink: 0; }
+  .bb-mini-btn { border: 1px solid var(--teal); background: none; color: var(--teal); border-radius: 99px; padding: 5px 11px; font-size: 11.5px; font-weight: 700; cursor: pointer; white-space: nowrap; font-family: inherit; }
+  .bb-mini-run { display: flex; align-items: center; gap: 8px; } .bb-compact .bb-mmss { font-size: 15px; }
   .seg-hint { margin: -12px 2px 14px; font-size: 13px; color: var(--ink-soft); line-height: 1.45; }
   .chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 2px 0 10px; }
   .chip.sm { padding: 7px 11px; font-size: 12px; }
@@ -2488,6 +2506,7 @@
     return v.length ? Math.min.apply(null, v) : null;
   }
 
+  function fN0(x) { return x.toLocaleString('de-DE', { maximumFractionDigits: 0 }); }
   function renderQuickFinder() {
     var near = nearbyStations(3, true);
     var favs = cpos.filter(function (c) { return state.favCpos[c.id]; });
@@ -2536,28 +2555,32 @@
 
     var box = document.createElement('div');
     box.className = 'quick-result';
-    if (owned.length === 0) {
-      box.innerHTML =
-        '<div class="qr-tag">' + cn.toUpperCase() + '</div>' +
-        '<div class="qr-name">Keinen eigenen Tarif hier</div>' +
-        '<div class="qr-alt">Günstigster verfügbarer Tarif insgesamt: <b>' + allSorted[0].name + '</b> zu <b>' + fmtPrice(allSorted[0].prices[cpo]) + '</b>.</div>';
-    } else {
-      var best = owned[0];
-      box.innerHTML =
-        '<div class="qr-tag">GÜNSTIGSTER EIGENER TARIF · ' + cn.toUpperCase() + '</div>' +
-        '<div class="qr-name">' + best.name + '</div>' +
-        '<div class="qr-price">' + best.prices[cpo].toFixed(2).replace('.', ',') + '<small> €/kWh</small></div>';
-      var overallBest = allSorted[0];
-      if (overallBest.id !== best.id) {
-        box.innerHTML += '<div class="qr-alt">Insgesamt günstigster hier wäre <b>' + overallBest.name + '</b> (' + fmtPrice(overallBest.prices[cpo]) + ') — hast du (noch) nicht.</div>';
-      } else if (owned.length > 1) {
-        box.innerHTML += '<div class="qr-alt">Nächstbester eigener Tarif: <b>' + owned[1].name + '</b> (' + fmtPrice(owned[1].prices[cpo]) + ').</div>';
-      }
-    }
+    var mine = owned[0], kwhS = getSessionKwh(), pf = function (v) { return v.toFixed(2).replace('.', ','); };
+    var head = mine
+      ? '<div class="qr-tag">GÜNSTIGSTER EIGENER TARIF · ' + cn.toUpperCase() + '</div><div class="qr-name">' + mine.name + '</div><div class="qr-price">' + pf(mine.prices[cpo]) + '<small> €/kWh</small></div>'
+      : '<div class="qr-tag">' + cn.toUpperCase() + '</div><div class="qr-name">Keinen eigenen Tarif hier</div>';
+    var list = allSorted.slice(0, 5);
+    if (mine && list.indexOf(mine) < 0) list.push(mine);
+    var mx = Math.max.apply(null, list.map(function (t) { return t.prices[cpo]; })), base = mine ? mine.prices[cpo] : null;
+    var rows = list.map(function (t) {
+      var p = t.prices[cpo], own = !!state.owned[t.id], cheaper = base != null && p < base - 0.0001;
+      return '<div class="qr-cmp-row' + (t === mine ? ' me' : '') + (cheaper ? ' cheaper' : '') + '"><div class="qr-cmp-n">' + t.name + (own ? '<em>Du</em>' : '') + (t.grundgebuehr > 0 ? '<small>' + fmtEUR(t.grundgebuehr) + ' Grundgebühr/Monat</small>' : '<small>keine Grundgebühr</small>') + '</div>' +
+        '<div class="qr-cmp-r"><b>' + pf(p) + ' €</b>' + (cheaper ? '<u>−' + Math.round((base - p) * 100) + ' ct</u>' : '') + '</div><div class="qr-cmp-bar"><i style="width:' + Math.max(8, p / mx * 100) + '%"></i></div></div>';
+    }).join('');
+    var alt = mine ? allSorted.filter(function (t) { return !state.owned[t.id] && t.prices[cpo] < base - 0.0001; })[0] : allSorted[0];
+    var sum = !mine ? (alt ? 'Günstigster Tarif hier: <b>' + alt.name + '</b> (' + fmtPrice(alt.prices[cpo]) + ').' : 'Für diesen Betreiber sind keine Tarifpreise hinterlegt.')
+      : alt ? 'Mit <b>' + alt.name + '</b> sparst du ca. <b>' + fmtEUR((base - alt.prices[cpo]) * kwhS) + '</b> pro Ladung (' + fN0(kwhS) + ' kWh)' + (alt.grundgebuehr > 0 ? ' – dafür ' + fmtEUR(alt.grundgebuehr) + ' Grundgebühr im Monat.' : ', ohne Grundgebühr.')
+      : '✓ Du hast hier bereits den günstigsten Tarif.';
+    box.innerHTML = head + '<div class="qr-cmp"><div class="qr-cmp-h">Preisvergleich bei ' + cn + '</div>' + rows + '</div><div class="qr-sum' + (alt && mine ? ' warn' : '') + '">' + sum + '</div>';
     var moreBtn = document.createElement('button');
-    moreBtn.className = 'qr-more';
-    moreBtn.innerHTML = 'Genaue Kosten & Ladezeit <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
-    moreBtn.addEventListener('click', function () { showPage('rechner'); showSub('charge'); });
+    moreBtn.className = 'qr-cta';
+    moreBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01"/></svg><span>Genaue Kosten &amp; Ladezeit berechnen</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+    moreBtn.addEventListener('click', function () {
+      showPage('rechner'); showSub('charge');
+      var pe = document.getElementById('rc_price');
+      if (pe && mine) { pe.value = mine.prices[cpo].toFixed(2); pe.dataset.t = 1; }
+      if (window.rcSync) window.rcSync();
+    });
     box.appendChild(moreBtn);
 
     var blockWrap = document.createElement('div');
@@ -2573,16 +2596,8 @@
     if (!wrap) return;
     var cpo = cpoById(state.quickCpo);
     var isRunningHere = state.blockTimer.intervalId && state.blockTimer.cpo === cpo.id;
-    var html = '<div class="block-box' + (state.blockTimer.doneFlag && isRunningHere ? ' bb-done' : '') + '">' +
-      '<div class="bb-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Blockiergebühr</div>' +
-      '<div class="bb-text">Ab ' + cpo.blockGraceMin + ' Min. nach Ladeende ca. ' + cpo.blockFeePerMin.toFixed(2).replace('.', ',') + ' €/Min. bei ' + cpo.name + '.</div>';
-    if (isRunningHere) {
-      html += '<div class="bb-running"><div class="bb-mmss" id="blockTimerDisplay">--:--</div><button class="bb-stop" id="blockTimerStop">Stoppen</button></div>' +
-        '<div class="bb-text" style="margin-top:6px;">Läuft nur, solange diese Seite geöffnet ist. Alternativ die Zeit oben auch manuell als Timer in der Uhr-App eintragen.</div>';
-    } else {
-      html += '<button class="bb-timer-btn" id="blockTimerStart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Timer starten (' + cpo.blockGraceMin + ' Min.)</button>';
-    }
-    html += '</div>';
+    var html = '<div class="block-box bb-compact' + (state.blockTimer.doneFlag && isRunningHere ? ' bb-done' : '') + '"><div class="bb-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>Blockiergebühr ab ' + cpo.blockGraceMin + ' Min. · ' + cpo.blockFeePerMin.toFixed(2).replace('.', ',') + ' €/Min.</span></div>' +
+      (isRunningHere ? '<div class="bb-mini-run"><span class="bb-mmss" id="blockTimerDisplay">--:--</span><button class="bb-stop" id="blockTimerStop">Stopp</button></div>' : '<button class="bb-mini-btn" id="blockTimerStart">Timer ' + cpo.blockGraceMin + ' Min.</button>') + '</div>';
     wrap.innerHTML = html;
     var startBtn = document.getElementById('blockTimerStart');
     if (startBtn) startBtn.addEventListener('click', function () { startBlockTimer(cpo.id, cpo.blockGraceMin); });
