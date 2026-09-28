@@ -1021,6 +1021,8 @@
   .map-touch-hint.show { opacity: 1; }
   /* Touch-Hinweis mittig zwischen Zoom-Buttons (oben) und Recenter-Button (unten) */
   .map-touch-hint { top: calc(50% + 43px) !important; }
+  /* Kein automatisches Nachrutschen der Seite */
+  html, body { overflow-anchor: none; }
 </style>
 </head>
 <body>
@@ -2029,6 +2031,13 @@
     moveTabIndicator();
     if (key === 'rechner' && window.rcSync) window.rcSync();
     if (key === 'home') renderHomeTeaser();
+    if (key === 'karte' && karteMap) {
+      setTimeout(function () {
+        karteMap.invalidateSize();
+        karteMap.setView([userLoc.lat, userLoc.lng], Math.max(karteMap.getZoom(), 14), { animate: false });
+        karteLastCenteredSel = null;
+      }, 0);
+    }
     window.scrollTo({ top: 0 });
   }
   var tabIndicator = document.getElementById('tabIndicator'), tabIndicatorReady = false, tabIndicatorLeft = 0;
@@ -3435,8 +3444,7 @@
         return mk;
       });
       if (!state.karteMapFitted) {
-        var pts = [[userLoc.lat, userLoc.lng]].concat(items.slice(0, 20).map(function (o) { var ll = stationLatLng(o.s); return [ll.lat, ll.lng]; }));
-        if (pts.length > 1) map.fitBounds(pts, { padding: [24, 24], maxZoom: 15 });
+        map.setView([userLoc.lat, userLoc.lng], 14, { animate: false });
         state.karteMapFitted = true;
       }
       if (state.mapSel != null && state.mapSel !== karteLastCenteredSel) {
@@ -3520,11 +3528,19 @@
       });
     });
   }
+  function keepScroll(y) {
+    window.scrollTo(0, y);
+    requestAnimationFrame(function () { window.scrollTo(0, y); });
+    setTimeout(function () { window.scrollTo(0, y); }, 120);
+    setTimeout(function () { window.scrollTo(0, y); }, 400);
+  }
   document.getElementById('mapRecenterBtn').addEventListener('click', function () {
     var map = ensureKarteMap(); if (!map) return;
+    var keepY = window.scrollY;
     map.stop();
     karteLastCenteredSel = null;
     map.setView([userLoc.lat, userLoc.lng], Math.max(map.getZoom(), 14), { animate: true });
+    keepScroll(keepY);
   });
   document.getElementById('mapNearestBtn').addEventListener('click', function () {
     var minKw = parseFloat(document.getElementById('mapKwSelect').value) || 0;
@@ -3541,6 +3557,7 @@
     state.mapSel = mapStations.indexOf(nearest);
     state.mapListLimit = Math.max(state.mapListLimit, 10);
     state.karteMapFitted = true;
+    var keepY = window.scrollY;
     karteLastCenteredSel = null;
     renderKarte();
     var map = ensureKarteMap();
@@ -3550,8 +3567,7 @@
       map.setView([nll.lat, nll.lng], Math.max(map.getZoom(), 15), { animate: true });
       karteLastCenteredSel = state.mapSel;
     }
-    var el = document.querySelector('#mapList .map-item.sel');
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    keepScroll(keepY);
   });
   document.getElementById('mapRadiusSlider').addEventListener('input', function () { state.mapListLimit = 10; renderKarte(); });
   document.getElementById('mapKwSelect').addEventListener('change', function () { state.mapListLimit = 10; renderKarte(); });
