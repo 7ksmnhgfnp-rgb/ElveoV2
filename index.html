@@ -1009,6 +1009,18 @@
   :root[data-theme="dark"] body.volti-green .mascot:not([class*=" v-"]) .m-stem, :root[data-theme="dark"] body.volti-green .leaflet-me-icon .m-stem { fill: none; }
   /* Karte: Buttons, Standort & Filter bleiben beim Scrollen unter der Menüleiste */
   .map-wrap { isolation: isolate; z-index: 0; }
+  /* Karte (Touch): Seite bleibt mit einem Finger scrollbar */
+  .map-card.leaflet-container { touch-action: pan-x pan-y; }
+  .map-touch-hint {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 600; pointer-events: none;
+    padding: 10px 16px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap;
+    background: var(--glass-bg-strong); border: 1px solid var(--glass-border);
+    -webkit-backdrop-filter: blur(18px) saturate(180%); backdrop-filter: blur(18px) saturate(180%);
+    box-shadow: 0 6px 18px rgba(19, 36, 32, 0.22); opacity: 0; transition: opacity 0.25s ease;
+  }
+  .map-touch-hint.show { opacity: 1; }
+  /* Touch-Hinweis mittig zwischen Zoom-Buttons (oben) und Recenter-Button (unten) */
+  .map-touch-hint { top: calc(50% + 43px) !important; }
 </style>
 </head>
 <body>
@@ -3338,7 +3350,22 @@
     if (karteMap || typeof L === 'undefined') return karteMap;
     var container = document.getElementById('mapCard');
     if (!container) return null;
-    karteMap = L.map(container, { attributionControl: true }).setView([userLoc.lat, userLoc.lng], 12);
+    var touchDev = (typeof L.Browser.mobile !== 'undefined' && L.Browser.mobile) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+    // Touch: Ein Finger scrollt die Seite, zwei Finger bewegen/zoomen die Karte
+    karteMap = L.map(container, { attributionControl: true, dragging: !touchDev }).setView([userLoc.lat, userLoc.lng], 12);
+    if (touchDev) {
+      var hint = document.createElement('div');
+      hint.className = 'map-touch-hint';
+      hint.textContent = 'Mit zwei Fingern die Karte bewegen';
+      container.parentNode.appendChild(hint);
+      var hintTimer = null;
+      container.addEventListener('touchmove', function (e) {
+        if (e.touches.length !== 1) return;
+        hint.classList.add('show');
+        clearTimeout(hintTimer);
+        hintTimer = setTimeout(function () { hint.classList.remove('show'); }, 1400);
+      }, { passive: true });
+    }
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>-Mitwirkende'
