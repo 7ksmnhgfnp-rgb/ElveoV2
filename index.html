@@ -1023,6 +1023,61 @@
   .map-touch-hint { top: calc(50% + 43px) !important; }
   /* Kein automatisches Nachrutschen der Seite */
   html, body { overflow-anchor: none; }
+  /* Dark Mode: "Für Einsteiger"-Kachel heller, damit sie heraussticht */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .tips-entry.big { background: linear-gradient(135deg, #2B7A6C, #1C5B50); border-color: #4FB8A4; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(79, 184, 164, 0.25), inset 0 1px 0 rgba(255,255,255,0.18); }
+    :root:not([data-theme="light"]) .tips-entry.big .te-label { color: #FFFFFF; }
+    :root:not([data-theme="light"]) .tips-entry.big .te-sub, :root:not([data-theme="light"]) .tips-entry.big .te-chevron { color: #D3EEE8; }
+  }
+  :root[data-theme="dark"] .tips-entry.big { background: linear-gradient(135deg, #2B7A6C, #1C5B50); border-color: #4FB8A4; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(79, 184, 164, 0.25), inset 0 1px 0 rgba(255,255,255,0.18); }
+  :root[data-theme="dark"] .tips-entry.big .te-label { color: #FFFFFF; }
+  :root[data-theme="dark"] .tips-entry.big .te-sub, :root[data-theme="dark"] .tips-entry.big .te-chevron { color: #D3EEE8; }
+  /* Dark Mode: Volti auf der Einsteiger-Kachel mit hellem Untergrund, damit er sich abhebt */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .tips-entry.big .te-mascot { background: rgba(255,255,255,0.94); border-radius: 20px; padding: 4px; box-sizing: border-box; box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
+  }
+  :root[data-theme="dark"] .tips-entry.big .te-mascot { background: rgba(255,255,255,0.94); border-radius: 20px; padding: 4px; box-sizing: border-box; box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
+  /* "Für Einsteiger"-Kachel: schöneres Design */
+  .tips-entry.big { position: relative; overflow: hidden; gap: 14px; padding: 16px; border-radius: 22px;
+    background: radial-gradient(150px 90px at 12% 0%, rgba(242,168,62,0.28), transparent 70%), linear-gradient(135deg, #1D4A40, #0B211C); }
+  .tips-entry.big::after { content: ""; position: absolute; right: -34px; top: -34px; width: 120px; height: 120px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.12), transparent 70%); pointer-events: none; }
+  .tips-entry.big .te-mascot { width: 68px; height: 68px; padding: 5px; box-sizing: border-box; border-radius: 50%;
+    background: radial-gradient(circle at 30% 25%, #FFFFFF, #DCF0EA);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.28), inset 0 -2px 0 rgba(14,110,99,0.15); }
+  .tips-entry.big .te-label { font-size: 16px; font-weight: 800; letter-spacing: -0.01em; }
+  .tips-entry.big .te-sub { font-size: 12px; line-height: 1.4; margin-top: 3px; }
+  .tips-entry.big .te-chevron { flex-shrink: 0; width: 32px; height: 32px; padding: 7px; box-sizing: border-box; border-radius: 50%;
+    background: var(--amber); color: #fff !important; box-shadow: 0 4px 10px rgba(242,168,62,0.4); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .tips-entry.big { background: radial-gradient(150px 90px at 12% 0%, rgba(242,168,62,0.30), transparent 70%), linear-gradient(135deg, #2E8676, #1B584D); }
+    :root:not([data-theme="light"]) .tips-entry.big .te-mascot { border-radius: 50%; padding: 5px; background: radial-gradient(circle at 30% 25%, #FFFFFF, #DCF0EA); }
+  }
+  :root[data-theme="dark"] .tips-entry.big { background: radial-gradient(150px 90px at 12% 0%, rgba(242,168,62,0.30), transparent 70%), linear-gradient(135deg, #2E8676, #1B584D); }
+  :root[data-theme="dark"] .tips-entry.big .te-mascot { border-radius: 50%; padding: 5px; background: radial-gradient(circle at 30% 25%, #FFFFFF, #DCF0EA); }
+  /* Einsteiger-Kachel: kein Kreis hinter Volti, heller Volti, hellgrüner Pfeil */
+  .tips-entry.big .te-mascot, :root[data-theme="dark"] .tips-entry.big .te-mascot { background: none !important; box-shadow: none !important; padding: 0 !important; border-radius: 0 !important; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tips-entry.big .te-mascot { background: none !important; box-shadow: none !important; padding: 0 !important; border-radius: 0 !important; } }
+  .tips-entry.big .mascot svg { filter: drop-shadow(0 3px 6px rgba(0,0,0,0.35)); }
+  .tips-entry.big .mascot .m-body { fill: #F4FBF8 !important; stroke: #B7EBDD !important; }
+  .tips-entry.big .mascot .m-limb { fill: #B7EBDD !important; stroke: none !important; }
+  .tips-entry.big .mascot .m-stem { fill: none !important; stroke: #B7EBDD !important; }
+  .tips-entry.big .te-chevron { background: #8EE6A8 !important; color: #0B3B33 !important; box-shadow: 0 4px 10px rgba(142, 230, 168, 0.35) !important; }
+  /* "Genaue Kosten & Ladezeit"-Kachel: gleiche Farbe wie die E-Auto-Start-Kachel */
+  .qr-cta { background: radial-gradient(150px 90px at 12% 0%, rgba(242,168,62,0.28), transparent 70%), linear-gradient(135deg, #1D4A40, #0B211C); border: 1px solid #1F3F36; box-shadow: 0 8px 22px rgba(6, 20, 16, 0.28), inset 0 1px 0 rgba(255,255,255,0.06); color: #fff; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .qr-cta { background: radial-gradient(150px 90px at 12% 0%, rgba(242,168,62,0.30), transparent 70%), linear-gradient(135deg, #2E8676, #1B584D); border-color: #4FB8A4; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(79, 184, 164, 0.25), inset 0 1px 0 rgba(255,255,255,0.18); }
+  }
+  :root[data-theme="dark"] .qr-cta { background: radial-gradient(150px 90px at 12% 0%, rgba(242,168,62,0.30), transparent 70%), linear-gradient(135deg, #2E8676, #1B584D); border-color: #4FB8A4; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(79, 184, 164, 0.25), inset 0 1px 0 rgba(255,255,255,0.18); }
+  /* Eigene Tarife klar erkennbar */
+  .t-row.is-own { background: var(--teal-tint); border-color: var(--teal); box-shadow: inset 4px 0 0 var(--teal); }
+  .t-row .icon-btn.own.on { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .t-row .tname { display: flex; align-items: center; gap: 6px; }
+  .own-badge { flex-shrink: 0; font-size: 10px; font-weight: 700; letter-spacing: 0.02em; color: var(--teal); border: 1px solid var(--teal); border-radius: 999px; padding: 1px 7px; }
+  /* Eigene Tarife: dezenter */
+  .t-row.is-own { background: color-mix(in srgb, var(--teal) 7%, var(--surface)); border-color: color-mix(in srgb, var(--teal) 35%, var(--line)); box-shadow: none; }
+  .t-row .icon-btn.own.on { background: var(--teal-tint); border-color: var(--teal-tint-line); color: var(--teal); }
+  .own-badge { font-size: 9.5px; font-weight: 600; border-color: var(--teal-tint-line); background: var(--teal-tint); padding: 1px 6px; }
 </style>
 </head>
 <body>
@@ -1482,7 +1537,7 @@
       <div class="chip" data-filter="mine">Meine Ladesäulen</div>
     </div>
     <div class="filter-row" id="mapRadiusRow" style="gap:10px; align-items:center;">
-      <input type="range" id="mapRadiusSlider" min="1" max="50" step="1" value="15" style="flex:2; min-width:0;"/>
+      <input type="range" id="mapRadiusSlider" min="1" max="30" step="1" value="15" style="flex:2; min-width:0;"/>
       <span id="mapRadiusValue" style="min-width:60px; text-align:right; font-size:13px;">bis 15 km</span>
       <select id="mapKwSelect" style="flex:1; min-width:0; padding:8px; border-radius:10px;">
         <option value="0" selected>alle KW</option>
@@ -2737,9 +2792,9 @@
   // ---- Unified tariff row (Home favorites + Tarife master list) ----
   function makeTariffRow(t) {
     var row = document.createElement('div');
-    row.className = 't-row';
     var min = Math.min.apply(null, cpos.map(function (c) { return t.prices[c.id]; }).filter(function (v) { return v != null; }));
     var isFav = !!state.favorites[t.id], isOwn = !!state.owned[t.id];
+    row.className = 't-row' + (isOwn ? ' is-own' : '');
     row.innerHTML =
       '<button class="icon-btn star ' + (isFav ? 'on' : '') + '" aria-label="Favorit">' +
         '<svg viewBox="0 0 24 24" fill="' + (isFav ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2z"/></svg>' +
@@ -2747,7 +2802,7 @@
       '<button class="icon-btn own ' + (isOwn ? 'on' : '') + '" aria-label="Besitze ich">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>' +
       '</button>' +
-      '<div class="trow-text"><div class="tname">' + t.name + '</div><div class="tfee">ab ' + fmtPrice(min) + (t.grundgebuehr > 0 ? ' · ' + fmtEUR(t.grundgebuehr) + '/Monat' : ' · keine Grundgebühr') + '</div></div>' +
+      '<div class="trow-text"><div class="tname">' + t.name + (isOwn ? '<span class="own-badge">✓ Mein Tarif</span>' : '') + '</div><div class="tfee">ab ' + fmtPrice(min) + (t.grundgebuehr > 0 ? ' · ' + fmtEUR(t.grundgebuehr) + '/Monat' : ' · keine Grundgebühr') + '</div></div>' +
       '<svg class="tchevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
     row.querySelector('.star').addEventListener('click', function (e) {
       e.stopPropagation();
@@ -3549,7 +3604,7 @@
       .sort(function (a, b) { return a.km - b.km; })[0];
     if (!nearest) return;
     var slider = document.getElementById('mapRadiusSlider');
-    if (nearest.km > parseFloat(slider.value)) slider.value = Math.min(50, Math.ceil(nearest.km));
+    if (nearest.km > parseFloat(slider.value)) slider.value = Math.min(30, Math.ceil(nearest.km));
     if (state.mapFilter === 'mine' && !state.favCpos[nearest.cpo]) {
       state.mapFilter = 'all';
       mapChips.forEach(function (c) { c.classList.toggle('on', c.getAttribute('data-filter') === 'all'); });
@@ -3569,7 +3624,18 @@
     }
     keepScroll(keepY);
   });
-  document.getElementById('mapRadiusSlider').addEventListener('input', function () { state.mapListLimit = 10; renderKarte(); });
+  document.getElementById('mapRadiusSlider').addEventListener('input', function () {
+    state.mapListLimit = 10;
+    renderKarte();
+    var map = ensureKarteMap();
+    if (map && karteRadiusCircle) {
+      // Karte so zoomen, dass der Radius (Standort in der Mitte) komplett sichtbar ist, auch unter Filter und Buttons
+      map.stop();
+      var z = map.getBoundsZoom(karteRadiusCircle.getBounds(), false, L.point(40, 200));
+      map.setView([userLoc.lat, userLoc.lng], Math.max(3, Math.min(z, 17)), { animate: true });
+      karteLastCenteredSel = null;
+    }
+  });
   document.getElementById('mapKwSelect').addEventListener('change', function () { state.mapListLimit = 10; renderKarte(); });
   var mapChips = document.querySelectorAll('#mapFilterRow .chip');
   mapChips.forEach(function (chip) {
