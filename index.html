@@ -1113,6 +1113,63 @@
   details.auth-fold > *:not(summary) { margin-top: 12px; }
   details.auth-fold > .auth-h { margin: 18px 0 8px; }
   details.auth-fold.danger > summary { color: #C24C3D; }
+  /* Karte: Recenter- und Ladesäulen-Button im gleichen Glas-Look wie die Zoom-Buttons */
+  .map-fab {
+    background: var(--glass-bg-strong) !important; border: 1px solid var(--glass-border) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(190%); backdrop-filter: blur(22px) saturate(190%);
+    box-shadow: 0 8px 24px rgba(19, 36, 32, 0.18), inset 0 1px 0 var(--glass-shine) !important;
+  }
+  /* Karte: kein oranger Ring um das ausgewählte Ladesäulen-Kästchen (Auswahl wird durch leichtes Vergrößern gezeigt) */
+  .leaflet-pin.sel .lp-box { outline: none !important; transform: scale(1.18); }
+  /* Elveo-Pro-Hinweise (Karte & Auswahl) schöner */
+  .map-pro-row {
+    position: relative; overflow: hidden; gap: 14px; padding: 14px 14px 14px 12px; border-radius: 20px;
+    background: radial-gradient(160px 100px at 0% 0%, rgba(248, 222, 138, 0.42), transparent 70%), linear-gradient(135deg, rgba(245, 214, 123, 0.22), rgba(184, 134, 11, 0.08)), var(--surface);
+    border: 1px solid #E8C25A; box-shadow: 0 8px 22px rgba(184, 134, 11, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    transition: transform 0.12s ease;
+  }
+  .map-pro-row:active { transform: scale(0.985); }
+  .map-pro-row::after { content: ""; position: absolute; right: -30px; top: -30px; width: 110px; height: 110px; border-radius: 50%; background: radial-gradient(circle, rgba(248, 222, 138, 0.35), transparent 70%); pointer-events: none; }
+  .map-pro-row .mp-mascot { width: 48px; height: 48px; filter: drop-shadow(0 4px 8px rgba(184, 134, 11, 0.35)); }
+  .map-pro-row .mp-text { font-size: 12.5px; line-height: 1.45; color: var(--ink); position: relative; z-index: 1; }
+  .map-pro-row .mp-text::before {
+    content: "ELVEO PRO"; display: inline-block; margin-bottom: 5px; padding: 2px 9px; border-radius: 999px;
+    font-size: 9.5px; font-weight: 800; letter-spacing: 0.06em; color: #3A2A05;
+    background: linear-gradient(135deg, #F8DE8A 0%, #E4BE58 55%, #C08F16 100%);
+  }
+  .map-pro-row .mp-arrow {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 800; line-height: 1; padding-bottom: 2px; color: #3A2A05; position: relative; z-index: 1;
+    background: linear-gradient(135deg, #F8DE8A 0%, #E4BE58 55%, #C08F16 100%); box-shadow: 0 3px 8px rgba(184, 134, 11, 0.35);
+  }
+  #tarifeProSection { background: none; border: none; box-shadow: none; padding: 0; }
+  #tarifeProSection .map-pro-row { margin-top: 0; }
+  /* Pro-Hinweis: Text sauber untereinander */
+  .map-pro-row .mp-text { flex: 1; min-width: 0; text-align: left; }
+  .map-pro-row .mp-text::before { display: block; width: fit-content; margin-bottom: 6px; }
+  .map-pro-row .mp-text b { font-weight: 700; }
+  /* Einstellungen-Popup */
+  #settingsOverlay { z-index: 60; }
+  .set-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px; margin-top: 12px; }
+  .set-card .auth-h { margin: 0 0 10px; }
+  .set-card .field { margin-bottom: 12px; }
+  .set-card.danger { border-color: rgba(194, 59, 59, 0.4); }
+  .set-card.danger .auth-h { color: #C24C3D; }
+  .set-names { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .set-names .field { margin-bottom: 12px; min-width: 0; }
+  #settingsBody .auth-msg { margin-top: 4px; }
+  /* Datenschutz */
+  #page-konto > section:last-of-type { margin-bottom: 8px; }
+  .privacy-text { font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .privacy-text h4 { margin: 18px 0 6px; font-size: 13.5px; font-weight: 700; color: var(--teal); }
+  .privacy-text p { margin: 0 0 8px; color: var(--ink-soft); }
+  .privacy-text p b { color: var(--ink); }
+  .privacy-text ul { margin: 0 0 8px; padding-left: 18px; color: var(--ink-soft); }
+  .privacy-text li { margin-bottom: 3px; }
+  /* Kontakt & Impressum */
+  #page-konto .tip-link + .tip-link { margin-top: 10px; }
+  textarea { width: 100%; appearance: none; -webkit-appearance: none; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px; font-size: 16px; font-weight: 500; color: var(--ink); font-family: inherit; resize: vertical; min-height: 110px; }
+  #contactBody .auth-msg { margin-top: 4px; }
 </style>
 </head>
 <body>
@@ -1213,7 +1270,7 @@
       <p class="section-label">Deine Favoriten<span class="hint" id="favCountHint"></span></p>
       <div id="favList"></div>
     </section>
-    <footer class="foot-note">Tippe auf einen Tarif für Details. Favoriten und Besitzstatus verwaltest du im Tab „Tarife“, dort wählst du auch die Ladesäulen für den Schnellfinder.</footer>
+    <footer class="foot-note">Tippe auf einen Tarif für Details. Favoriten und Besitzstatus verwaltest du im Tab „Auswahl“, dort wählst du auch die Ladesäulen für den Schnellfinder.</footer>
   </div>
 
   <!-- PAGE: RECHNER (Ladung + Reise) -->
@@ -1528,6 +1585,34 @@
   <!-- PAGE: TARIFE + LADESÄULEN -->
   <div class="page" id="page-tarife">
     <section style="margin-top:0;">
+      <p class="section-label">Mein Fahrzeug<span class="hint">für Reichweite, Kosten & Ladezeit</span></p>
+      <div class="field">
+        <label for="acctVehicle">Modell</label>
+        <select id="acctVehicle"></select>
+        <div class="field-note" id="vehicleProNote"></div>
+      </div>
+      <div id="acctCustomWrap" style="display:none;">
+        <div class="field">
+          <label for="acctCustomCapacity">Akkukapazität (kWh)</label>
+          <input type="number" id="acctCustomCapacity" min="15" max="150" step="1">
+        </div>
+        <div class="field">
+          <label for="acctCustomConsumption">Verbrauch (kWh/100km)</label>
+          <input type="number" id="acctCustomConsumption" min="8" max="40" step="0.5">
+        </div>
+        <div class="field">
+          <label for="acctCustomPower">Max. Ladeleistung (kW)</label>
+          <input type="number" id="acctCustomPower" min="20" max="350" step="5">
+        </div>
+      </div>
+      <div class="vehicle-stats">
+        <div class="vstat"><div class="vs-val" id="vsCapacity">—</div><div class="vs-label">kWh Akku</div></div>
+        <div class="vstat"><div class="vs-val" id="vsRange">—</div><div class="vs-label">km Reichweite (100%)</div></div>
+        <div class="vstat"><div class="vs-val" id="vsPower">—</div><div class="vs-label">kW max. Laden</div></div>
+      </div>
+    </section>
+
+    <section>
       <p class="section-label">Tarife<span class="hint">★ Favorit · ✓ besitze ich</span></p>
       <div class="filter-row" id="tarifeFilterRow">
         <div class="chip on" data-filter="all">Alle</div>
@@ -1661,34 +1746,6 @@
     </section>
 
     <section>
-      <p class="section-label">Mein Fahrzeug<span class="hint">für Reichweite, Kosten & Ladezeit</span></p>
-      <div class="field">
-        <label for="acctVehicle">Modell</label>
-        <select id="acctVehicle"></select>
-        <div class="field-note" id="vehicleProNote"></div>
-      </div>
-      <div id="acctCustomWrap" style="display:none;">
-        <div class="field">
-          <label for="acctCustomCapacity">Akkukapazität (kWh)</label>
-          <input type="number" id="acctCustomCapacity" min="15" max="150" step="1">
-        </div>
-        <div class="field">
-          <label for="acctCustomConsumption">Verbrauch (kWh/100km)</label>
-          <input type="number" id="acctCustomConsumption" min="8" max="40" step="0.5">
-        </div>
-        <div class="field">
-          <label for="acctCustomPower">Max. Ladeleistung (kW)</label>
-          <input type="number" id="acctCustomPower" min="20" max="350" step="5">
-        </div>
-      </div>
-      <div class="vehicle-stats">
-        <div class="vstat"><div class="vs-val" id="vsCapacity">—</div><div class="vs-label">kWh Akku</div></div>
-        <div class="vstat"><div class="vs-val" id="vsRange">—</div><div class="vs-label">km Reichweite (100%)</div></div>
-        <div class="vstat"><div class="vs-val" id="vsPower">—</div><div class="vs-label">kW max. Laden</div></div>
-      </div>
-    </section>
-
-    <section>
       <p class="section-label">Laden zuhause<span class="hint">optional</span></p>
       <div class="field">
         <label for="acctHomePrice">Preis pro kWh an deiner Wallbox</label>
@@ -1722,7 +1779,34 @@
       <button class="danger-btn" id="acctReset">Alle Daten zurücksetzen</button>
     </section>
 
-    <footer class="foot-note">Konto-Daten bleiben nur in dieser Sitzung gespeichert.</footer>
+    <section>
+      <button class="tip-link" id="privacyBtn">
+        <div class="tl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v5c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <div>
+          <div class="tl-label">Datenschutzrichtlinien</div>
+          <div class="tl-sub">So gehen wir mit deinen Daten um</div>
+        </div>
+        <svg class="tl-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <button class="tip-link" id="contactBtn">
+        <div class="tl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></svg></div>
+        <div>
+          <div class="tl-label">Kontakt</div>
+          <div class="tl-sub">Frage, Fehler oder Idee? Schreib uns</div>
+        </div>
+        <svg class="tl-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <button class="tip-link" id="imprintBtn">
+        <div class="tl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div>
+        <div>
+          <div class="tl-label">Impressum</div>
+          <div class="tl-sub">Angaben zum Betreiber</div>
+        </div>
+        <svg class="tl-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </section>
+
+    <footer class="foot-note" style="text-align:center;">Elveo GmbH - Laumersheim - 2026</footer>
   </div>
 
 </div>
@@ -1744,7 +1828,7 @@
     </button>
     <button class="tab-btn" data-page="tarife">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
-      Tarife
+      Auswahl
     </button>
     <button class="tab-btn" data-page="konto">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
@@ -1892,6 +1976,53 @@
     </div>
   </div>
 
+</div>
+
+<div class="modal-overlay" id="privacyOverlay">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="mtitle">Datenschutzrichtlinien</div>
+      <button class="modal-close" id="privacyClose" aria-label="Schließen">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <p class="modal-fee">Stand: September 2026</p>
+    <div class="privacy-text" id="privacyBody"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="contactOverlay">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="mtitle">Kontakt</div>
+      <button class="modal-close" id="contactClose" aria-label="Schließen"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <p class="modal-fee">Wir freuen uns über Fragen, Fehlermeldungen und Ideen.</p>
+    <div id="contactBody"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="imprintOverlay">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="mtitle">Impressum</div>
+      <button class="modal-close" id="imprintClose" aria-label="Schließen"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="privacy-text" id="imprintBody"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="settingsOverlay">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="mtitle">Einstellungen</div>
+      <button class="modal-close" id="settingsClose" aria-label="Schließen">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <p class="modal-fee">Deine Account-Daten verwalten</p>
+    <div id="settingsBody"></div>
+  </div>
 </div>
 
 <div class="modal-overlay" id="tipsOverlay">
@@ -2102,9 +2233,9 @@
   var pageTexts = {
     home: { title: "Hallo!", sub: "Dein schnellster Weg zum günstigsten Tarif — und zu deinen Favoriten." },
     rechner: { title: "Rechner", sub: "Finde den günstigsten Tarif — im Alltag, auf Reisen und für einzelne Ladungen." },
-    tarife: { title: "Tarife & Ladesäulen", sub: "Wähle deine Tarife und Ladesäulen — beides fließt in Rechner und Schnellfinder ein." },
+    tarife: { title: "Meine Auswahl", sub: "Wähle Fahrzeug, Tarife und Ladesäulen — alles fließt in Rechner und Schnellfinder ein." },
     karte: { title: "Karte", sub: "Ladesäulen in deiner Umgebung." },
-    konto: { title: "Dein Konto", sub: "Fahrzeug, Akku und Heimladepreis hinterlegen, damit die Rechner genauer werden." }
+    konto: { title: "Dein Konto", sub: "Account, Profilbild und Heimladepreis verwalten." }
   };
   var tabBtns = document.querySelectorAll('.tab-btn');
   var pages = { home: document.getElementById('page-home'), rechner: document.getElementById('page-rechner'), tarife: document.getElementById('page-tarife'), karte: document.getElementById('page-karte'), konto: document.getElementById('page-konto') };
@@ -2408,7 +2539,7 @@
     } else if (priced.length === 0) {
       var empty = document.createElement('div');
       empty.className = 'empty-note';
-      empty.textContent = 'Keiner deiner Tarife lädt bei diesem Betreiber – oder du hast im Tab „Tarife“ noch keinen als eigenen markiert.';
+      empty.textContent = 'Keiner deiner Tarife lädt bei diesem Betreiber – oder du hast im Tab „Auswahl“ noch keinen als eigenen markiert.';
       list.appendChild(empty);
     } else {
       priced.forEach(function (p, i) {
@@ -2477,7 +2608,7 @@
     if (ownedTariffs.length < 2) {
       var p = document.createElement('p');
       p.className = 'tip-line';
-      p.innerHTML = 'Markiere im Tab „Tarife“ mindestens zwei eigene Tarife, die bei <b>' + cn + '</b> laden — dann zeige ich dir, ab wann sich der teurere Grundpreis lohnt.';
+      p.innerHTML = 'Markiere im Tab „Auswahl“ mindestens zwei eigene Tarife, die bei <b>' + cn + '</b> laden — dann zeige ich dir, ab wann sich der teurere Grundpreis lohnt.';
       content.appendChild(p);
       return;
     }
@@ -2524,7 +2655,7 @@
     box.innerHTML =
       '<div class="block-box">' +
         '<div class="bb-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Blockiergebühr bei ' + cpo.name + '</div>' +
-        '<div class="bb-text">Ab ' + cpo.blockGraceMin + ' Min. nach Ladeende fallen ca. ' + cpo.blockFeePerMin.toFixed(2).replace('.', ',') + ' €/Min. an. Timer dafür: Startseite → Schnellfinder (Ladesäule vorher im Tab „Tarife“ auswählen).</div>' +
+        '<div class="bb-text">Ab ' + cpo.blockGraceMin + ' Min. nach Ladeende fallen ca. ' + cpo.blockFeePerMin.toFixed(2).replace('.', ',') + ' €/Min. an. Timer dafür: Startseite → Schnellfinder (Ladesäule vorher im Tab „Auswahl“ auswählen).</div>' +
       '</div>';
   }
 
@@ -2730,7 +2861,7 @@
       var ph = document.createElement('div');
       ph.className = 'quick-placeholder';
       if (favs.length === 0) {
-        ph.innerHTML = 'Tippe oben eine Ladesäule in deiner Nähe an.<br>Eigene Ladesäulen wählst du im Tab „Tarife“ aus.<br><button class="qr-more">Zu den Ladesäulen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>';
+        ph.innerHTML = 'Tippe oben eine Ladesäule in deiner Nähe an.<br>Eigene Ladesäulen wählst du im Tab „Auswahl“ aus.<br><button class="qr-more">Zu den Ladesäulen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>';
         ph.querySelector('button').addEventListener('click', function () { showPage('tarife'); });
       } else {
         ph.textContent = 'Betreiber antippen — sofort erscheint dein günstigster Tarif.';
@@ -2865,7 +2996,7 @@
     if (favTariffs.length === 0) {
       var empty = document.createElement('div');
       empty.className = 'empty-note';
-      empty.textContent = 'Noch keine Favoriten. Im Tab „Tarife“ markierst du Tarife mit dem Stern, dann tauchen sie hier auf.';
+      empty.textContent = 'Noch keine Favoriten. Im Tab „Auswahl“ markierst du Tarife mit dem Stern, dann tauchen sie hier auf.';
       favWrap.appendChild(empty);
     } else {
       favTariffs.forEach(function (t) { favWrap.appendChild(makeTariffRow(t)); });
@@ -2903,7 +3034,7 @@
   }
   function coffeeText() {
     var km = coffeeBreakKm();
-    if (!km) return 'Schon eine Kaffeepause von 10 Minuten kann dein E-Auto ein gutes Stück weiterbringen. Hinterlege dein Fahrzeug im Konto, dann rechnet Elveo dir aus, wie weit.';
+    if (!km) return 'Schon eine Kaffeepause von 10 Minuten kann dein E-Auto ein gutes Stück weiterbringen. Wähle dein Fahrzeug im Tab „Auswahl“, dann rechnet Elveo dir aus, wie weit.';
     return 'Schon eine Kaffeepause von 10 Minuten bringt dein ' + vehicleName() + ' ab 20 % Akkustand etwa ' + km + ' km weiter, an einer Säule mit ' + state.charge.stationPower + ' kW.';
   }
   function stationAdviceText() {
@@ -3023,7 +3154,7 @@
       action: { label: 'Zum Konto', go: 'konto' } },
     { title: 'Ladekarte oder App vorbereiten',
       text: 'Richte vor der ersten Fahrt einen Ladetarif ein, damit du nicht spontan zum teuersten Preis lädst. Viele Säulen lassen sich per Karte, App oder direkt bezahlen.',
-      help: 'Im Tab „Tarife“ siehst du alle Tarife mit Preisen je Betreiber und Preisverlauf. Deine eigenen markierst du mit dem Haken.',
+      help: 'Im Tab „Auswahl“ siehst du alle Tarife mit Preisen je Betreiber und Preisverlauf. Deine eigenen markierst du mit dem Haken.',
       action: { label: 'Zu den Tarifen', go: 'tarife' } },
     { title: 'Reichweite realistisch planen',
       text: 'Autobahn, Kälte und Anhänger erhöhen den Verbrauch. Rechne mit einem Puffer und plane Ladestopps lieber etwas früher ein, statt mit dem letzten Prozent anzukommen.',
@@ -3031,8 +3162,8 @@
       action: { label: 'Zum Reise-Rechner', go: 'trip' } },
     { title: 'Schon 10 Minuten bringen dich weiter',
       text: function () { return coffeeText(); },
-      help: 'Elveo rechnet mit der Ladekurve deines Fahrzeugs. Im Konto wählst du dein Modell, im Ladungs-Rechner die Ladeleistung der Säule.',
-      action: { label: 'Zum Konto', go: 'konto' } },
+      help: 'Elveo rechnet mit der Ladekurve deines Fahrzeugs. Im Tab „Auswahl“ wählst du dein Modell, im Ladungs-Rechner die Ladeleistung der Säule.',
+      action: { label: 'Zur Auswahl', go: 'tarife' } },
     { title: 'Die erste Schnellladung üben',
       text: 'Probiere Anstecken, Freischalten und Bezahlen einmal in Ruhe aus, nicht erst mit fast leerem Akku. Danach ist jede weitere Ladung Routine.',
       help: 'Auf „Jetzt laden“ zeigt dir der Schnellfinder Anbieter in der Nähe und sofort deinen günstigsten Tarif.',
@@ -3775,7 +3906,7 @@
     var bfCpo = cpoById(histCpoForBlock);
     document.getElementById('modalBlockNote').innerHTML =
       '<div class="bb-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Blockiergebühr bei ' + bfCpo.name + '</div>' +
-      '<div class="bb-text">Ab ' + bfCpo.blockGraceMin + ' Min. nach Ladeende ca. ' + bfCpo.blockFeePerMin.toFixed(2).replace('.', ',') + ' €/Min. Timer dafür: Ladesäule im Tab „Tarife“ auswählen, dann Startseite → Schnellfinder.</div>';
+      '<div class="bb-text">Ab ' + bfCpo.blockGraceMin + ' Min. nach Ladeende ca. ' + bfCpo.blockFeePerMin.toFixed(2).replace('.', ',') + ' €/Min. Timer dafür: Ladesäule im Tab „Auswahl“ auswählen, dann Startseite → Schnellfinder.</div>';
 
     modalOverlay.classList.add('open');
   }
@@ -4235,11 +4366,19 @@
   // Leer gelassen: Account wird nur lokal auf diesem Gerät gespeichert.
   var AUTH_CONFIG = { supabaseUrl: '', supabaseAnonKey: '' };
   var authRemote = !!(AUTH_CONFIG.supabaseUrl && AUTH_CONFIG.supabaseAnonKey);
-  var auth = { user: null, tab: 'login', email: '', name: '', msg: '', ok: false };
+  var auth = { user: null, tab: 'login', email: '', first: '', last: '', msg: '', ok: false };
   function lsGet(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
   function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
   auth.user = lsGet('elveo_session');
-  function applyAuthName() { state.account.name = (auth.user && auth.user.name) || 'Fahrer'; }
+  function splitName(u) {
+    if (!u) return { first: '', last: '' };
+    if (u.first) return { first: u.first, last: u.last || '' };
+    var parts = String(u.name || '').trim().split(/\s+/);
+    return { first: parts[0] || '', last: parts.slice(1).join(' ') };
+  }
+  function fullName(u) { var n = splitName(u); return (n.first + ' ' + n.last).trim(); }
+  // In der App wird nur der Vorname verwendet
+  function applyAuthName() { state.account.name = splitName(auth.user).first || 'Fahrer'; }
   applyAuthName();
   function validEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
   function toB64(buf) { var b = new Uint8Array(buf), t = ''; for (var i = 0; i < b.length; i++) t += String.fromCharCode(b[i]); return btoa(t); }
@@ -4250,16 +4389,16 @@
       .then(function (k) { return crypto.subtle.deriveBits({ name: 'PBKDF2', salt: salt, iterations: 150000, hash: 'SHA-256' }, k, 256); })
       .then(toB64);
   }
-  function localRegister(email, pw, name) {
+  function localRegister(email, pw, first, last) {
     var acc = lsGet('elveo_accounts') || {};
     if (acc[email]) return Promise.reject(new Error('Mit dieser E-Mail gibt es schon einen Account.'));
     var salt = crypto.getRandomValues(new Uint8Array(16));
-    return hashPw(pw, salt).then(function (h) { acc[email] = { salt: toB64(salt), hash: h, name: name }; lsSet('elveo_accounts', acc); return { email: email, name: name }; });
+    return hashPw(pw, salt).then(function (h) { acc[email] = { salt: toB64(salt), hash: h, first: first, last: last, name: first + ' ' + last }; lsSet('elveo_accounts', acc); return { email: email, first: first, last: last }; });
   }
   function localLogin(email, pw) {
     var a = (lsGet('elveo_accounts') || {})[email];
     if (!a) return Promise.reject(new Error('E-Mail oder Passwort ist falsch.'));
-    return hashPw(pw, fromB64(a.salt)).then(function (h) { if (h !== a.hash) throw new Error('E-Mail oder Passwort ist falsch.'); return { email: email, name: a.name }; });
+    return hashPw(pw, fromB64(a.salt)).then(function (h) { if (h !== a.hash) throw new Error('E-Mail oder Passwort ist falsch.'); return { email: email, first: a.first, last: a.last, name: a.name }; });
   }
   function sbErr(j) {
     var m = String(j.error_description || j.msg || j.message || '');
@@ -4281,8 +4420,9 @@
       return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw new Error(sbErr(j)); return j; });
     }, function () { throw new Error('Keine Verbindung. Bitte prüfe dein Internet.'); });
   }
+  var settingsOpen = false;
   function authMsg(text, ok) {
-    var el = document.getElementById('authMsg');
+    var el = document.getElementById(settingsOpen ? 'setMsg' : 'authMsg');
     if (!el) return;
     el.textContent = text || '';
     el.className = 'auth-msg' + (ok ? ' ok' : '');
@@ -4299,31 +4439,17 @@
     if (avatarBlockEl && box.contains(avatarBlockEl)) box.parentNode.appendChild(avatarBlockEl);
     document.getElementById('authHint').textContent = authRemote ? 'Cloud' : 'nur dieses Gerät';
     if (auth.user) {
-      var nm = auth.user.name || '';
+      var nm = fullName(auth.user);
       box.innerHTML =
         '<div class="auth-hero"><div class="auth-hero-avatar" id="authHeroAvatar"></div><div class="auth-hero-text"><div class="auth-mail">' + esc(nm || auth.user.email) + '</div><div class="auth-sub">' + (nm ? esc(auth.user.email) + '<br>' : '') + 'Angemeldet' + (auth.user.local ? ' · lokal auf diesem Gerät' : '') + '</div></div></div>' +
         '<div class="auth-msg' + (auth.ok ? ' ok' : '') + '" id="authMsg">' + esc(auth.msg) + '</div>' +
         '<div id="avatarSlot"></div>' +
-        '<details class="fold-plain auth-fold"><summary>Daten ändern<span class="hint">Name, E-Mail, Passwort</span></summary>' +
-          '<p class="auth-h">Name</p>' +
-          '<div class="field"><input type="text" id="authNewName" maxlength="30" autocomplete="nickname" value="' + esc(nm) + '"></div>' +
-          '<button class="auth-btn" id="authSaveName">Name speichern</button>' +
-          '<p class="auth-h">E-Mail-Adresse</p>' +
-          '<div class="field"><label for="authNewEmail">Neue E-Mail</label><input type="email" id="authNewEmail" autocomplete="email" inputmode="email" autocapitalize="none"></div>' +
-          '<div class="field"><label for="authEmailPw">Aktuelles Passwort</label><input type="password" id="authEmailPw" autocomplete="current-password"></div>' +
-          '<button class="auth-btn" id="authSaveEmail">E-Mail ändern</button>' +
-          '<p class="auth-h">Passwort</p>' +
-          '<div class="field"><label for="authOldPw">Aktuelles Passwort</label><input type="password" id="authOldPw" autocomplete="current-password"></div>' +
-          '<div class="field"><label for="authNewPw">Neues Passwort (mind. 8 Zeichen)</label><input type="password" id="authNewPw" autocomplete="new-password"></div>' +
-          '<div class="field"><label for="authNewPw2">Neues Passwort wiederholen</label><input type="password" id="authNewPw2" autocomplete="new-password"></div>' +
-          '<button class="auth-btn" id="authSavePw">Passwort ändern</button>' +
-        '</details>' +
-        '<details class="fold-plain auth-fold danger"><summary>Account löschen</summary>' +
-          '<p class="auth-note" style="margin-top:0;">Dein Account wird dauerhaft gelöscht. Das lässt sich nicht rückgängig machen.</p>' +
-          '<div class="field"><label for="authDelPw">Zur Bestätigung: Passwort</label><input type="password" id="authDelPw" autocomplete="current-password"></div>' +
-          '<button class="auth-btn danger" id="authDelete">Account endgültig löschen</button>' +
-        '</details>' +
-        '<button class="danger-btn" id="authLogout" style="margin-top:12px;">Abmelden</button>';
+        '<button class="tip-link" id="authSettingsBtn" style="margin-top:12px;">' +
+          '<div class="tl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>' +
+          '<div><div class="tl-label">Einstellungen</div><div class="tl-sub">Name, E-Mail, Passwort, Account löschen</div></div>' +
+          '<svg class="tl-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>' +
+        '</button>' +
+        '<button class="danger-btn" id="authLogout" style="margin-top:10px;">Abmelden</button>';
       var ha = document.getElementById('authHeroAvatar'); if (ha) ha.innerHTML = avatarSVG(state.account.avatar);
       placeAvatarBlock();
       auth.msg = ''; auth.ok = false;
@@ -4333,7 +4459,7 @@
     box.innerHTML =
       '<div class="segmented" style="margin-bottom:14px;"><button class="rc-tab' + (reg ? '' : ' active') + '" data-tab="login"><b>Anmelden</b></button><button class="rc-tab' + (reg ? ' active' : '') + '" data-tab="register"><b>Registrieren</b></button></div>' +
       '<div class="auth-msg' + (auth.ok ? ' ok' : '') + '" id="authMsg">' + esc(auth.msg) + '</div>' +
-      (reg ? '<div class="field"><label for="authName">Name</label><input type="text" id="authName" maxlength="30" autocomplete="nickname" value="' + esc(auth.name || '') + '"></div>' : '') +
+      (reg ? '<div class="set-names" style="margin-bottom:16px;"><div class="field"><label for="authFirst">Vorname</label><input type="text" id="authFirst" maxlength="30" autocomplete="given-name" value="' + esc(auth.first || '') + '"></div><div class="field"><label for="authLast">Nachname</label><input type="text" id="authLast" maxlength="40" autocomplete="family-name" value="' + esc(auth.last || '') + '"></div></div>' : '') +
       '<div class="field"><label for="authEmail">E-Mail</label><input type="email" id="authEmail" autocomplete="email" inputmode="email" autocapitalize="none" value="' + esc(auth.email) + '"></div>' +
       '<div class="field"><label for="authPw">Passwort' + (reg ? ' (mind. 8 Zeichen)' : '') + '</label><input type="password" id="authPw" autocomplete="' + (reg ? 'new-password' : 'current-password') + '"></div>' +
       (reg ? '<div class="field"><label for="authPw2">Passwort wiederholen</label><input type="password" id="authPw2" autocomplete="new-password"></div>' : '') +
@@ -4349,11 +4475,12 @@
     var pw = document.getElementById('authPw').value;
     var reg = auth.tab === 'register';
     auth.email = email;
-    var name = '';
+    var first = '', last = '';
     if (reg) {
-      name = document.getElementById('authName').value.trim().replace(/\s+/g, ' ');
-      auth.name = name;
-      if (name.length < 2) return authMsg('Bitte wähle einen Namen (mindestens 2 Zeichen).');
+      first = document.getElementById('authFirst').value.trim().replace(/\s+/g, ' ');
+      last = document.getElementById('authLast').value.trim().replace(/\s+/g, ' ');
+      auth.first = first; auth.last = last;
+      if (!first || !last) return authMsg('Bitte gib Vor- und Nachnamen ein.');
     }
     if (!validEmail(email)) return authMsg('Bitte gib eine gültige E-Mail-Adresse ein.');
     if (reg) {
@@ -4365,14 +4492,15 @@
     var p;
     if (authRemote) {
       p = reg
-        ? sbFetch('/auth/v1/signup', { email: email, password: pw, data: { name: name } }).then(function (j) { return j.access_token ? { email: email, name: name, token: j.access_token } : { pending: true }; })
-        : sbFetch('/auth/v1/token?grant_type=password', { email: email, password: pw }).then(function (j) { var md = (j.user && j.user.user_metadata) || {}; return { email: email, name: md.name || '', token: j.access_token }; });
+        ? sbFetch('/auth/v1/signup', { email: email, password: pw, data: { first_name: first, last_name: last, name: first + ' ' + last } }).then(function (j) { return j.access_token ? { email: email, first: first, last: last, token: j.access_token } : { pending: true }; })
+        : sbFetch('/auth/v1/token?grant_type=password', { email: email, password: pw }).then(function (j) { var md = (j.user && j.user.user_metadata) || {}; return { email: email, first: md.first_name || '', last: md.last_name || '', name: md.name || '', token: j.access_token }; });
     } else {
-      p = reg ? localRegister(email, pw, name) : localLogin(email, pw);
+      p = reg ? localRegister(email, pw, first, last) : localLogin(email, pw);
     }
     p.then(function (u) {
       if (u.pending) { auth.tab = 'login'; auth.msg = 'Fast geschafft: Wir haben dir eine E-Mail geschickt. Bestätige sie und melde dich dann an.'; auth.ok = true; renderAuth(); var m = document.getElementById('authMsg'); if (m) { m.textContent = 'Fast geschafft: Wir haben dir eine E-Mail geschickt. Bestätige sie und melde dich dann an.'; m.className = 'auth-msg ok'; } return; }
-      auth.user = { email: u.email, name: u.name || '', token: u.token || null, local: !authRemote };
+      var nn0 = splitName(u);
+      auth.user = { email: u.email, first: nn0.first, last: nn0.last, name: (nn0.first + ' ' + nn0.last).trim(), token: u.token || null, local: !authRemote };
       lsSet('elveo_session', auth.user);
       applyAuthName();
       renderAuth();
@@ -4391,16 +4519,25 @@
   function authRun(btn, p, okMsg, after) {
     var label = btn.textContent;
     btn.disabled = true; btn.textContent = 'Einen Moment …';
-    p.then(function () { if (after) after(); auth.msg = okMsg; auth.ok = true; renderAuth(); })
+    p.then(function () {
+      if (after) after();
+      if (settingsOpen && auth.user) { renderAuth(); renderSettings(okMsg, true); }
+      else { auth.msg = okMsg; auth.ok = true; renderAuth(); }
+    })
      .catch(function (e) { btn.disabled = false; btn.textContent = label; authMsg(e.message || 'Das hat nicht geklappt. Bitte versuche es erneut.'); });
   }
   function actSaveName(btn) {
-    var nn = document.getElementById('authNewName').value.trim().replace(/\s+/g, ' ');
-    if (nn.length < 2) return authMsg('Bitte wähle einen Namen (mindestens 2 Zeichen).');
-    var p;
-    if (authRemote) p = sbFetch('/auth/v1/user', { data: { name: nn } }, auth.user.token, 'PUT');
-    else { var acc = lsGet('elveo_accounts') || {}; if (acc[auth.user.email]) acc[auth.user.email].name = nn; lsSet('elveo_accounts', acc); p = Promise.resolve(); }
-    authRun(btn, p, 'Name gespeichert.', function () { auth.user.name = nn; saveSession(); applyAuthName(); });
+    var f = document.getElementById('authNewFirst').value.trim().replace(/\s+/g, ' ');
+    var l = document.getElementById('authNewLast').value.trim().replace(/\s+/g, ' ');
+    if (!f || !l) return authMsg('Bitte gib Vor- und Nachnamen ein.');
+    var full = f + ' ' + l, p;
+    if (authRemote) p = sbFetch('/auth/v1/user', { data: { first_name: f, last_name: l, name: full } }, auth.user.token, 'PUT');
+    else {
+      var acc = lsGet('elveo_accounts') || {};
+      if (acc[auth.user.email]) { acc[auth.user.email].first = f; acc[auth.user.email].last = l; acc[auth.user.email].name = full; }
+      lsSet('elveo_accounts', acc); p = Promise.resolve();
+    }
+    authRun(btn, p, 'Name gespeichert.', function () { auth.user.first = f; auth.user.last = l; auth.user.name = full; saveSession(); applyAuthName(); });
   }
   function actSaveEmail(btn) {
     var ne = document.getElementById('authNewEmail').value.trim().toLowerCase();
@@ -4443,17 +4580,55 @@
       var acc = lsGet('elveo_accounts') || {}; delete acc[email]; lsSet('elveo_accounts', acc);
     });
     authRun(btn, p, 'Dein Account wurde gelöscht.', function () {
-      auth.user = null; auth.tab = 'login'; auth.email = ''; auth.name = '';
+      auth.user = null; auth.tab = 'login'; auth.email = ''; auth.first = ''; auth.last = ''; closeSettings();
       try { localStorage.removeItem('elveo_session'); } catch (x) {}
       applyAuthName();
     });
   }
+  // ---- Einstellungen-Popup ----
+  function renderSettings(msg, ok) {
+    var u = auth.user; if (!u) return;
+    var n = splitName(u);
+    document.getElementById('settingsBody').innerHTML =
+      '<div class="auth-msg' + (ok ? ' ok' : '') + '" id="setMsg">' + esc(msg || '') + '</div>' +
+      '<div class="set-card"><p class="auth-h">Name</p>' +
+        '<div class="set-names"><div class="field"><label for="authNewFirst">Vorname</label><input type="text" id="authNewFirst" maxlength="30" autocomplete="given-name" value="' + esc(n.first) + '"></div>' +
+        '<div class="field"><label for="authNewLast">Nachname</label><input type="text" id="authNewLast" maxlength="40" autocomplete="family-name" value="' + esc(n.last) + '"></div></div>' +
+        '<div class="auth-note" style="margin:0 0 12px;">In der App sprechen wir dich nur mit deinem Vornamen an.</div>' +
+        '<button class="auth-btn" id="authSaveName">Name speichern</button></div>' +
+      '<div class="set-card"><p class="auth-h">E-Mail-Adresse</p>' +
+        '<div class="field"><label for="authNewEmail">Neue E-Mail</label><input type="email" id="authNewEmail" autocomplete="email" inputmode="email" autocapitalize="none"></div>' +
+        '<div class="field"><label for="authEmailPw">Aktuelles Passwort</label><input type="password" id="authEmailPw" autocomplete="current-password"></div>' +
+        '<button class="auth-btn" id="authSaveEmail">E-Mail ändern</button></div>' +
+      '<div class="set-card"><p class="auth-h">Passwort</p>' +
+        '<div class="field"><label for="authOldPw">Aktuelles Passwort</label><input type="password" id="authOldPw" autocomplete="current-password"></div>' +
+        '<div class="field"><label for="authNewPw">Neues Passwort (mind. 8 Zeichen)</label><input type="password" id="authNewPw" autocomplete="new-password"></div>' +
+        '<div class="field"><label for="authNewPw2">Neues Passwort wiederholen</label><input type="password" id="authNewPw2" autocomplete="new-password"></div>' +
+        '<button class="auth-btn" id="authSavePw">Passwort ändern</button></div>' +
+      '<div class="set-card danger"><p class="auth-h">Account löschen</p>' +
+        '<div class="auth-note" style="margin:0 0 12px;">Dein Account wird dauerhaft gelöscht. Das lässt sich nicht rückgängig machen.</div>' +
+        '<div class="field"><label for="authDelPw">Zur Bestätigung: Passwort</label><input type="password" id="authDelPw" autocomplete="current-password"></div>' +
+        '<button class="auth-btn danger" id="authDelete">Account endgültig löschen</button></div>';
+  }
+  var settingsOverlay = document.getElementById('settingsOverlay');
+  function openSettings() { if (!auth.user) return; settingsOpen = true; renderSettings(); settingsOverlay.classList.add('open'); }
+  function closeSettings() { settingsOpen = false; settingsOverlay.classList.remove('open'); }
+  document.getElementById('settingsClose').addEventListener('click', closeSettings);
+  settingsOverlay.addEventListener('click', function (e) { if (e.target === settingsOverlay) closeSettings(); });
+  document.getElementById('settingsBody').addEventListener('click', function (e) {
+    var t = e.target.closest('button'); if (!t) return;
+    if (t.id === 'authSaveName') actSaveName(t);
+    else if (t.id === 'authSaveEmail') actSaveEmail(t);
+    else if (t.id === 'authSavePw') actSavePw(t);
+    else if (t.id === 'authDelete') actDelete(t);
+  });
   document.getElementById('authBox').addEventListener('click', function (e) {
     var t = e.target.closest('button'); if (!t) return;
     if (t.getAttribute('data-tab')) {
       var em = document.getElementById('authEmail'); if (em) auth.email = em.value.trim();
       auth.tab = t.getAttribute('data-tab'); renderAuth();
-    } else if (t.id === 'authSubmit') { authSubmit(); }
+    } else if (t.id === 'authSettingsBtn') { openSettings(); }
+    else if (t.id === 'authSubmit') { authSubmit(); }
     else if (t.id === 'authSaveName') { actSaveName(t); }
     else if (t.id === 'authSaveEmail') { actSaveEmail(t); }
     else if (t.id === 'authSavePw') { actSavePw(t); }
@@ -4474,6 +4649,90 @@
     if (e.key === 'Enter' && e.target.tagName === 'INPUT') { e.preventDefault(); if (document.getElementById('authSubmit')) authSubmit(); }
   });
   renderAuth();
+
+  // ---- Datenschutzrichtlinien, Kontakt & Impressum ----
+  // Hier die Angaben zum Betreiber der App eintragen (gilt für Datenschutz, Kontakt und Impressum).
+  var PRIVACY_CONTACT = { name: '', address: '', email: '', phone: '' };
+  function renderPrivacy() {
+    var c = PRIVACY_CONTACT;
+    var who = (c.name || c.address || c.email)
+      ? esc(c.name) + (c.address ? '<br>' + esc(c.address) : '') + (c.email ? '<br>' + esc(c.email) : '')
+      : '<i>[Name, Anschrift und E-Mail des Betreibers eintragen]</i>';
+    document.getElementById('privacyBody').innerHTML =
+      '<h4>1. Verantwortlicher</h4><p>' + who + '</p>' +
+      '<h4>2. Welche Daten wir verarbeiten</h4>' +
+      '<p><b>Account:</b> Vorname, Nachname, E-Mail-Adresse und Passwort. Das Passwort wird nie im Klartext gespeichert, sondern nur als Hash. Zusätzlich speichern wir auf deinem Gerät, dass du angemeldet bist.</p>' +
+      '<p><b>App-Einstellungen:</b> Fahrzeug, Tarife, Favoriten, Bewertungen und Meldungen bleiben nur in deiner aktuellen Sitzung im Speicher deines Geräts. Sie werden nicht an uns übertragen.</p>' +
+      '<h4>3. Standort</h4>' +
+      '<p>Wenn du den Standort freigibst, nutzt Elveo ihn, um Ladesäulen in deiner Nähe zu zeigen. Die Entfernungen werden auf deinem Gerät berechnet. Für die Anzeige deines Ortsnamens werden deine Koordinaten an den Dienst BigDataCloud gesendet. Du kannst die Freigabe jederzeit in den Einstellungen deines Geräts oder Browsers widerrufen.</p>' +
+      '<h4>4. Externe Dienste</h4>' +
+      '<p>Beim Nutzen der App kann dein Gerät Verbindungen zu diesen Diensten aufbauen. Dabei wird mindestens deine IP-Adresse übertragen:</p>' +
+      '<ul><li>GitHub Pages (Hosting der App und der Ladesäulen-Daten)</li><li>OpenStreetMap (Kartenkacheln)</li><li>cdnjs (Kartenbibliothek Leaflet)</li><li>BigDataCloud (Ortsname zum Standort)</li><li>Google Maps, nur wenn du einen Link dorthin öffnest</li>' + (authRemote ? '<li>Supabase (Speicherung und Anmeldung deines Accounts)</li>' : '') + '</ul>' +
+      '<p>Die Ladesäulen-Daten stammen aus Open Charge Map. Preise und Tarife in der App sind Beispielwerte.</p>' +
+      '<h4>5. Wo dein Account gespeichert wird</h4>' +
+      '<p>' + (authRemote ? 'Dein Account wird beim Anbieter Supabase gespeichert, damit du ihn geräteübergreifend nutzen kannst.' : 'Dein Account wird nur lokal im Speicher deines Browsers gespeichert und nicht mit anderen Geräten synchronisiert. Wenn du Browserdaten löschst, geht er verloren.') + '</p>' +
+      '<h4>6. Speicherdauer und Löschung</h4>' +
+      '<p>Du kannst deinen Account jederzeit unter Konto → Einstellungen → Account löschen dauerhaft entfernen. Beim Abmelden wird die Anmeldung auf deinem Gerät beendet.</p>' +
+      '<h4>7. Deine Rechte</h4>' +
+      '<p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch. Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren. Wende dich dafür an den oben genannten Verantwortlichen.</p>' +
+      '<h4>8. Änderungen</h4><p>Wir passen diese Hinweise an, wenn sich die App ändert. Das Datum oben zeigt den aktuellen Stand.</p>';
+  }
+  var privacyOverlay = document.getElementById('privacyOverlay');
+  document.getElementById('privacyBtn').addEventListener('click', function () { renderPrivacy(); privacyOverlay.classList.add('open'); });
+  document.getElementById('privacyClose').addEventListener('click', function () { privacyOverlay.classList.remove('open'); });
+  privacyOverlay.addEventListener('click', function (e) { if (e.target === privacyOverlay) privacyOverlay.classList.remove('open'); });
+
+  // ---- Kontakt ----
+  var contactOverlay = document.getElementById('contactOverlay');
+  function renderContact(msg, ok) {
+    var mail = PRIVACY_CONTACT.email;
+    document.getElementById('contactBody').innerHTML =
+      '<div class="auth-msg' + (ok ? ' ok' : '') + '" id="contactMsg">' + esc(msg || '') + '</div>' +
+      '<div class="field"><label for="contactTopic">Thema</label><select id="contactTopic"><option>Frage</option><option>Fehler melden</option><option>Idee / Wunsch</option><option>Sonstiges</option></select></div>' +
+      '<div class="field"><label for="contactReply">Deine E-Mail für die Antwort</label><input type="email" id="contactReply" autocomplete="email" inputmode="email" autocapitalize="none" value="' + esc(auth.user ? auth.user.email : '') + '"></div>' +
+      '<div class="field"><label for="contactText">Nachricht</label><textarea id="contactText" rows="5" maxlength="2000" placeholder="Wie können wir helfen?"></textarea></div>' +
+      '<button class="auth-btn" id="contactSend">Nachricht vorbereiten</button>' +
+      '<div class="auth-note">Beim Absenden öffnet sich dein E-Mail-Programm mit der fertigen Nachricht.' + (mail ? ' Du erreichst uns auch direkt unter <b>' + esc(mail) + '</b>.' : '') + '</div>';
+  }
+  document.getElementById('contactBtn').addEventListener('click', function () { renderContact(); contactOverlay.classList.add('open'); });
+  document.getElementById('contactClose').addEventListener('click', function () { contactOverlay.classList.remove('open'); });
+  contactOverlay.addEventListener('click', function (e) { if (e.target === contactOverlay) contactOverlay.classList.remove('open'); });
+  document.getElementById('contactBody').addEventListener('click', function (e) {
+    if (e.target.id !== 'contactSend') return;
+    var text = document.getElementById('contactText').value.trim();
+    var topic = document.getElementById('contactTopic').value;
+    var reply = document.getElementById('contactReply').value.trim();
+    var setMsg = function (t, ok) { var m = document.getElementById('contactMsg'); m.textContent = t; m.className = 'auth-msg' + (ok ? ' ok' : ''); };
+    if (!PRIVACY_CONTACT.email) return setMsg('Die Kontakt-E-Mail des Betreibers ist noch nicht hinterlegt.');
+    if (text.length < 5) return setMsg('Bitte schreibe eine kurze Nachricht.');
+    if (reply && !validEmail(reply)) return setMsg('Bitte gib eine gültige E-Mail-Adresse für die Antwort ein.');
+    var body = text + (reply ? '\n\nAntwort bitte an: ' + reply : '');
+    window.location.href = 'mailto:' + encodeURIComponent(PRIVACY_CONTACT.email) + '?subject=' + encodeURIComponent('Elveo: ' + topic) + '&body=' + encodeURIComponent(body);
+    setMsg('Dein E-Mail-Programm sollte sich jetzt öffnen. Sende die Nachricht dort ab.', true);
+  });
+
+  // ---- Impressum ----
+  var imprintOverlay = document.getElementById('imprintOverlay');
+  function renderImprint() {
+    var c = PRIVACY_CONTACT;
+    var ph = function (t) { return '<i>[' + t + ']</i>'; };
+    var addr = c.address ? esc(c.address).replace(/,\s*/g, '<br>') : ph('Straße, PLZ Ort eintragen');
+    document.getElementById('imprintBody').innerHTML =
+      '<h4>Angaben gemäß § 5 DDG</h4>' +
+      '<p><b>' + (c.name ? esc(c.name) : ph('Name eintragen')) + '</b><br>' + addr + '</p>' +
+      '<h4>Kontakt</h4>' +
+      '<p>E-Mail: ' + (c.email ? '<a href="mailto:' + esc(c.email) + '" style="color:var(--teal);">' + esc(c.email) + '</a>' : ph('E-Mail eintragen')) +
+      (c.phone ? '<br>Telefon: ' + esc(c.phone) : '') + '</p>' +
+      '<h4>Verantwortlich für den Inhalt</h4>' +
+      '<p>' + (c.name ? esc(c.name) : ph('Name eintragen')) + ', Anschrift wie oben.</p>' +
+      '<h4>Haftung für Inhalte</h4>' +
+      '<p>Die Tarife, Preise und Berechnungen in Elveo sind Beispielwerte und Schätzungen. Für Richtigkeit, Vollständigkeit und Aktualität übernehmen wir keine Gewähr. Bitte prüfe Preise vor dem Laden beim jeweiligen Anbieter.</p>' +
+      '<h4>Quellen</h4>' +
+      '<p>Kartendaten: © OpenStreetMap-Mitwirkende. Ladesäulen-Daten: Open Charge Map.</p>';
+  }
+  document.getElementById('imprintBtn').addEventListener('click', function () { renderImprint(); imprintOverlay.classList.add('open'); });
+  document.getElementById('imprintClose').addEventListener('click', function () { imprintOverlay.classList.remove('open'); });
+  imprintOverlay.addEventListener('click', function (e) { if (e.target === imprintOverlay) imprintOverlay.classList.remove('open'); });
 
   // ---- init ----
   // Beim Öffnen: Anbieter in direkter Nähe im Schnellfinder vorauswählen
