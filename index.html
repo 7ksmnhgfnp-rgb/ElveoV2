@@ -1078,6 +1078,41 @@
   .t-row.is-own { background: color-mix(in srgb, var(--teal) 7%, var(--surface)); border-color: color-mix(in srgb, var(--teal) 35%, var(--line)); box-shadow: none; }
   .t-row .icon-btn.own.on { background: var(--teal-tint); border-color: var(--teal-tint-line); color: var(--teal); }
   .own-badge { font-size: 9.5px; font-weight: 600; border-color: var(--teal-tint-line); background: var(--teal-tint); padding: 1px 6px; }
+  /* Account (E-Mail & Passwort) */
+  input[type="email"], input[type="password"] {
+    width: 100%; appearance: none; -webkit-appearance: none; background: var(--surface);
+    border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px;
+    font-size: 16px; font-weight: 600; color: var(--ink); font-family: inherit;
+  }
+  .auth-btn { width: 100%; border: none; border-radius: var(--radius-sm); padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer; background: var(--teal); color: #fff; font-family: inherit; }
+  .auth-btn:disabled { opacity: .6; cursor: default; }
+  .auth-link { background: none; border: none; padding: 0; margin-top: 12px; font-size: 12.5px; font-weight: 600; color: var(--teal); cursor: pointer; font-family: inherit; }
+  .auth-msg { margin: 0 0 12px; padding: 10px 12px; border-radius: var(--radius-sm); font-size: 12.5px; line-height: 1.5; background: rgba(194, 59, 59, 0.12); color: var(--ink); border: 1px solid rgba(194, 59, 59, 0.35); }
+  .auth-msg.ok { background: var(--teal-tint); border-color: var(--teal-tint-line); }
+  .auth-msg:empty { display: none; }
+  .auth-user { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .auth-avatar { flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: var(--teal-tint); border: 1px solid var(--teal-tint-line); color: var(--teal); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; text-transform: uppercase; }
+  .auth-mail { font-weight: 700; font-size: 14.5px; word-break: break-all; }
+  .auth-sub { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+  .auth-note { margin-top: 12px; font-size: 11.5px; color: var(--ink-soft); line-height: 1.5; }
+  .auth-h { margin: 16px 0 8px; font-size: 12px; font-weight: 700; color: var(--ink-soft); letter-spacing: .03em; text-transform: uppercase; }
+  .auth-fold { margin-top: 14px; }
+  .auth-fold[open] > summary { margin-bottom: 4px; }
+  .auth-btn.danger { background: #C23B3B; }
+  .auth-fold .field { margin-bottom: 12px; }
+  /* Account-Einstellungen überarbeitet */
+  .auth-hero { display: flex; align-items: center; gap: 14px; padding: 14px; margin-bottom: 14px; border-radius: var(--radius-lg); background: var(--teal-tint); border: 1px solid var(--teal-tint-line); }
+  .auth-hero-avatar { width: 64px; height: 64px; flex-shrink: 0; }
+  .auth-hero-avatar .mascot { width: 100%; height: 100%; }
+  .auth-hero-text { min-width: 0; }
+  .auth-hero .auth-mail { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
+  #avatarBlock .auth-h { margin: 4px 0 10px; }
+  #avatarBlock .avatar-grid { margin-bottom: 4px; }
+  details.auth-fold { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 13px 14px; margin-top: 10px; }
+  details.auth-fold > summary { font-size: 14px; }
+  details.auth-fold > *:not(summary) { margin-top: 12px; }
+  details.auth-fold > .auth-h { margin: 18px 0 8px; }
+  details.auth-fold.danger > summary { color: #C24C3D; }
 </style>
 </head>
 <body>
@@ -1595,11 +1630,11 @@
   <!-- PAGE: KONTO -->
   <div class="page" id="page-konto">
     <section style="margin-top:0;">
-      <p class="section-label">Profil</p>
-      <div class="avatar-grid" id="avatarGrid"></div>
-      <div class="field">
-        <label for="acctName">Name</label>
-        <input type="text" id="acctName" maxlength="30">
+      <p class="section-label">Account<span class="hint" id="authHint"></span></p>
+      <div id="authBox"></div>
+      <div id="avatarBlock">
+        <p class="auth-h">Profilbild</p>
+        <div class="avatar-grid" id="avatarGrid"></div>
       </div>
     </section>
 
@@ -3872,6 +3907,7 @@
       b.classList.toggle('locked', !!v.pro && !state.account.pro);
     });
     if (headerAvatarEl) headerAvatarEl.innerHTML = avatarSVG(state.account.avatar);
+    var heroAv = document.getElementById('authHeroAvatar'); if (heroAv) heroAv.innerHTML = avatarSVG(state.account.avatar);
     var sel = avatarVariants[state.account.avatar - 1] || avatarVariants[0];
     Array.prototype.slice.call(document.body.classList).forEach(function (c) { if (c.indexOf('volti-') === 0) document.body.classList.remove(c); });
     document.body.classList.add('volti-' + sel.cls.split(' ')[0].replace('v-', ''));
@@ -3956,7 +3992,6 @@
     }
   }
   populateVehicleSelect();
-  document.getElementById('acctName').value = state.account.name;
   document.getElementById('acctCustomCapacity').value = state.account.customCapacity;
   document.getElementById('acctCustomConsumption').value = state.account.customConsumption;
   document.getElementById('acctCustomPower').value = state.account.customMaxPower;
@@ -3975,7 +4010,6 @@
     renderResults(); renderTrip();
   }
 
-  document.getElementById('acctName').addEventListener('input', function (e) { state.account.name = e.target.value; });
   vehicleSelect.addEventListener('change', function () {
     state.account.vehicle = vehicleSelect.value;
     syncVehicleCustomVisibility();
@@ -4195,6 +4229,251 @@
     };
     window.rcSync();
   })();
+
+  // ---- Account (E-Mail & Passwort) ----
+  // Für echte Cloud-Accounts hier die Supabase-Zugangsdaten eintragen (Project URL + anon public key).
+  // Leer gelassen: Account wird nur lokal auf diesem Gerät gespeichert.
+  var AUTH_CONFIG = { supabaseUrl: '', supabaseAnonKey: '' };
+  var authRemote = !!(AUTH_CONFIG.supabaseUrl && AUTH_CONFIG.supabaseAnonKey);
+  var auth = { user: null, tab: 'login', email: '', name: '', msg: '', ok: false };
+  function lsGet(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  auth.user = lsGet('elveo_session');
+  function applyAuthName() { state.account.name = (auth.user && auth.user.name) || 'Fahrer'; }
+  applyAuthName();
+  function validEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
+  function toB64(buf) { var b = new Uint8Array(buf), t = ''; for (var i = 0; i < b.length; i++) t += String.fromCharCode(b[i]); return btoa(t); }
+  function fromB64(x) { var t = atob(x), b = new Uint8Array(t.length); for (var i = 0; i < t.length; i++) b[i] = t.charCodeAt(i); return b; }
+  function hashPw(pw, salt) {
+    if (!window.crypto || !crypto.subtle) return Promise.reject(new Error('Sicheres Speichern ist hier nicht möglich (HTTPS nötig).'));
+    return crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveBits'])
+      .then(function (k) { return crypto.subtle.deriveBits({ name: 'PBKDF2', salt: salt, iterations: 150000, hash: 'SHA-256' }, k, 256); })
+      .then(toB64);
+  }
+  function localRegister(email, pw, name) {
+    var acc = lsGet('elveo_accounts') || {};
+    if (acc[email]) return Promise.reject(new Error('Mit dieser E-Mail gibt es schon einen Account.'));
+    var salt = crypto.getRandomValues(new Uint8Array(16));
+    return hashPw(pw, salt).then(function (h) { acc[email] = { salt: toB64(salt), hash: h, name: name }; lsSet('elveo_accounts', acc); return { email: email, name: name }; });
+  }
+  function localLogin(email, pw) {
+    var a = (lsGet('elveo_accounts') || {})[email];
+    if (!a) return Promise.reject(new Error('E-Mail oder Passwort ist falsch.'));
+    return hashPw(pw, fromB64(a.salt)).then(function (h) { if (h !== a.hash) throw new Error('E-Mail oder Passwort ist falsch.'); return { email: email, name: a.name }; });
+  }
+  function sbErr(j) {
+    var m = String(j.error_description || j.msg || j.message || '');
+    if (/invalid login/i.test(m)) return 'E-Mail oder Passwort ist falsch.';
+    if (/already|registered/i.test(m)) return 'Mit dieser E-Mail gibt es schon einen Account.';
+    if (/not confirmed/i.test(m)) return 'Bitte bestätige zuerst deine E-Mail (Link im Postfach).';
+    if (/password/i.test(m) && /(short|least|weak)/i.test(m)) return 'Das Passwort ist zu schwach oder zu kurz.';
+    if (/rate|too many/i.test(m)) return 'Zu viele Versuche. Bitte warte einen Moment.';
+    if (/jwt|expired|not authenticated/i.test(m)) return 'Deine Anmeldung ist abgelaufen. Bitte melde dich neu an.';
+    if (/could not find the function|delete_user/i.test(m)) return 'Account-Löschung ist im Cloud-Backend noch nicht eingerichtet.';
+    return m || 'Das hat nicht geklappt. Bitte versuche es erneut.';
+  }
+  function sbFetch(path, body, token, method) {
+    return fetch(AUTH_CONFIG.supabaseUrl.replace(/\/$/, '') + path, {
+      method: method || 'POST',
+      headers: { 'apikey': AUTH_CONFIG.supabaseAnonKey, 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (token || AUTH_CONFIG.supabaseAnonKey) },
+      body: JSON.stringify(body)
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw new Error(sbErr(j)); return j; });
+    }, function () { throw new Error('Keine Verbindung. Bitte prüfe dein Internet.'); });
+  }
+  function authMsg(text, ok) {
+    var el = document.getElementById('authMsg');
+    if (!el) return;
+    el.textContent = text || '';
+    el.className = 'auth-msg' + (ok ? ' ok' : '');
+    if (text && el.scrollIntoView) el.scrollIntoView({ block: 'nearest' });
+  }
+  var avatarBlockEl = document.getElementById('avatarBlock');
+  function placeAvatarBlock() {
+    var slot = document.getElementById('avatarSlot');
+    if (slot && avatarBlockEl) slot.appendChild(avatarBlockEl);
+  }
+  function renderAuth() {
+    var box = document.getElementById('authBox');
+    if (!box) return;
+    if (avatarBlockEl && box.contains(avatarBlockEl)) box.parentNode.appendChild(avatarBlockEl);
+    document.getElementById('authHint').textContent = authRemote ? 'Cloud' : 'nur dieses Gerät';
+    if (auth.user) {
+      var nm = auth.user.name || '';
+      box.innerHTML =
+        '<div class="auth-hero"><div class="auth-hero-avatar" id="authHeroAvatar"></div><div class="auth-hero-text"><div class="auth-mail">' + esc(nm || auth.user.email) + '</div><div class="auth-sub">' + (nm ? esc(auth.user.email) + '<br>' : '') + 'Angemeldet' + (auth.user.local ? ' · lokal auf diesem Gerät' : '') + '</div></div></div>' +
+        '<div class="auth-msg' + (auth.ok ? ' ok' : '') + '" id="authMsg">' + esc(auth.msg) + '</div>' +
+        '<div id="avatarSlot"></div>' +
+        '<details class="fold-plain auth-fold"><summary>Daten ändern<span class="hint">Name, E-Mail, Passwort</span></summary>' +
+          '<p class="auth-h">Name</p>' +
+          '<div class="field"><input type="text" id="authNewName" maxlength="30" autocomplete="nickname" value="' + esc(nm) + '"></div>' +
+          '<button class="auth-btn" id="authSaveName">Name speichern</button>' +
+          '<p class="auth-h">E-Mail-Adresse</p>' +
+          '<div class="field"><label for="authNewEmail">Neue E-Mail</label><input type="email" id="authNewEmail" autocomplete="email" inputmode="email" autocapitalize="none"></div>' +
+          '<div class="field"><label for="authEmailPw">Aktuelles Passwort</label><input type="password" id="authEmailPw" autocomplete="current-password"></div>' +
+          '<button class="auth-btn" id="authSaveEmail">E-Mail ändern</button>' +
+          '<p class="auth-h">Passwort</p>' +
+          '<div class="field"><label for="authOldPw">Aktuelles Passwort</label><input type="password" id="authOldPw" autocomplete="current-password"></div>' +
+          '<div class="field"><label for="authNewPw">Neues Passwort (mind. 8 Zeichen)</label><input type="password" id="authNewPw" autocomplete="new-password"></div>' +
+          '<div class="field"><label for="authNewPw2">Neues Passwort wiederholen</label><input type="password" id="authNewPw2" autocomplete="new-password"></div>' +
+          '<button class="auth-btn" id="authSavePw">Passwort ändern</button>' +
+        '</details>' +
+        '<details class="fold-plain auth-fold danger"><summary>Account löschen</summary>' +
+          '<p class="auth-note" style="margin-top:0;">Dein Account wird dauerhaft gelöscht. Das lässt sich nicht rückgängig machen.</p>' +
+          '<div class="field"><label for="authDelPw">Zur Bestätigung: Passwort</label><input type="password" id="authDelPw" autocomplete="current-password"></div>' +
+          '<button class="auth-btn danger" id="authDelete">Account endgültig löschen</button>' +
+        '</details>' +
+        '<button class="danger-btn" id="authLogout" style="margin-top:12px;">Abmelden</button>';
+      var ha = document.getElementById('authHeroAvatar'); if (ha) ha.innerHTML = avatarSVG(state.account.avatar);
+      placeAvatarBlock();
+      auth.msg = ''; auth.ok = false;
+      return;
+    }
+    var reg = auth.tab === 'register';
+    box.innerHTML =
+      '<div class="segmented" style="margin-bottom:14px;"><button class="rc-tab' + (reg ? '' : ' active') + '" data-tab="login"><b>Anmelden</b></button><button class="rc-tab' + (reg ? ' active' : '') + '" data-tab="register"><b>Registrieren</b></button></div>' +
+      '<div class="auth-msg' + (auth.ok ? ' ok' : '') + '" id="authMsg">' + esc(auth.msg) + '</div>' +
+      (reg ? '<div class="field"><label for="authName">Name</label><input type="text" id="authName" maxlength="30" autocomplete="nickname" value="' + esc(auth.name || '') + '"></div>' : '') +
+      '<div class="field"><label for="authEmail">E-Mail</label><input type="email" id="authEmail" autocomplete="email" inputmode="email" autocapitalize="none" value="' + esc(auth.email) + '"></div>' +
+      '<div class="field"><label for="authPw">Passwort' + (reg ? ' (mind. 8 Zeichen)' : '') + '</label><input type="password" id="authPw" autocomplete="' + (reg ? 'new-password' : 'current-password') + '"></div>' +
+      (reg ? '<div class="field"><label for="authPw2">Passwort wiederholen</label><input type="password" id="authPw2" autocomplete="new-password"></div>' : '') +
+      '<button class="auth-btn" id="authSubmit">' + (reg ? 'Account erstellen' : 'Anmelden') + '</button>' +
+      (!reg && authRemote ? '<button class="auth-link" id="authForgot">Passwort vergessen?</button>' : '') +
+      (authRemote ? '' : '<div class="auth-note">Dein Account wird nur auf diesem Gerät gespeichert und nicht mit anderen Geräten synchronisiert.</div>') +
+      '<div id="avatarSlot" style="margin-top:20px;"></div>';
+    placeAvatarBlock();
+    auth.msg = ''; auth.ok = false;
+  }
+  function authSubmit() {
+    var email = document.getElementById('authEmail').value.trim().toLowerCase();
+    var pw = document.getElementById('authPw').value;
+    var reg = auth.tab === 'register';
+    auth.email = email;
+    var name = '';
+    if (reg) {
+      name = document.getElementById('authName').value.trim().replace(/\s+/g, ' ');
+      auth.name = name;
+      if (name.length < 2) return authMsg('Bitte wähle einen Namen (mindestens 2 Zeichen).');
+    }
+    if (!validEmail(email)) return authMsg('Bitte gib eine gültige E-Mail-Adresse ein.');
+    if (reg) {
+      if (pw.length < 8) return authMsg('Das Passwort braucht mindestens 8 Zeichen.');
+      if (pw !== document.getElementById('authPw2').value) return authMsg('Die Passwörter stimmen nicht überein.');
+    } else if (!pw) return authMsg('Bitte gib dein Passwort ein.');
+    var btn = document.getElementById('authSubmit'), label = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Einen Moment …'; authMsg('');
+    var p;
+    if (authRemote) {
+      p = reg
+        ? sbFetch('/auth/v1/signup', { email: email, password: pw, data: { name: name } }).then(function (j) { return j.access_token ? { email: email, name: name, token: j.access_token } : { pending: true }; })
+        : sbFetch('/auth/v1/token?grant_type=password', { email: email, password: pw }).then(function (j) { var md = (j.user && j.user.user_metadata) || {}; return { email: email, name: md.name || '', token: j.access_token }; });
+    } else {
+      p = reg ? localRegister(email, pw, name) : localLogin(email, pw);
+    }
+    p.then(function (u) {
+      if (u.pending) { auth.tab = 'login'; auth.msg = 'Fast geschafft: Wir haben dir eine E-Mail geschickt. Bestätige sie und melde dich dann an.'; auth.ok = true; renderAuth(); var m = document.getElementById('authMsg'); if (m) { m.textContent = 'Fast geschafft: Wir haben dir eine E-Mail geschickt. Bestätige sie und melde dich dann an.'; m.className = 'auth-msg ok'; } return; }
+      auth.user = { email: u.email, name: u.name || '', token: u.token || null, local: !authRemote };
+      lsSet('elveo_session', auth.user);
+      applyAuthName();
+      renderAuth();
+    }).catch(function (e) {
+      btn.disabled = false; btn.textContent = label;
+      authMsg(e.message || 'Das hat nicht geklappt. Bitte versuche es erneut.');
+    });
+  }
+  function verifyPw(pw) {
+    var p = authRemote
+      ? sbFetch('/auth/v1/token?grant_type=password', { email: auth.user.email, password: pw }).then(function (j) { return j.access_token; })
+      : localLogin(auth.user.email, pw).then(function () { return null; });
+    return p.catch(function (e) { throw new Error(/falsch/.test(e.message) ? 'Das aktuelle Passwort ist falsch.' : e.message); });
+  }
+  function saveSession() { lsSet('elveo_session', auth.user); }
+  function authRun(btn, p, okMsg, after) {
+    var label = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Einen Moment …';
+    p.then(function () { if (after) after(); auth.msg = okMsg; auth.ok = true; renderAuth(); })
+     .catch(function (e) { btn.disabled = false; btn.textContent = label; authMsg(e.message || 'Das hat nicht geklappt. Bitte versuche es erneut.'); });
+  }
+  function actSaveName(btn) {
+    var nn = document.getElementById('authNewName').value.trim().replace(/\s+/g, ' ');
+    if (nn.length < 2) return authMsg('Bitte wähle einen Namen (mindestens 2 Zeichen).');
+    var p;
+    if (authRemote) p = sbFetch('/auth/v1/user', { data: { name: nn } }, auth.user.token, 'PUT');
+    else { var acc = lsGet('elveo_accounts') || {}; if (acc[auth.user.email]) acc[auth.user.email].name = nn; lsSet('elveo_accounts', acc); p = Promise.resolve(); }
+    authRun(btn, p, 'Name gespeichert.', function () { auth.user.name = nn; saveSession(); applyAuthName(); });
+  }
+  function actSaveEmail(btn) {
+    var ne = document.getElementById('authNewEmail').value.trim().toLowerCase();
+    var pw = document.getElementById('authEmailPw').value;
+    if (!validEmail(ne)) return authMsg('Bitte gib eine gültige neue E-Mail-Adresse ein.');
+    if (ne === auth.user.email) return authMsg('Das ist bereits deine E-Mail-Adresse.');
+    if (!pw) return authMsg('Bitte gib zur Bestätigung dein aktuelles Passwort ein.');
+    var old = auth.user.email;
+    var p = verifyPw(pw).then(function (tok) {
+      if (authRemote) return sbFetch('/auth/v1/user', { email: ne }, tok, 'PUT').then(function () { auth.user.token = tok; });
+      var acc = lsGet('elveo_accounts') || {};
+      if (acc[ne]) throw new Error('Mit dieser E-Mail gibt es schon einen Account.');
+      acc[ne] = acc[old]; delete acc[old]; lsSet('elveo_accounts', acc);
+      auth.user.email = ne;
+    });
+    authRun(btn, p, authRemote ? 'Wir haben eine Bestätigungs-E-Mail geschickt. Die Änderung gilt, sobald du den Link bestätigst.' : 'E-Mail-Adresse geändert.', saveSession);
+  }
+  function actSavePw(btn) {
+    var oldPw = document.getElementById('authOldPw').value, np = document.getElementById('authNewPw').value;
+    if (!oldPw) return authMsg('Bitte gib dein aktuelles Passwort ein.');
+    if (np.length < 8) return authMsg('Das neue Passwort braucht mindestens 8 Zeichen.');
+    if (np !== document.getElementById('authNewPw2').value) return authMsg('Die neuen Passwörter stimmen nicht überein.');
+    var p = verifyPw(oldPw).then(function (tok) {
+      if (authRemote) return sbFetch('/auth/v1/user', { password: np }, tok, 'PUT').then(function () { auth.user.token = tok; });
+      var salt = crypto.getRandomValues(new Uint8Array(16));
+      return hashPw(np, salt).then(function (h) {
+        var acc = lsGet('elveo_accounts') || {};
+        if (acc[auth.user.email]) { acc[auth.user.email].salt = toB64(salt); acc[auth.user.email].hash = h; lsSet('elveo_accounts', acc); }
+      });
+    });
+    authRun(btn, p, 'Passwort geändert.', saveSession);
+  }
+  function actDelete(btn) {
+    var pw = document.getElementById('authDelPw').value;
+    if (!pw) return authMsg('Bitte gib zur Bestätigung dein Passwort ein.');
+    if (!window.confirm('Account wirklich endgültig löschen? Das lässt sich nicht rückgängig machen.')) return;
+    var email = auth.user.email;
+    var p = verifyPw(pw).then(function (tok) {
+      if (authRemote) return sbFetch('/rest/v1/rpc/delete_user', {}, tok);
+      var acc = lsGet('elveo_accounts') || {}; delete acc[email]; lsSet('elveo_accounts', acc);
+    });
+    authRun(btn, p, 'Dein Account wurde gelöscht.', function () {
+      auth.user = null; auth.tab = 'login'; auth.email = ''; auth.name = '';
+      try { localStorage.removeItem('elveo_session'); } catch (x) {}
+      applyAuthName();
+    });
+  }
+  document.getElementById('authBox').addEventListener('click', function (e) {
+    var t = e.target.closest('button'); if (!t) return;
+    if (t.getAttribute('data-tab')) {
+      var em = document.getElementById('authEmail'); if (em) auth.email = em.value.trim();
+      auth.tab = t.getAttribute('data-tab'); renderAuth();
+    } else if (t.id === 'authSubmit') { authSubmit(); }
+    else if (t.id === 'authSaveName') { actSaveName(t); }
+    else if (t.id === 'authSaveEmail') { actSaveEmail(t); }
+    else if (t.id === 'authSavePw') { actSavePw(t); }
+    else if (t.id === 'authDelete') { actDelete(t); }
+    else if (t.id === 'authLogout') {
+      var tok = auth.user && auth.user.token;
+      if (authRemote && tok) sbFetch('/auth/v1/logout', {}, tok).catch(function () {});
+      auth.user = null; try { localStorage.removeItem('elveo_session'); } catch (x) {}
+      applyAuthName();
+      renderAuth();
+    } else if (t.id === 'authForgot') {
+      var mail = document.getElementById('authEmail').value.trim().toLowerCase();
+      if (!validEmail(mail)) return authMsg('Bitte gib oben deine E-Mail-Adresse ein.');
+      sbFetch('/auth/v1/recover', { email: mail }).then(function () { authMsg('Wenn es zu dieser E-Mail einen Account gibt, haben wir dir einen Link zum Zurücksetzen geschickt.', true); }).catch(function (er) { authMsg(er.message); });
+    }
+  });
+  document.getElementById('authBox').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target.tagName === 'INPUT') { e.preventDefault(); if (document.getElementById('authSubmit')) authSubmit(); }
+  });
+  renderAuth();
 
   // ---- init ----
   // Beim Öffnen: Anbieter in direkter Nähe im Schnellfinder vorauswählen
