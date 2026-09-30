@@ -1063,12 +1063,6 @@
   .tips-entry.big .mascot .m-limb { fill: #B7EBDD !important; stroke: none !important; }
   .tips-entry.big .mascot .m-stem { fill: none !important; stroke: #B7EBDD !important; }
   .tips-entry.big .te-chevron { background: #8EE6A8 !important; color: #0B3B33 !important; box-shadow: 0 4px 10px rgba(142, 230, 168, 0.35) !important; }
-  /* "Genaue Kosten & Ladezeit"-Kachel: gleiche Farbe wie die E-Auto-Start-Kachel */
-  .qr-cta { background: radial-gradient(150px 90px at 12% 0%, rgba(242,168,62,0.28), transparent 70%), linear-gradient(135deg, #1D4A40, #0B211C); border: 1px solid #1F3F36; box-shadow: 0 8px 22px rgba(6, 20, 16, 0.28), inset 0 1px 0 rgba(255,255,255,0.06); color: #fff; }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .qr-cta { background: radial-gradient(150px 90px at 12% 0%, rgba(242,168,62,0.30), transparent 70%), linear-gradient(135deg, #2E8676, #1B584D); border-color: #4FB8A4; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(79, 184, 164, 0.25), inset 0 1px 0 rgba(255,255,255,0.18); }
-  }
-  :root[data-theme="dark"] .qr-cta { background: radial-gradient(150px 90px at 12% 0%, rgba(242,168,62,0.30), transparent 70%), linear-gradient(135deg, #2E8676, #1B584D); border-color: #4FB8A4; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(79, 184, 164, 0.25), inset 0 1px 0 rgba(255,255,255,0.18); }
   /* Eigene Tarife klar erkennbar */
   .t-row.is-own { background: var(--teal-tint); border-color: var(--teal); box-shadow: inset 4px 0 0 var(--teal); }
   .t-row .icon-btn.own.on { background: var(--teal); border-color: var(--teal); color: #fff; }
@@ -1170,11 +1164,62 @@
   #page-konto .tip-link + .tip-link { margin-top: 10px; }
   textarea { width: 100%; appearance: none; -webkit-appearance: none; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px; font-size: 16px; font-weight: 500; color: var(--ink); font-family: inherit; resize: vertical; min-height: 110px; }
   #contactBody .auth-msg { margin-top: 4px; }
+  /* Rechner (überarbeitet) */
+  .rc-car { display: flex; align-items: center; gap: 12px; padding: 12px 14px; margin-bottom: 14px; border-radius: var(--radius-lg); background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: 0 6px 20px rgba(19, 36, 32, 0.06), inset 0 1px 0 var(--glass-shine); }
+  .rc-car-ic { flex-shrink: 0; width: 40px; height: 40px; border-radius: 12px; background: var(--teal-tint); color: var(--teal); display: flex; align-items: center; justify-content: center; }
+  .rc-car-tx { min-width: 0; }
+  .rc-car-tx b { display: block; font-size: 14px; }
+  .rc-car-tx small { display: block; font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; }
+  .rc-car .link-btn { margin-left: auto; font-size: 13px; }
+  #page-rechner .rc-bars .rc-row { grid-template-columns: 1fr auto; }
+  #page-rechner .slider-group .chip-row { margin-top: 0; }
+  #page-rechner .field-note { margin: -4px 0 12px; }
+  #page-rechner .map-link { margin-top: 12px; }
+  #page-rechner .field-note { font-size: 12px; line-height: 1.5; color: var(--ink-soft); }
+  /* Fahrzeug-Auswahl */
+  .veh-hero { position: relative; overflow: hidden; margin-bottom: 12px; padding: 14px; border-radius: var(--radius-lg); text-align: center;
+    background: radial-gradient(220px 130px at 50% 0%, color-mix(in srgb, var(--vc) 22%, transparent), transparent 75%), var(--surface); border: 1px solid var(--line); }
+  .veh-hero-art { width: 78%; max-width: 280px; margin: 4px auto 6px; cursor: pointer; filter: drop-shadow(0 8px 12px rgba(19, 36, 32, 0.18)); }
+  .veh-hero-name { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
+  .veh-hero-sub { font-size: 12.5px; color: var(--ink-soft); margin-top: 2px; }
+  .veh-change { margin-top: 12px; border: none; border-radius: 999px; padding: 10px 18px; font-size: 13px; font-weight: 700; cursor: pointer; background: var(--teal); color: #fff; font-family: inherit; }
+  .veh-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .veh-card { position: relative; text-align: left; padding: 10px 10px 12px; border-radius: 16px; cursor: pointer; font-family: inherit; color: var(--ink);
+    background: radial-gradient(120px 70px at 50% 0%, color-mix(in srgb, var(--vc) 18%, transparent), transparent 80%), var(--surface); border: 1px solid var(--line); }
+  .veh-card.sel { border-color: var(--teal); box-shadow: 0 0 0 2px var(--teal-tint-line); }
+  .veh-card.locked .veh-art { opacity: .55; }
+  .veh-art { padding: 2px 4px 0; }
+  .veh-name { margin-top: 4px; font-size: 13px; font-weight: 700; line-height: 1.25; }
+  .veh-sub { margin-top: 2px; font-size: 11px; color: var(--ink-soft); }
+  .veh-check { position: absolute; top: 8px; left: 8px; width: 20px; height: 20px; border-radius: 50%; background: var(--teal); color: #fff; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+  #vehOverlay { z-index: 60; }
+  .rc-car-ic { width: 66px !important; height: 42px !important; padding: 2px 4px; border-radius: 12px; }
+  #vehicleProNote { font-size: 12px; line-height: 1.5; color: var(--ink-soft); }
+  .t-row .tname { flex-wrap: wrap; white-space: normal; overflow: visible; }
+  /* Rechner: schlank */
+  .rc-tip { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--teal-tint); border: 1px solid var(--teal-tint-line); font-size: 13px; line-height: 1.5; color: var(--ink); }
+  .rc-tip > b { flex-shrink: 0; font-size: 10.5px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--teal); padding-top: 2px; }
+  .rc-note { margin: 14px 4px 0; font-size: 11.5px; line-height: 1.5; color: var(--ink-soft); }
+  #page-rechner section:has(> .rc-tip) { padding: 0; background: none; border: none; box-shadow: none; margin-top: 10px; }
+  #page-rechner section:empty { display: none; }
+  /* Rechner-Tipps mit Volti */
+  .rc-tip { align-items: center; gap: 12px; }
+  .rc-tip-mascot { flex-shrink: 0; width: 46px; height: 46px; }
+  .rc-tip-mascot .mascot { width: 100%; height: 100%; }
+  /* "Genaue Kosten & Ladezeit berechnen": dezenter */
+  .qr-cta { background: transparent; color: var(--teal); border: 1px solid var(--teal-tint-line); box-shadow: none; padding: 10px 12px; margin-top: 12px; font-size: 13px; font-weight: 600; border-radius: 12px; }
+  .qr-cta svg { width: 16px; height: 16px; }
+  .qr-cta:active { background: var(--teal-tint); }
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
+    <linearGradient id="carShine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".28"/>
+      <stop offset=".55" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".12"/>
+    </linearGradient>
     <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#FFF5CF"/>
       <stop offset="0.5" stop-color="#FCEBB0"/>
@@ -1586,11 +1631,9 @@
   <div class="page" id="page-tarife">
     <section style="margin-top:0;">
       <p class="section-label">Mein Fahrzeug<span class="hint">für Reichweite, Kosten & Ladezeit</span></p>
-      <div class="field">
-        <label for="acctVehicle">Modell</label>
-        <select id="acctVehicle"></select>
-        <div class="field-note" id="vehicleProNote"></div>
-      </div>
+      <div id="vehHero"></div>
+      <select id="acctVehicle" style="display:none;"></select>
+      <div class="field-note" id="vehicleProNote" style="margin-bottom:14px;"></div>
       <div id="acctCustomWrap" style="display:none;">
         <div class="field">
           <label for="acctCustomCapacity">Akkukapazität (kWh)</label>
@@ -2012,6 +2055,17 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="vehOverlay">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="mtitle">Fahrzeug wählen</div>
+      <button class="modal-close" id="vehClose" aria-label="Schließen"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <input type="text" id="vehSearch" placeholder="Modell suchen, z. B. Tesla, ID.3 …" autocomplete="off" style="margin-bottom:4px;">
+    <div id="vehGrid"></div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="settingsOverlay">
   <div class="modal-card">
     <div class="modal-head">
@@ -2232,7 +2286,7 @@
   // ---- Tab navigation ----
   var pageTexts = {
     home: { title: "Hallo!", sub: "Dein schnellster Weg zum günstigsten Tarif — und zu deinen Favoriten." },
-    rechner: { title: "Rechner", sub: "Finde den günstigsten Tarif — im Alltag, auf Reisen und für einzelne Ladungen." },
+    rechner: { title: "Rechner", sub: "Kosten, Ladezeit und Ladestopps einfach berechnen." },
     tarife: { title: "Meine Auswahl", sub: "Wähle Fahrzeug, Tarife und Ladesäulen — alles fließt in Rechner und Schnellfinder ein." },
     karte: { title: "Karte", sub: "Ladesäulen in deiner Umgebung." },
     konto: { title: "Dein Konto", sub: "Account, Profilbild und Heimladepreis verwalten." }
@@ -2900,9 +2954,8 @@
     moreBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01"/></svg><span>Genaue Kosten &amp; Ladezeit berechnen</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
     moreBtn.addEventListener('click', function () {
       showPage('rechner'); showSub('charge');
-      var pe = document.getElementById('rc_price');
-      if (pe && mine) { pe.value = mine.prices[cpo].toFixed(2); pe.dataset.t = 1; }
       if (window.rcSync) window.rcSync();
+      if (window.rcPreset) window.rcPreset(mine ? mine.id : null, cpo);
     });
     box.appendChild(moreBtn);
 
@@ -3508,8 +3561,12 @@
   }
   var dynamicCpoNames = {};
 
+  // Nur Ladesäulen mit Namen anzeigen: alle Einträge aus der Quelle, die einen Namen (Betreiber oder Standort) haben
+  function cleanName(v) { var t = String(v || '').trim(); return (t && !/^(unbekannt|unknown|n\/a|null|undefined|-+)$/i.test(t)) ? t : ''; }
+  function hasStationName(s) { return !!(cleanName(s.name) || cleanName(s.title)); }
   function applyRealStations(userLat, userLng, list) {
     userLoc = { lat: userLat, lng: userLng };
+    list = list.filter(hasStationName);
     mapStations = list.map(function (s) {
       var km = haversineKm(userLat, userLng, s.lat, s.lng);
       var bearingRad = toRad(bearingDeg(userLat, userLng, s.lat, s.lng));
@@ -3653,7 +3710,7 @@
       karteMarkers.forEach(function (mk) { map.removeLayer(mk); });
       karteMarkers = items.map(function (o) {
         var ll = stationLatLng(o.s);
-        var label = o.s.name || cpoName(o.s.cpo);
+        var label = cleanName(o.s.name) || cleanName(o.s.title) || cpoName(o.s.cpo);
         var cls = 'leaflet-pin' + (state.favCpos[o.s.cpo] ? ' on' : '') + (o.i === state.mapSel ? ' sel' : '');
         var badge = cheapIdx[o.i] ? '<span class="lp-badge">€</span>' : '';
         var html = '<div class="' + cls + '">' +
@@ -3688,7 +3745,7 @@
     } else {
       var shown = state.account.pro ? items.slice(0, state.mapListLimit) : items;
       list.innerHTML = shown.map(function (o) {
-        var m = o.s, isSel = o.i === state.mapSel, name = m.name || cpoName(m.cpo);
+        var m = o.s, isSel = o.i === state.mapSel, name = cleanName(m.name) || cleanName(m.title) || cpoName(m.cpo);
         var ob = tariffs.filter(function (t) { return state.owned[t.id] && t.prices[m.cpo] != null; })
           .sort(function (a, b) { return a.prices[m.cpo] - b.prices[m.cpo]; })[0];
         var sub = (m.kw ? m.kw + ' kW · ' : '') + (ob ? ob.name + ' ' + fmtPrice(ob.prices[m.cpo]) : 'kein eigener Tarif hier');
@@ -4091,6 +4148,74 @@
 
   // ---- Konto ----
   var vehicleSelect = document.getElementById('acctVehicle');
+  // ---- Fahrzeug-Auswahl mit Illustrationen ----
+  var vehType = { beispiel_klein: 'small', beispiel_kompakt: 'compact', beispiel_suv: 'suv', beispiel_lang: 'sedan', id3: 'compact', id4: 'suv', model3: 'sedan', modely: 'suv', ioniq5: 'suv', ev6: 'suv', megane: 'compact', '500e': 'small', e208: 'small', cooper_se: 'small', enyaq: 'suv', q4_etron: 'suv', eqa: 'suv', i4: 'sedan', polestar2: 'sedan', byd_atto3: 'suv', cupra_born: 'compact', zoe: 'small', leaf: 'compact', taycan: 'sport', custom: 'compact' };
+  var vehColors = ['#0E6E63', '#1C7FB0', '#7C3AA6', '#C23B3B', '#E29A2E', '#4A5D57', '#8FA9A0'];
+  var carShapes = {
+    small: { body: 'M26 74 L26 60 Q26 54 34 52 L54 46 Q64 30 82 28 L114 28 Q132 30 142 46 L166 52 Q174 55 174 62 L174 74 Z', wins: ['M68 44 Q74 34 84 33 L98 33 L98 44 Z', 'M104 33 L114 33 Q126 35 132 44 L104 44 Z'], wx: [58, 142], wr: 14, hx: 168 },
+    compact: { body: 'M14 74 L14 60 Q14 54 22 52 L48 47 Q60 30 82 28 L122 28 Q142 30 152 46 L180 52 Q188 55 188 63 L188 74 Z', wins: ['M62 46 Q70 34 84 33 L100 33 L100 46 Z', 'M106 33 L122 33 Q136 35 144 46 L106 46 Z'], wx: [50, 152], wr: 14, hx: 182 },
+    suv: { body: 'M12 76 L12 58 Q12 52 20 50 L44 46 L58 26 L138 26 Q152 27 160 42 L182 48 Q190 51 190 60 L190 76 Z', wins: ['M64 44 L72 32 L100 32 L100 44 Z', 'M106 32 L136 32 Q146 33 152 44 L106 44 Z'], wx: [50, 152], wr: 15, hx: 184 },
+    sedan: { body: 'M8 74 L8 62 Q8 56 18 54 L52 49 Q68 34 92 32 L128 32 Q148 34 160 48 L186 54 Q194 57 194 64 L194 74 Z', wins: ['M70 48 Q78 38 92 37 L104 37 L104 48 Z', 'M110 37 L128 37 Q140 39 150 48 L110 48 Z'], wx: [46, 154], wr: 14, hx: 188 },
+    sport: { body: 'M8 76 L8 66 Q8 60 20 58 L60 52 Q84 36 112 36 Q138 38 150 50 L186 56 Q196 59 196 66 L196 76 Z', wins: ['M84 50 Q98 40 114 40 Q128 41 138 50 Z'], wx: [48, 154], wr: 13, hx: 190 }
+  };
+  function vehColor(id) { var h = 0; String(id).split('').forEach(function (c) { h = (h * 31 + c.charCodeAt(0)) >>> 0; }); return vehColors[h % vehColors.length]; }
+  function carArt(v) {
+    var sh = carShapes[vehType[v.id] || 'compact'], col = vehColor(v.id);
+    var wheels = sh.wx.map(function (x) { return '<circle cx="' + x + '" cy="76" r="' + sh.wr + '" fill="#1B2B27"/><circle cx="' + x + '" cy="76" r="' + Math.round(sh.wr * 0.45) + '" fill="#D6DEDA"/>'; }).join('');
+    return '<svg viewBox="0 0 200 100" aria-hidden="true" style="display:block;width:100%;height:auto;">' +
+      '<ellipse cx="100" cy="92" rx="82" ry="5" fill="#000" fill-opacity=".14"/>' +
+      '<path d="' + sh.body + '" fill="' + col + '"/>' +
+      '<path d="' + sh.body + '" fill="url(#carShine)" />' +
+      sh.wins.map(function (w) { return '<path d="' + w + '" fill="#EAF4F1" fill-opacity=".85"/>'; }).join('') +
+      '<ellipse cx="' + sh.hx + '" cy="60" rx="5" ry="3" fill="#FFF3C4"/>' + wheels + '</svg>';
+  }
+  function vehRange(v) { var c = v.id === 'custom' ? state.account.customCapacity : v.capacity, k = v.id === 'custom' ? state.account.customConsumption : v.consumption; return c && k ? Math.round(c / k * 100) : null; }
+  function vehSub(v) {
+    if (v.id === 'custom') return 'Werte selbst eingeben';
+    return v.capacity + ' kWh · ca. ' + vehRange(v) + ' km';
+  }
+  function vehName(v) { return v.id === 'custom' ? 'Eigenes Fahrzeug' : v.label; }
+  function renderVehicleHero() {
+    var box = document.getElementById('vehHero'); if (!box) return;
+    var v = currentVehicle(), col = vehColor(v.id);
+    box.innerHTML = '<div class="veh-hero" style="--vc:' + col + ';"><div class="veh-hero-art">' + carArt(v) + '</div>' +
+      '<div class="veh-hero-info"><div class="veh-hero-name">' + esc(vehName(v)) + '</div><div class="veh-hero-sub">' + esc(vehSub(v)) + '</div></div>' +
+      '<button class="veh-change" id="vehChangeBtn">Fahrzeug wechseln</button></div>';
+  }
+  var vehOverlay = document.getElementById('vehOverlay');
+  function vehCard(v, locked) {
+    var sel = v.id === state.account.vehicle;
+    return '<button class="veh-card' + (sel ? ' sel' : '') + (locked ? ' locked' : '') + '" data-id="' + v.id + '" style="--vc:' + vehColor(v.id) + ';">' +
+      (sel ? '<span class="veh-check">✓</span>' : '') + (locked ? '<span class="pro-ribbon">PRO</span>' : '') +
+      '<div class="veh-art">' + carArt(v) + '</div><div class="veh-name">' + esc(vehName(v)) + '</div><div class="veh-sub">' + esc(vehSub(v)) + '</div></button>';
+  }
+  function renderVehicleGrid() {
+    var q = (document.getElementById('vehSearch').value || '').trim().toLowerCase();
+    var match = function (v) { return !q || v.label.toLowerCase().indexOf(q) >= 0; };
+    var ex = vehicles.filter(function (v) { return v.id !== 'custom' && match(v); });
+    var pro = proVehicles.filter(match);
+    var html = '';
+    if (ex.length) html += '<p class="modal-section-label">Beispielfahrzeuge</p><div class="veh-grid">' + ex.map(function (v) { return vehCard(v, false); }).join('') + '</div>';
+    if (pro.length) html += '<p class="modal-section-label">Echte Modelle' + (state.account.pro ? '' : ' · mit Elveo Pro') + '</p><div class="veh-grid">' + pro.map(function (v) { return vehCard(v, !state.account.pro); }).join('') + '</div>';
+    if (!q) html += '<p class="modal-section-label">Nicht dabei?</p><div class="veh-grid">' + vehCard(vehicles.filter(function (v) { return v.id === 'custom'; })[0], false) + '</div>';
+    if (!ex.length && !pro.length) html = '<div class="empty-note">Kein Modell gefunden. Wähle „Eigenes Fahrzeug“ und gib die Werte selbst ein.</div><div class="veh-grid" style="margin-top:12px;">' + vehCard(vehicles.filter(function (v) { return v.id === 'custom'; })[0], false) + '</div>';
+    document.getElementById('vehGrid').innerHTML = html;
+  }
+  function openVehPicker() { document.getElementById('vehSearch').value = ''; renderVehicleGrid(); vehOverlay.classList.add('open'); }
+  function closeVehPicker() { vehOverlay.classList.remove('open'); }
+  document.getElementById('vehHero').addEventListener('click', function (e) { if (e.target.closest('#vehChangeBtn') || e.target.closest('.veh-hero-art')) openVehPicker(); });
+  document.getElementById('vehClose').addEventListener('click', closeVehPicker);
+  vehOverlay.addEventListener('click', function (e) { if (e.target === vehOverlay) closeVehPicker(); });
+  document.getElementById('vehSearch').addEventListener('input', renderVehicleGrid);
+  document.getElementById('vehGrid').addEventListener('click', function (e) {
+    var card = e.target.closest('.veh-card'); if (!card) return;
+    var id = card.getAttribute('data-id');
+    if (card.classList.contains('locked')) { closeVehPicker(); showProLockHint(); return; }
+    vehicleSelect.value = id;
+    vehicleSelect.dispatchEvent(new Event('change'));
+    closeVehPicker();
+  });
+
   function populateVehicleSelect() {
     vehicleSelect.innerHTML = '';
     vehicles.forEach(function (v) {
@@ -4115,6 +4240,7 @@
     var customOpt = document.createElement('option'); customOpt.value = 'custom'; customOpt.textContent = 'Eigenes Fahrzeug …';
     vehicleSelect.appendChild(customOpt);
     vehicleSelect.value = state.account.vehicle;
+    renderVehicleHero();
     var vpn = document.getElementById('vehicleProNote');
     if (vpn) {
       vpn.innerHTML = state.account.pro
@@ -4168,6 +4294,7 @@
   });
 
   function renderVehicleStats() {
+    renderVehicleHero();
     var cap = vehicleCapacity(), pow = vehicleMaxPower();
     document.getElementById('vsCapacity').textContent = cap ? cap.toLocaleString('de-DE') : '—';
     document.getElementById('vsRange').textContent = cap ? vehicleRangeAtFull().toLocaleString('de-DE') : '—';
@@ -4236,128 +4363,237 @@
   var _rtr = renderTrip; renderTrip = function () { _rtr(); renderVerdicts(); };
   showSub('alltag');
 
-  // ================= Neuer Rechner (3 Bereiche) =================
+  // ================= Rechner (schlank & übersichtlich) =================
   (function () {
     var root = document.getElementById('page-rechner');
-    var fN = function (x, d) { return (x || 0).toLocaleString('de-DE', { maximumFractionDigits: d == null ? 0 : d }); };
     var E = fmtEUR;
-    function F(id, l, v, st) { return '<div class="field"><label for="rc_' + id + '">' + l + '</label><input type="number" id="rc_' + id + '" data-rc value="' + v + '" step="' + (st || 1) + '" inputmode="decimal"></div>'; }
-    function n(id) { var e = document.getElementById('rc_' + id); return e ? (parseFloat(String(e.value).replace(',', '.')) || 0) : 0; }
-    function S(id) { var e = document.getElementById('rc_' + id); return e ? e.value : ''; }
+    var fN = function (x, d) { return (x || 0).toLocaleString('de-DE', { maximumFractionDigits: d == null ? 0 : d }); };
+    var selTouched = false;
+    function el(id) { return document.getElementById('rc_' + id); }
+    function n(id) { var e = el(id); return e ? (parseFloat(String(e.value).replace(',', '.')) || 0) : 0; }
+    function S(id) { var e = el(id); return e ? e.value : ''; }
+    function tById(id) { return tariffs.filter(function (t) { return t.id === id; })[0]; }
     function avgP(t) { var v = Object.keys(t.prices).map(function (k) { return t.prices[k]; }); return v.reduce(function (a, b) { return a + b; }, 0) / v.length; }
+    function priceAt(t, cpoId) { return cpoId && t.prices[cpoId] != null ? t.prices[cpoId] : avgP(t); }
+
+    // ---------- Bausteine ----------
+    function F(id, l, v, st, assume) {
+      return '<div class="field"><label for="rc_' + id + '">' + l + '</label><input type="number" id="rc_' + id + '" data-rc' + (assume ? ' data-assume' : '') + ' value="' + v + '" step="' + (st || 1) + '" inputmode="decimal"></div>';
+    }
+    function chipRow(id, chips) {
+      return '<div class="chip-row" data-for="' + id + '">' + chips.map(function (c) { return '<div class="chip sm" data-v="' + c[1] + '">' + c[0] + '</div>'; }).join('') + '</div>';
+    }
+    function sl(id, label, min, max, step, val, unit, chips) {
+      return '<div class="slider-readout"><div class="lbl">' + label + '</div><div class="val" id="rcv_' + id + '">' + fN(val) + ' <small>' + unit + '</small></div></div>' +
+        (chips ? chipRow(id, chips) : '') +
+        '<input type="range" id="rc_' + id + '" data-rc data-unit="' + unit + '" min="' + min + '" max="' + max + '" step="' + step + '" value="' + val + '">';
+    }
+    function sec(title, hint, body) { return '<section><p class="section-label">' + title + (hint ? '<span class="hint">' + hint + '</span>' : '') + '</p>' + body + '</section>'; }
+    function hero(k, big, sub, tiles) {
+      return '<div class="calc-hero" style="margin-top:0;"><div class="ch-main"><div class="ch-kicker">' + k + '</div><div class="ch-price">' + big + '</div><div class="ch-sub">' + sub + '</div></div>' +
+        (tiles.length ? '<div class="time-grid ch-grid">' + tiles.map(function (t) { return '<div class="time-card' + (t[2] ? ' emph' : '') + '"><div class="tc-label">' + t[0] + '</div><div class="tc-val">' + t[1] + '</div></div>'; }).join('') + '</div>' : '') + '</div>';
+    }
     function bars(items) {
       var mx = Math.max.apply(null, items.map(function (i) { return i.v; })) || 1;
       return '<div class="rc-bars">' + items.map(function (i) {
-        return '<div class="rc-row' + (i.best ? ' best' : '') + '"><div class="rc-l">' + i.l + (i.sub ? '<small>' + i.sub + '</small>' : '') + '</div><div class="rc-bar"><i style="width:' + Math.max(3, i.v / mx * 100) + '%"></i></div><b>' + E(i.v) + '</b></div>';
+        return '<div class="rc-row' + (i.best ? ' best' : '') + '"><div class="rc-l">' + i.l + (i.sub ? '<small>' + i.sub + '</small>' : '') + '</div><b>' + E(i.v) + '</b><div class="rc-bar"><i style="width:' + Math.max(3, i.v / mx * 100) + '%"></i></div></div>';
       }).join('') + '</div>';
     }
-    function tiles(a) { return '<div class="rc-tiles">' + a.map(function (t) { return '<div class="rc-tile' + (t[2] ? ' emph' : '') + '"><div class="tc-label">' + t[0] + '</div><div class="tc-val">' + t[1] + '</div></div>'; }).join('') + '</div>'; }
-    function say(h) { return '<p class="verdict">' + h + '</p>'; }
-    function assume(h) { return '<div class="rc-assume"><b>Annahmen:</b> ' + h + ' Beispiel- bzw. selbst eingegebene Werte, keine Live-Daten.</div>'; }
-    function card(t, body) { return '<section><p class="section-label">' + t + '</p>' + body + '</section>'; }
-    function advice(kwh, trip) {
-      var rows = tariffs.map(function (t) { var p = avgP(t); return { t: t, p: p, cost: t.grundgebuehr + p * kwh }; }).sort(function (a, b) { return a.cost - b.cost; });
-      var best = rows[0], free = rows.filter(function (r) { return r.t.grundgebuehr === 0; }).sort(function (a, b) { return a.p - b.p; })[0];
-      var h = '<b>' + best.t.name + '</b> ist bei ca. ' + fN(kwh) + ' kWh öffentlichem Laden ' + (trip ? 'auf dieser Reise' : 'pro Monat') + ' am günstigsten (' + E(best.cost) + ').';
-      if (free) {
-        var be = rows.filter(function (r) { return r.t.grundgebuehr > 0 && r.p < free.p; }).map(function (r) { return { r: r, k: r.t.grundgebuehr / (free.p - r.p) }; }).sort(function (a, b) { return a.k - b.k; })[0];
-        if (be) h += ' Ab ungefähr <b>' + fN(be.k) + ' kWh</b> pro Monat ist <b>' + be.r.t.name + '</b> günstiger als <b>' + free.t.name + '</b> (' + E(be.r.t.grundgebuehr) + ' Grundgebühr, dafür ' + fN((free.p - be.r.p) * 100) + ' ct weniger pro kWh).';
-        if (trip && best.t.grundgebuehr > 0) h += ' Für deine geplante Reise lohnt sich <b>' + best.t.name + '</b> voraussichtlich (ca. ' + E(free.cost - best.cost) + ' gespart). Wenn du danach kaum öffentlich lädst, könnte es sinnvoll sein, ihn wieder zu kündigen.';
-      }
-      return say(h) + bars(rows.map(function (r, i) { return { l: r.t.name, sub: 'Ø ' + fN(r.p * 100) + ' ct/kWh' + (r.t.grundgebuehr ? ' + ' + E(r.t.grundgebuehr) + '/Monat' : ''), v: r.cost, best: i === 0 }; }));
+    function markBest(items) { var m = Math.min.apply(null, items.map(function (i) { return i.v; })); items.forEach(function (i) { i.best = i.v === m; }); return items; }
+    function tip(h) { return '<div class="rc-tip"><div class="rc-tip-mascot">' + mascotSVG({ cls: '', face: 'default', topIcon: 'lamp' }) + '</div><span>' + h + '</span></div>'; }
+    function note(h) { return '<p class="rc-note">' + h + '</p>'; }
+    // Kurz-Tipp: günstigster Tarif für eine Energiemenge
+    function tariffTip(kwh, trip, cpoId, base) {
+      var rows = tariffs.map(function (t) { var p = priceAt(t, cpoId); return { t: t, cost: (base || 0) + (trip && state.owned[t.id] ? 0 : t.grundgebuehr) + p * kwh }; }).sort(function (a, b) { return a.cost - b.cost; });
+      var best = rows[0], mine = rows.filter(function (r) { return state.owned[r.t.id]; })[0];
+      if (mine && mine.t.id === best.t.id) return tip('✓ <b>' + best.t.name + '</b> hast du schon, das ist hier der günstigste Tarif.');
+      var h = '<b>' + best.t.name + '</b> ist ' + (trip ? 'für diese Reise' : 'dafür') + ' am günstigsten (' + E(best.cost) + (trip ? '' : ' pro Monat') + (best.t.grundgebuehr ? ', inkl. ' + E(best.t.grundgebuehr) + ' Grundgebühr' : '') + ').';
+      if (mine) h += ' Du sparst damit ca. <b>' + E(mine.cost - best.cost) + '</b> gegenüber ' + mine.t.name + '.';
+      if (trip && best.t.grundgebuehr > 0) h += ' Danach kannst du ihn wieder kündigen.';
+      return tip(h);
     }
 
     // ---------- Markup ----------
-    var days = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'], dv = [35, 10, 0, 45, 30, 60, 0];
+    var carIcon = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M3 13l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 8l2 5v4H3v-4z"/><circle cx="7.5" cy="17" r="1.6"/><circle cx="16.5" cy="17" r="1.6"/></svg>';
     root.innerHTML =
-      '<div class="segmented" id="rcTabs">' +
-      '<button class="rc-tab active" data-t="1"><b>Laden</b><span>Kosten &amp; Zeit</span></button>' +
-      '<button class="rc-tab" data-t="2"><b>Alltag</b><span>Woche &amp; Monat</span></button>' +
-      '<button class="rc-tab" data-t="3"><b>Reise</b><span>Langstrecke</span></button></div>' +
-      '<section style="margin-top:0"><p class="section-label">Dein Auto &amp; deine Preise<span class="hint" id="rcCar"></span></p><div class="rc-grid">' +
-      F('cap', 'Akku (kWh)', 60) + F('cons', 'Verbrauch (kWh/100 km)', 17, 0.5) + F('home', 'Strom zuhause (€/kWh)', 0.32, 0.01) +
-      F('ac', 'Öffentlich AC (€/kWh)', 0.49, 0.01) + F('dc', 'Schnellladen DC (€/kWh)', 0.69, 0.01) +
-      F('l', 'Vergleich Verbrenner (l/100 km)', 7, 0.5) + F('fuel', 'Benzin (€/Liter)', 1.85, 0.01) + '</div></section>' +
-      '<div class="rc-pane" id="rcT1"><section><p class="section-label">Ladevorgang</p><div class="rc-grid">' +
-      F('from', 'Akku jetzt (%)', 20) + F('to', 'Ziel (%)', 80) + F('pw', 'Ladeleistung Säule (kW)', 50) + F('price', 'Dein Preis (€/kWh)', 0.59, 0.01) + F('fee', 'Grundgebühr (€/Monat)', 0) + F('mk', 'Öffentlich laden pro Monat (kWh)', 60, 5) + '</div></section><div id="rcO1"></div></div>' +
-      '<div class="rc-pane" id="rcT2" style="display:none"><section><p class="section-label">Deine Woche<span class="hint">km pro Tag</span></p><div class="rc-days">' +
-      days.map(function (d, i) { return F('d' + i, d, dv[i]); }).join('') + '</div><div class="rc-grid" style="margin-top:10px">' + F('soc', 'Akku jetzt (%)', 80) + F('res', 'Mindestreserve (%)', 15) + F('wb', 'Wallbox zuhause (kW)', 11) + '</div></section><div id="rcO2"></div></div>' +
-      '<div class="rc-pane" id="rcT3" style="display:none"><section><p class="section-label">Deine Reise</p><div class="rc-grid">' +
-      '<div class="field"><label for="rc_from3">Start</label><input type="text" id="rc_from3" data-rc placeholder="z. B. Frankfurt"></div><div class="field"><label for="rc_to3">Ziel</label><input type="text" id="rc_to3" data-rc placeholder="z. B. München"></div>' +
-      '<div class="field" style="grid-column:1/3"><label for="rc_via">Zwischenziele (optional)</label><input type="text" id="rc_via" data-rc placeholder="z. B. Nürnberg"></div>' +
-      F('dist', 'Entfernung einfach (km)', 400, 10) + '<div class="field"><label for="rc_rt">Fahrt</label><select id="rc_rt" data-rc><option value="1">Hin und zurück</option><option value="0">Nur hin</option></select></div>' +
-      F('s3', 'Akku bei Start (%)', 90, 5) + F('a3', 'Mindestens bei Ankunft (%)', 15, 5) + '<div class="field"><label for="rc_p3">Ladeart unterwegs</label><select id="rc_p3" data-rc><option value="50">DC 50 kW</option><option value="150" selected>DC 150 kW</option><option value="300">DC 300 kW</option><option value="22">AC 22 kW</option></select></div>' + F('spd', 'Ø Tempo (km/h)', 100, 5) +
-      '</div><a class="map-link" id="rcRoute" target="_blank" rel="noopener" href="#">Route in Google Maps prüfen</a><div class="field-note">Die Entfernung gibst du selbst ein (keine Live-Routenberechnung). Über den Link kannst du sie in Google Maps ablesen.</div></section><div id="rcO3"></div></div>';
+      '<div class="rc-car"><div class="rc-car-ic">' + carIcon + '</div><div class="rc-car-tx"><b id="rcCarName">—</b><small id="rcCarSub"></small></div><button class="link-btn" id="rcCarChange">Ändern</button></div>' +
+      '<div class="segmented" id="rcTabs" style="margin-bottom:12px;">' +
+        '<button class="rc-tab active" data-t="1"><b>Laden</b><span>jetzt</span></button>' +
+        '<button class="rc-tab" data-t="2"><b>Alltag</b><span>pro Monat</span></button>' +
+        '<button class="rc-tab" data-t="3"><b>Reise</b><span>Langstrecke</span></button></div>' +
+      '<p class="seg-hint" id="rcHint" style="margin-top:0;"></p>' +
 
-    // ---------- Berechnung ----------
-    function render() {
-      var cap = n('cap') || 60, cons = n('cons') || 17, home = n('home'), ac = n('ac'), dc = n('dc'), lp = n('l'), fuel = n('fuel');
-      var vmax = vehicleMaxPower() || 150;
-      document.getElementById('rcCar').textContent = currentVehicle().label;
-      var fuelTxt = lp > 0 ? 'Verbrenner ' + fN(lp, 1) + ' l/100 km zu ' + fmtEUR(fuel) + '/l' : 'kein Verbrenner-Vergleich';
-      // 1) Laden
-      var from = n('from'), to = n('to'), pw = n('pw') || 50, price = n('price'), fee = n('fee');
-      var o1 = document.getElementById('rcO1');
-      if (to <= from) { o1.innerHTML = '<div class="empty-note">Das Ziel muss höher sein als der aktuelle Akkustand.</div>'; }
-      else {
-        var kwh = cap * (to - from) / 100, min = chargingTimeMinutes(from, to, cap, vmax, pw), km = kwh / cons * 100, cost = kwh * price;
-        var items = [{ l: 'Zuhause laden', v: kwh * home, sub: fN(home * 100) + ' ct/kWh' }, { l: 'Öffentlich AC', v: kwh * ac, sub: fN(ac * 100) + ' ct/kWh' }, { l: 'Öffentlich DC (Schnellladen)', v: kwh * dc, sub: fN(dc * 100) + ' ct/kWh' }, { l: 'Dein Tarif', v: cost, sub: fN(price * 100) + ' ct/kWh' + (fee ? ' + ' + E(fee) + '/Monat' : '') }];
-        var v100 = lp * fuel, vcost = km * v100 / 100;
-        if (lp > 0) items.push({ l: 'Verbrenner (gleiche ' + fN(km) + ' km)', v: vcost, sub: E(v100) + ' pro 100 km' });
-        var minv = Math.min.apply(null, items.map(function (i) { return i.v; })); items.forEach(function (i) { i.best = i.v === minv; });
-        o1.innerHTML = card('Ergebnis', tiles([['Geladen', fN(kwh, 1) + ' kWh'], ['Ladezeit', fmtDuration(min), 1], ['Akku', '+' + (to - from) + ' %'], ['Reichweite', '+' + fN(km) + ' km'], ['Kosten', E(cost), 1], ['pro 100 km', E(cons * price)], ['pro km', E(cons * price / 100)]]) +
-          say('Du lädst <b>' + fN(kwh, 1) + ' kWh</b> von ' + from + ' auf ' + to + ' %. Das dauert etwa <b>' + fmtDuration(min) + '</b> und bringt dir rund <b>' + fN(km) + ' km</b> Reichweite. Bei ' + fN(price * 100) + ' ct/kWh kostet das <b>' + E(cost) + '</b>.')) +
-          card('Kostenvergleich', bars(items) + (lp > 0 ? say(cost < vcost ? 'Dieselbe Strecke kostet dich elektrisch <b>' + E(vcost - cost) + '</b> weniger als mit dem Verbrenner.' : 'Mit diesem Preis wäre der Verbrenner auf dieser Strecke ' + E(cost - vcost) + ' günstiger. Zuhause laden würde ' + E(kwh * home) + ' kosten.') : '')) +
-          card('Welcher Tarif passt?', advice(n('mk'), false)) + assume('Akku ' + fN(cap) + ' kWh, Verbrauch ' + fN(cons, 1) + ' kWh/100 km, Ladeleistung ' + fN(Math.min(pw, vmax)) + ' kW (begrenzt durch Auto und Säule, Ladekurve vereinfacht), ' + fuelTxt + '. Tarifpreise: Ø über alle Betreiber.');
-      }
-      // 2) Alltag
-      var km7 = days.map(function (d, i) { return n('d' + i); }), wk = km7.reduce(function (a, b) { return a + b; }, 0), wkKwh = wk * cons / 100, mo = wk * 52 / 12, moKwh = wkKwh * 52 / 12;
-      var res = n('res'), soc = n('soc'), win = cap * (80 - res) / 100, o2 = document.getElementById('rcO2');
-      if (wk <= 0) { o2.innerHTML = '<div class="empty-note">Trage oben ein, wie viele Kilometer du pro Tag fährst.</div>'; }
-      else {
-        var s = soc, when = null; for (var d = 0; d < 14 && when == null; d++) { s -= km7[d % 7] * cons / 100 / cap * 100; if (s < res) when = d; }
-        var whenTxt = when == null ? 'Dein Akku reicht mit ' + soc + ' % mindestens zwei Wochen.' : 'Mit ' + soc + ' % Akku solltest du spätestens <b>vor ' + (when >= 7 ? 'nächstem ' : '') + days[when % 7] + (when === 0 ? ' (heute)' : '') + '</b> laden, sonst unterschreitest du deine Reserve von ' + res + ' %.';
-        var sess = Math.max(1, Math.ceil(wkKwh / win)), per = wkKwh / sess, wb = n('wb') || 11;
-        var q = 2, per2 = wkKwh / q, acKw = Math.min(11, vmax), dcKw = Math.min(50, vmax);
-        var needPct = wkKwh / cap * 100, fits = needPct <= 100 - res - 5;
-        var acts = [['Einkaufen', 30, 11], ['Supermarkt (Schnelllader)', 15, 50], ['Fitnessstudio', 60, 11], ['Restaurant', 75, 11], ['Kino', 150, 11], ['Stadtbesuch', 120, 11], ['Arbeit', 480, 11]].map(function (a) { var kw = Math.min(a[2], vmax), k = kw * a[1] / 60 / cons * 100; return { n: a[0], m: a[1], kw: kw, km: k, days: k / (wk / 7) }; }).sort(function (a, b) { return b.days - a.days; });
-        var top = acts.filter(function (a) { return a.n.indexOf('Einkaufen') === 0; })[0];
-        o2.innerHTML = card('Deine Woche in Zahlen', tiles([['Ø pro Tag', fN(wk / 7, 1) + ' km'], ['Pro Woche', fN(wk) + ' km', 1], ['Pro Monat', fN(mo) + ' km'], ['Energie/Woche', fN(wkKwh, 1) + ' kWh'], ['Energie/Monat', fN(moKwh) + ' kWh'], ['Ladungen/Woche', sess, 1]]) +
-          say('Du fährst durchschnittlich <b>' + fN(wk) + ' km pro Woche</b>. Bei deinem Verbrauch brauchst du dafür ungefähr <b>' + fN(wkKwh, 1) + ' kWh</b>. ' + whenTxt)) +
-          card('A · Laden zuhause', say('Bei einem sinnvollen Ladefenster (' + res + ' % bis 80 %) reicht <b>' + sess + '× pro Woche</b> laden, je ca. ' + fN(per, 1) + ' kWh. An der Wallbox (' + fN(wb) + ' kW) dauert das etwa <b>' + fmtDuration(per / wb * 60) + '</b> – über Nacht kein Thema. Kosten: <b>' + E(wkKwh * home) + '</b> pro Woche, <b>' + E(moKwh * home) + '</b> pro Monat.')) +
-          card('B · 2× pro Woche öffentlich', say('Pro Ladestopp ca. <b>' + fN(per2, 1) + ' kWh</b>. Am AC-Punkt (' + fN(acKw) + ' kW) dauert das ' + fmtDuration(per2 / acKw * 60) + ' und kostet ' + E(per2 * ac) + '; am Schnelllader (' + fN(dcKw) + ' kW) ' + fmtDuration(per2 / dcKw * 60) + ' für ' + E(per2 * dc) + '. Pro Monat: <b>' + E(moKwh * ac) + ' (AC)</b> bzw. <b>' + E(moKwh * dc) + ' (DC)</b>. Passende Stopps: Supermarkt, Arbeit, Fitnessstudio (siehe D).')) +
-          card('C · 1× pro Woche', say(fits ? 'Ja, das reicht: Eine Ladung von etwa <b>' + fN(Math.max(res, 0)) + ' % auf ' + fN(Math.min(100, res + needPct + 5)) + ' %</b> deckt deine Woche (' + fN(wkKwh, 1) + ' kWh). Für den Akku ist ' + fN(Math.min(100, res + needPct + 5)) + ' % ' + (res + needPct + 5 > 80 ? 'aber schon recht voll – ab und zu ist das okay.' : 'unproblematisch.') : 'Das wird knapp: Du bräuchtest ' + fN(needPct) + ' % Akku pro Woche. Besser 2× pro Woche laden.')) +
-          card('D · Laden mit Aktivitäten verbinden', acts.map(function (a) { return '<div class="rc-act' + (a.days >= 1 ? ' hi' : '') + '"><div><b>' + a.n + '</b><small>' + a.m + ' min · ' + fN(a.kw) + ' kW</small></div><div class="rc-act-r"><b>+' + fN(a.km) + ' km</b><small>≈ ' + fN(a.days, 1) + ' Tage Fahren</small></div></div>'; }).join('') +
-            say(top && top.days >= 1 ? '⭐ Schon <b>' + top.m + ' Minuten beim Einkaufen</b> bringen dir etwa ' + fN(top.km) + ' km – das reicht für ca. ' + fN(top.days, 1) + ' Tage. Kostenpunkt bei AC: ' + E(top.kw * top.m / 60 * ac) + '.' : 'Bei deinem Fahrprofil lohnt sich vor allem längeres Laden (Arbeit, Kino), kurze Stopps bringen wenig.')) +
-          card('Tarif-Tipp für deinen Monat', advice(moKwh * 0.5, false)) + assume('Verbrauch ' + fN(cons, 1) + ' kWh/100 km, Akku ' + fN(cap) + ' kWh, Ladefenster ' + res + '–80 %, 52 Wochen = 12 Monate. Tarif-Tipp: 50 % deines Bedarfs öffentlich. AC-Punkt max. 11 kW, Ladeleistungen von Auto und Säule begrenzt.');
-      }
-      // 3) Reise
-      var rt = S('rt') !== '0', tot = n('dist') * (rt ? 2 : 1), tk = tot * cons / 100, avail = cap * Math.max(0, n('s3') - n('a3')) / 100, need = Math.max(0, tk - avail);
-      var pw3 = Math.min(n('p3') || 150, vmax), perStop = cap * 0.65, stops = need > 0 ? Math.ceil(need / perStop) : 0, eachKwh = stops ? need / stops : 0, eachPct = eachKwh / cap * 100;
-      var tmin = stops ? chargingTimeMinutes(15, 15 + eachPct, cap, vmax, pw3) : 0, totalMin = tmin * stops, drive = tot / (n('spd') || 100) * 60;
-      var via = S('via'), url = 'https://www.google.com/maps/dir/?api=1&origin=' + encodeURIComponent(S('from3')) + '&destination=' + encodeURIComponent(S('to3')) + (via ? '&waypoints=' + encodeURIComponent(via) : '');
-      document.getElementById('rcRoute').href = url;
-      var tv = tariffs.map(function (t) { var own = !!state.owned[t.id]; return { l: t.name, sub: 'Laden unterwegs Ø ' + fN(avgP(t) * 100) + ' ct/kWh' + (own ? ' · hast du' : (t.grundgebuehr ? ' · + ' + E(t.grundgebuehr) + ' Grundgebühr' : '')), v: avail * home + need * avgP(t) + (own ? 0 : t.grundgebuehr) }; }).sort(function (a, b) { return a.v - b.v; });
-      var v3 = [{ l: 'Variante 1 · alles zuhause (nur Vergleich)', v: tk * home }, { l: 'Variante 2 · unterwegs Standardpreis DC', sub: fN(dc * 100) + ' ct/kWh', v: avail * home + need * dc }].concat(tv.map(function (x, i) { x.l = 'Variante 3 · ' + x.l; x.best = i === 0; return x; }));
-      if (lp > 0) v3.push({ l: 'Verbrenner (' + fN(tot) + ' km)', v: tot * lp * fuel / 100 });
-      var bestV = tv[0];
-      document.getElementById('rcO3').innerHTML = card('Ergebnis', tiles([['Strecke', fN(tot) + ' km'], ['Energie', fN(tk) + ' kWh'], ['Ladestopps', stops, 1], ['Zeit pro Stopp', stops ? fmtDuration(tmin) : '–'], ['Reisezeit', fmtDuration(drive + totalMin), 1], ['Kosten (günstigster Tarif)', E(bestV.v)], ['pro 100 km', E(bestV.v / tot * 100)]]) +
-        say(stops === 0 ? 'Du kommst mit deinem Start-Akku (' + n('s3') + ' %) ohne Ladestopp ans Ziel und hast bei Ankunft noch mindestens ' + n('a3') + ' %.' : 'Für <b>' + fN(tot) + ' km</b> brauchst du ca. <b>' + fN(tk) + ' kWh</b>. Du musst etwa <b>' + stops + '× laden</b>, jeweils rund ' + fmtDuration(tmin) + ' (' + fN(eachKwh) + ' kWh, ca. 15 → ' + fN(15 + eachPct) + ' %). Gesamt unterwegs: ca. ' + fmtDuration(drive + totalMin) + ' inkl. Ladepausen.')) +
-        card('Kosten je Strategie', bars(v3) + say('Zeigt, wie Ladeort und Tarif die Reisekosten verändern – Zuhause vollladen und unterwegs nur das Nötigste spart am meisten.')) +
-        card('Tarifoptimierung für diese Reise', advice(need, true)) + assume('Verbrauch ' + fN(cons, 1) + ' kWh/100 km, Akku ' + fN(cap) + ' kWh, Start bei ' + n('s3') + ' % aus dem Heimladen (' + fN(home * 100) + ' ct/kWh), Ladestopps von 15 % bis max. 80 %, Ladeleistung ' + fN(pw3) + ' kW, Ø ' + fN(n('spd')) + ' km/h. Tarifpreise: Ø über Betreiber, neue Tarife inkl. 1 Monat Grundgebühr.');
+      '<div class="rc-pane" id="rcT1"><div id="rcH1"></div>' +
+        sec('Wie viel lädst du?', '', '<div class="slider-card slider-group">' +
+          sl('from', 'Akku jetzt', 0, 100, 1, 20, '%', [['10 %', 10], ['20 %', 20], ['40 %', 40]]) + '<div class="sg-sep"></div>' +
+          sl('to', 'Laden bis', 0, 100, 1, 80, '%', [['80 % · schonend', 80], ['90 %', 90], ['100 %', 100]]) + '</div>') +
+        sec('Wo lädst du?', '', '<div class="lbl" style="font-size:13px;color:var(--ink-soft);margin-bottom:6px;">Leistung der Säule</div>' + chipRow('pw', [['11 kW · AC', 11], ['50 kW', 50], ['150 kW', 150], ['350 kW', 350]]) + '<input type="hidden" id="rc_pw" data-rc value="50">' +
+          '<div class="rc-grid" style="margin-top:6px;"><div class="field"><label for="rc_tariff">Dein Tarif</label><select id="rc_tariff" data-rc></select></div><div class="field"><label for="rc_cpo">Betreiber</label><select id="rc_cpo" data-rc></select></div></div>' +
+          '<div id="rcPriceWrap" style="display:none;">' + F('price', 'Dein Preis pro kWh (€)', '0.59', 0.01) + '</div>') +
+        '<div id="rcO1"></div>' +
+      '</div>' +
+
+      '<div class="rc-pane" id="rcT2" style="display:none;"><div id="rcH2"></div>' +
+        sec('Wie viel fährst du?', '', '<div class="slider-card slider-group">' + sl('wk', 'Fahrstrecke pro Woche', 0, 1500, 10, 250, 'km', [['100', 100], ['250', 250], ['500', 500], ['800', 800]]) + '</div>') +
+        '<div id="rcO2"></div>' +
+      '</div>' +
+
+      '<div class="rc-pane" id="rcT3" style="display:none;"><div id="rcH3"></div>' +
+        sec('Deine Reise', '', '<div class="slider-card slider-group">' +
+          sl('dist', 'Entfernung (einfache Strecke)', 20, 1500, 10, 400, 'km', [['200', 200], ['400', 400], ['600', 600], ['800', 800]]) + '<div class="sg-sep"></div>' +
+          '<div class="sg-toggle"><div><div class="tr-label">Hin- und Rückfahrt</div></div><label class="switch"><input type="checkbox" id="rc_rt" data-rc checked><span class="track"></span></label></div><div class="sg-sep"></div>' +
+          sl('s3', 'Akku bei Abfahrt', 20, 100, 5, 90, '%', [['80 %', 80], ['90 %', 90], ['100 %', 100]]) + '</div>' +
+          '<a class="map-link" href="https://www.google.com/maps/dir/" target="_blank" rel="noopener">Entfernung in Google Maps nachsehen</a>') +
+        '<div id="rcO3"></div>' +
+      '</div>' +
+
+      '<section><details class="fold-plain"><summary>Preise &amp; Auto anpassen<span class="hint">vorbelegt</span></summary>' +
+        '<p class="field-note" style="margin:8px 0 12px;">Die Werte kommen aus deiner Auswahl und deinem Konto. Änderungen gelten nur im Rechner.</p>' +
+        '<p class="sub-label">Auto &amp; Preise</p><div class="rc-grid">' +
+        F('cap', 'Akku (kWh)', 60, 1, true) + F('cons', 'Verbrauch (kWh/100 km)', 17, 0.5, true) + F('home', 'Strom zuhause (€/kWh)', 0.32, 0.01, true) +
+        F('ac', 'Öffentlich AC (€/kWh)', 0.49, 0.01, true) + F('dc', 'Schnellladen DC (€/kWh)', 0.69, 0.01, true) +
+        F('l', 'Verbrenner (l/100 km, 0 = aus)', 7, 0.5, true) + F('fuel', 'Benzin (€/Liter)', 1.85, 0.01, true) + '</div>' +
+        '<p class="sub-label" style="margin-top:14px;">Reise</p><div class="rc-grid">' +
+        F('a3', 'Akku bei Ankunft (%)', 15, 5, true) + F('p3', 'Ladeleistung unterwegs (kW)', 150, 10, true) + F('spd', 'Ø Tempo (km/h)', 100, 5, true) + '</div></details></section>';
+
+    var hints = { 1: 'Was kostet eine Ladung und wie lange dauert sie?', 2: 'Was kostet dich das Laden im Monat?', 3: 'Was kostet deine Reise und wie viele Stopps brauchst du?' };
+
+    // ---------- Tarif & Betreiber ----------
+    el('cpo').innerHTML = cpos.map(function (c) { return '<option value="' + c.id + '">' + c.name + '</option>'; }).join('');
+    el('cpo').value = state.cpo || 'enbw';
+    function fillTariffs() {
+      var sel = el('tariff'), cur = sel.value;
+      var own = tariffs.filter(function (t) { return state.owned[t.id]; }), other = tariffs.filter(function (t) { return !state.owned[t.id]; });
+      sel.innerHTML = own.map(function (t) { return '<option value="' + t.id + '">✓ ' + t.name + '</option>'; }).join('') + other.map(function (t) { return '<option value="' + t.id + '">' + t.name + '</option>'; }).join('') + '<option value="own">Eigener Preis</option>';
+      if (!selTouched) {
+        var c = S('cpo'), pool = own.length ? own : tariffs;
+        var best = pool.filter(function (t) { return t.prices[c] != null; }).sort(function (a, b) { return a.prices[c] - b.prices[c]; })[0];
+        sel.value = best ? best.id : 'own';
+      } else if (cur && sel.querySelector('option[value="' + cur + '"]')) sel.value = cur;
     }
-    root.addEventListener('input', function (e) { if (e.target.hasAttribute('data-rc')) { e.target.dataset.t = 1; render(); } });
-    root.addEventListener('change', function (e) { if (e.target.hasAttribute('data-rc')) render(); });
-    function tab(t) {
+    function applyPrice() {
+      var t = tById(S('tariff')), p = t ? t.prices[S('cpo')] : null;
+      if (t && p != null) el('price').value = p.toFixed(2);
+      document.getElementById('rcPriceWrap').style.display = (!t || p == null) ? 'block' : 'none';
+    }
+
+    // ---------- 1: Laden ----------
+    function r1() {
+      var cap = n('cap') || 60, cons = n('cons') || 17, home = n('home'), dc = n('dc'), lp = n('l'), fuel = n('fuel');
+      var vmax = vehicleMaxPower() || 150, from = n('from'), to = n('to'), pw = n('pw') || 50, price = n('price');
+      var t = tById(S('tariff')), cpoId = S('cpo');
+      var H = document.getElementById('rcH1'), O = document.getElementById('rcO1');
+      if (to <= from) { H.innerHTML = hero('Kosten dieser Ladung', '—', 'Das Ziel muss höher sein als der aktuelle Akkustand.', []); O.innerHTML = ''; return; }
+      var kwh = cap * (to - from) / 100, min = chargingTimeMinutes(from, to, cap, vmax, pw), km = kwh / cons * 100, cost = kwh * price;
+      H.innerHTML = hero('Kosten dieser Ladung', E(cost), fN(kwh, 1) + ' kWh · ' + (t ? t.name + (t.grundgebuehr ? ' (+ ' + E(t.grundgebuehr) + '/Monat)' : '') : 'eigener Preis'), [['Ladezeit', fmtDuration(min), 1], ['Reichweite', '+' + fN(km) + ' km'], ['pro 100 km', E(cons * price)]]);
+      var items = [{ l: 'Dein Preis', sub: fN(price * 100) + ' ct/kWh', v: cost }];
+      if (home > 0) items.push({ l: 'Zuhause', sub: fN(home * 100) + ' ct/kWh', v: kwh * home });
+      items.push({ l: 'Schnellladen ohne Tarif', sub: fN(dc * 100) + ' ct/kWh', v: kwh * dc });
+      var vcost = 0;
+      if (lp > 0) { vcost = km * lp * fuel / 100; items.push({ l: 'Verbrenner (gleiche Strecke)', sub: fN(km) + ' km', v: vcost }); }
+      markBest(items);
+      // Günstigster Tarif beim gewählten Betreiber
+      var pool = tariffs.filter(function (x) { return x.prices[cpoId] != null; }).sort(function (a, b) { return a.prices[cpoId] - b.prices[cpoId]; });
+      var cheap = pool[0], tp = '';
+      if (cheap && t && cheap.id !== t.id && cheap.prices[cpoId] < price - 0.0001) tp = tip('Mit <b>' + cheap.name + '</b> zahlst du bei ' + cpoName(cpoId) + ' ca. <b>' + E((price - cheap.prices[cpoId]) * kwh) + '</b> weniger pro Ladung' + (cheap.grundgebuehr ? ' (dafür ' + E(cheap.grundgebuehr) + ' Grundgebühr im Monat)' : '') + '.');
+      else if (cheap && t) tp = tip('✓ Das ist bei ' + cpoName(cpoId) + ' der günstigste Tarif.');
+      O.innerHTML = sec('Wo wäre es günstiger?', '', bars(items)) + (tp ? '<section>' + tp + '</section>' : '') +
+        note(pw > vmax ? 'Dein Auto lädt maximal mit ' + fN(vmax) + ' kW, mehr Säulenleistung bringt nichts.' : 'Berechnet mit ' + fN(cap) + ' kWh Akku und ' + fN(Math.min(pw, vmax)) + ' kW Ladeleistung. Beispielwerte, keine Live-Preise.');
+    }
+
+    // ---------- 2: Alltag ----------
+    function r2() {
+      var cap = n('cap') || 60, cons = n('cons') || 17, home = n('home'), ac = n('ac'), dc = n('dc'), lp = n('l'), fuel = n('fuel');
+      var wk = n('wk'), wkKwh = wk * cons / 100, mo = wk * 52 / 12, moKwh = wkKwh * 52 / 12;
+      var H = document.getElementById('rcH2'), O = document.getElementById('rcO2');
+      if (wk <= 0) { H.innerHTML = hero('Ladekosten pro Monat', '—', 'Stelle oben ein, wie viel du pro Woche fährst.', []); O.innerHTML = ''; return; }
+      var sess = Math.max(1, Math.ceil(wkKwh / (cap * 0.65)));
+      H.innerHTML = hero('Ladekosten pro Monat (zuhause)', home > 0 ? E(moKwh * home) : '—', home > 0 ? fN(moKwh) + ' kWh · ' + fN(mo) + ' km im Monat' : 'Trage bei „Preise & Auto anpassen“ deinen Heimstrompreis ein.',
+        [['Energie/Woche', fN(wkKwh, 1) + ' kWh'], ['Laden/Woche', sess + '×', 1], ['Pro Jahr', home > 0 ? E(moKwh * 12 * home) : '—']]);
+      var items = [];
+      if (home > 0) items.push({ l: 'Zuhause laden', sub: fN(home * 100) + ' ct/kWh', v: moKwh * home });
+      items.push({ l: 'Öffentlich AC', sub: fN(ac * 100) + ' ct/kWh', v: moKwh * ac }, { l: 'Schnellladen DC', sub: fN(dc * 100) + ' ct/kWh', v: moKwh * dc });
+      if (lp > 0) items.push({ l: 'Verbrenner', sub: fN(lp, 1) + ' l/100 km', v: mo * lp * fuel / 100 });
+      markBest(items);
+      O.innerHTML = sec('Wo lädst du am günstigsten?', 'pro Monat', bars(items)) +
+        '<section>' + (home > 0 ? tip('Zuhause laden spart dir gegenüber Schnellladen etwa <b>' + E(moKwh * (dc - home)) + '</b> im Monat.') : '') + '</section>' +
+        '<section>' + tariffTip(moKwh * 0.5, false, null) + '</section>' +
+        note('Bei öffentlichem Laden gehen wir von der Hälfte deines Bedarfs aus. Beispielwerte, keine Live-Preise.');
+    }
+
+    // ---------- 3: Reise ----------
+    function r3() {
+      var cap = n('cap') || 60, cons = n('cons') || 17, home = n('home'), dc = n('dc'), lp = n('l'), fuel = n('fuel');
+      var vmax = vehicleMaxPower() || 150, rt = el('rt').checked, tot = n('dist') * (rt ? 2 : 1), tk = tot * cons / 100, s3 = n('s3'), a3 = n('a3');
+      var avail = cap * Math.max(0, s3 - a3) / 100, need = Math.max(0, tk - avail), pw3 = Math.min(n('p3') || 150, vmax);
+      var stops = need > 0 ? Math.ceil(need / (cap * 0.65)) : 0, eachKwh = stops ? need / stops : 0, eachPct = eachKwh / cap * 100;
+      var tmin = stops ? chargingTimeMinutes(15, 15 + eachPct, cap, vmax, pw3) : 0, drive = tot / (n('spd') || 100) * 60;
+      var tv = tariffs.map(function (t) { var own = !!state.owned[t.id]; return { t: t, l: t.name, sub: own ? '✓ hast du' : (t.grundgebuehr ? '+ ' + E(t.grundgebuehr) + ' Grundgebühr' : 'keine Grundgebühr'), v: avail * home + need * avgP(t) + (own ? 0 : t.grundgebuehr) }; }).sort(function (x, y) { return x.v - y.v; });
+      var bestV = tv[0], shown = tv.slice(0, 3);
+      tv.forEach(function (x) { if (state.owned[x.t.id] && shown.indexOf(x) < 0) shown.push(x); });
+      var items = shown.map(function (x) { return { l: x.l, sub: x.sub, v: x.v }; });
+      items.push({ l: 'Ohne Tarif (Schnellladen)', sub: fN(dc * 100) + ' ct/kWh', v: avail * home + need * dc });
+      if (lp > 0) items.push({ l: 'Verbrenner', sub: fN(tot) + ' km', v: tot * lp * fuel / 100 });
+      markBest(items);
+      document.getElementById('rcH3').innerHTML = hero('Geschätzte Reisekosten', E(bestV.v), 'mit ' + bestV.l + ' · ' + fN(tk) + ' kWh Energie', [['Strecke', fN(tot) + ' km'], ['Ladestopps', String(stops), 1], ['Reisezeit', fmtDuration(drive + tmin * stops)]]);
+      document.getElementById('rcO3').innerHTML =
+        (stops === 0 ? '<section>' + tip('Du kommst ohne Ladestopp ans Ziel und hast bei Ankunft noch mindestens ' + fN(a3) + ' %.') + '</section>' : '<section>' + tip('Plane <b>' + stops + ' Ladestopp' + (stops > 1 ? 's' : '') + '</b> à ca. ' + fmtDuration(tmin) + ' ein (' + fN(eachKwh) + ' kWh, von etwa 15 auf ' + fN(15 + eachPct) + ' %).') + '</section>') +
+        sec('Kosten je Tarif', '', bars(items)) +
+        '<section>' + tariffTip(need, true, null, avail * home) + '</section>' +
+        note('Start mit ' + s3 + ' % vom Heimladen, Stopps von 15 % bis max. 80 %, ' + fN(pw3) + ' kW. Beispielwerte, keine Live-Preise.');
+    }
+
+    // ---------- Steuerung ----------
+    function syncChips() {
+      [].forEach.call(root.querySelectorAll('.chip-row[data-for]'), function (row) {
+        var e = el(row.getAttribute('data-for')); if (!e) return;
+        [].forEach.call(row.children, function (c) { c.classList.toggle('on', parseFloat(e.value) === parseFloat(c.getAttribute('data-v'))); });
+      });
+    }
+    function upd(e) { var r = document.getElementById('rcv_' + e.id.slice(3)); if (r && e.getAttribute('data-unit')) r.innerHTML = fN(parseFloat(e.value)) + ' <small>' + e.getAttribute('data-unit') + '</small>'; }
+    function setSl(id, v) { var e = el(id); e.value = v; upd(e); }
+    function render() { applyPrice(); r1(); r2(); r3(); syncChips(); }
+    root.addEventListener('input', function (e) {
+      var t = e.target; if (!t.hasAttribute || !t.hasAttribute('data-rc')) return;
+      if (t.type === 'range') upd(t);
+      if (t.hasAttribute('data-assume')) t.dataset.t = 1;
+      if (t.id === 'rc_price') el('tariff').value = 'own';
+      if (t.id === 'rc_from' && n('from') >= n('to')) setSl('to', Math.min(100, n('from') + 5));
+      if (t.id === 'rc_to' && n('to') <= n('from')) setSl('from', Math.max(0, n('to') - 5));
+      render();
+    });
+    root.addEventListener('change', function (e) {
+      var t = e.target;
+      if (t.id === 'rc_tariff' || t.id === 'rc_cpo') selTouched = true;
+      if (t.hasAttribute && t.hasAttribute('data-rc')) render();
+    });
+    root.addEventListener('click', function (e) {
+      var chip = e.target.closest('.chip[data-v]');
+      if (chip) { var inp = el(chip.parentNode.getAttribute('data-for')); if (inp) { inp.value = chip.getAttribute('data-v'); inp.dispatchEvent(new Event('input', { bubbles: true })); } return; }
+      if (e.target.id === 'rcCarChange') { showPage('tarife'); return; }
+      var tab = e.target.closest('.rc-tab'); if (tab) { show(parseInt(tab.getAttribute('data-t'), 10)); window.scrollTo({ top: 0 }); }
+    });
+    function show(t) {
       [].forEach.call(root.querySelectorAll('.rc-tab'), function (b) { b.classList.toggle('active', b.getAttribute('data-t') == t); });
       [1, 2, 3].forEach(function (i) { document.getElementById('rcT' + i).style.display = i == t ? 'block' : 'none'; });
+      document.getElementById('rcHint').textContent = hints[t];
     }
-    [].forEach.call(root.querySelectorAll('.rc-tab'), function (b) { b.addEventListener('click', function () { tab(b.getAttribute('data-t')); window.scrollTo({ top: 0 }); }); });
-    window.rcShow = tab;
-    window.rcSync = function () {
-      [['cap', vehicleCapacity()], ['cons', vehicleConsumption()], ['home', state.account.homePrice]].forEach(function (p) { var e = document.getElementById('rc_' + p[0]); if (e && !e.dataset.t && p[1]) e.value = p[1]; });
+    window.rcShow = show;
+    window.rcPreset = function (tid, cpoId) {
+      if (cpoId) el('cpo').value = cpoId;
+      selTouched = true; fillTariffs();
+      el('tariff').value = tid && el('tariff').querySelector('option[value="' + tid + '"]') ? tid : 'own';
       render();
     };
+    window.rcSync = function () {
+      [['cap', vehicleCapacity()], ['cons', vehicleConsumption()], ['home', state.account.homePrice]].forEach(function (p) { var e = el(p[0]); if (e && !e.dataset.t && p[1] != null) e.value = p[1]; });
+      document.getElementById('rcCarName').textContent = currentVehicle().label;
+      var cic = document.querySelector('.rc-car-ic'); if (cic) cic.innerHTML = carArt(currentVehicle());
+      document.getElementById('rcCarSub').textContent = fN(vehicleCapacity() || 0) + ' kWh Akku · ' + fN(vehicleConsumption() || 0, 1) + ' kWh/100 km · max. ' + fN(vehicleMaxPower() || 0) + ' kW';
+      if (!selTouched) el('cpo').value = state.cpo || el('cpo').value;
+      fillTariffs(); render();
+    };
+    show(1);
     window.rcSync();
   })();
 
