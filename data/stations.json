@@ -1,5 +1,14 @@
 [
   {
+    "cpo": "enbw",
+    "name": "EnBW (D)",
+    "lat": 47.98332249225959,
+    "lng": 7.820008326149946,
+    "kw": 150,
+    "title": "EnBW mobility+",
+    "address": "Basler Straße 98, 79115 Freiburg "
+  },
+  {
     "cpo": "x-tank-rast",
     "name": "Tank & Rast",
     "lat": 50.77812536560651,
@@ -53989,14 +53998,5 @@
     "kw": 22,
     "title": "Gedeplatz",
     "address": "Gedeplatz, 99976 Lengenfeld unterm Stein"
-  },
-  {
-    "cpo": "x-stromnetz-hamburg",
-    "name": "Stromnetz Hamburg",
-    "lat": 53.59337,
-    "lng": 10.14196,
-    "kw": 22,
-    "title": "Rahlstedter Straße 29",
-    "address": "Rahlstedter Straße 29, 22149 Hamburg"
   }
 ]
