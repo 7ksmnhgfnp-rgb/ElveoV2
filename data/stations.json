@@ -1,5 +1,14 @@
 [
   {
+    "cpo": "shell",
+    "name": "Shell Recharge Solutions (DE)",
+    "lat": 48.0278797783439,
+    "lng": 7.777074383921104,
+    "kw": 300,
+    "title": "Shell Recharge",
+    "address": "Brugesstraße 47, 79224 Umkirch "
+  },
+  {
     "cpo": "enbw",
     "name": "EnBW (D)",
     "lat": 47.98332249225959,
@@ -53989,14 +53998,5 @@
     "kw": 22,
     "title": "Jülicher Ring 32",
     "address": "Jülicher Ring 32, 53879 Euskirchen"
-  },
-  {
-    "cpo": "x-unbekannt",
-    "name": "Unbekannter Anbieter",
-    "lat": 51.21411,
-    "lng": 10.21947,
-    "kw": 22,
-    "title": "Gedeplatz",
-    "address": "Gedeplatz, 99976 Lengenfeld unterm Stein"
   }
 ]
