@@ -1,5 +1,32 @@
 [
   {
+    "cpo": "x-inergia-de",
+    "name": "Inergia (DE)",
+    "lat": 48.4998228,
+    "lng": 9.1533116,
+    "kw": 240,
+    "title": "Reutlingen MAX 240",
+    "address": "Carl-Zeiss-Straße 71, 72770 Reutlingen"
+  },
+  {
+    "cpo": "x-inergia-de",
+    "name": "Inergia (DE)",
+    "lat": 47.7588227,
+    "lng": 8.8754562,
+    "kw": 240,
+    "title": "Singen DC 240",
+    "address": "Pfaffenhäule 58, 78224 Singen"
+  },
+  {
+    "cpo": "x-inergia-de",
+    "name": "Inergia (DE)",
+    "lat": 47.6779331,
+    "lng": 9.147928,
+    "kw": 40,
+    "title": "Konstanz DC 40",
+    "address": "Macairestraße 5, 78467 Konstanz"
+  },
+  {
     "cpo": "shell",
     "name": "Shell Recharge Solutions (DE)",
     "lat": 48.0278797783439,
@@ -53971,32 +53998,5 @@
     "kw": 22,
     "title": "Gewerbegebiet 1",
     "address": "Gewerbegebiet 1, 54597 Fleringen"
-  },
-  {
-    "cpo": "x-unbekannt",
-    "name": "Unbekannter Anbieter",
-    "lat": 47.552545,
-    "lng": 9.719015,
-    "kw": 22,
-    "title": "Auenstr. 12",
-    "address": "Auenstr. 12, 88131 Lindau (B)"
-  },
-  {
-    "cpo": "x-be-energised-has-to-be",
-    "name": "Be Energised (has-to-be)",
-    "lat": 49.452202,
-    "lng": 7.055122,
-    "kw": 22,
-    "title": "Am Kirmesplatz 1",
-    "address": "Am Kirmesplatz 1, 66646 Marpingen"
-  },
-  {
-    "cpo": "x-unbekannt",
-    "name": "Unbekannter Anbieter",
-    "lat": 50.669292,
-    "lng": 6.784022,
-    "kw": 22,
-    "title": "Jülicher Ring 32",
-    "address": "Jülicher Ring 32, 53879 Euskirchen"
   }
 ]
