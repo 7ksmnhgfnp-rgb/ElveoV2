@@ -27,6 +27,24 @@
     "address": "Macairestraße 5, 78467 Konstanz"
   },
   {
+    "cpo": "enbw",
+    "name": "EnBW (D)",
+    "lat": 54.665914291048495,
+    "lng": 9.93260786660528,
+    "kw": 200,
+    "title": "Penny",
+    "address": "Ziegeleiweg, 24376 Kappeln"
+  },
+  {
+    "cpo": "x-unknown-operator",
+    "name": "(Unknown Operator)",
+    "lat": 54.65877056573194,
+    "lng": 10.030780578284066,
+    "kw": 11,
+    "title": "ORO Ladepunkt",
+    "address": "Strandpromenade, 24376 Olpenitz"
+  },
+  {
     "cpo": "shell",
     "name": "Shell Recharge Solutions (DE)",
     "lat": 48.0278797783439,
@@ -53980,23 +53998,5 @@
     "kw": 22,
     "title": "Lindenweg 1",
     "address": "Lindenweg 1, 01471 Radeburg"
-  },
-  {
-    "cpo": "x-unbekannt",
-    "name": "Unbekannter Anbieter",
-    "lat": 51.215127,
-    "lng": 7.00996,
-    "kw": 22,
-    "title": "Parkplatz des Bahnhofs Gruiten am Neandertalweg",
-    "address": "Parkplatz des Bahnhofs Gruiten am Neandertalweg, 42782 Haan"
-  },
-  {
-    "cpo": "x-innogy-se-rwe-emobility",
-    "name": "Innogy SE (RWE eMobility)",
-    "lat": 50.20975,
-    "lng": 6.4904,
-    "kw": 22,
-    "title": "Gewerbegebiet 1",
-    "address": "Gewerbegebiet 1, 54597 Fleringen"
   }
 ]
