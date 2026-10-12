@@ -108,6 +108,15 @@
     "address": "Heilhausermühle 1, 54649 Waxweiler"
   },
   {
+    "cpo": "x-powergo",
+    "name": "PowerGo",
+    "lat": 47.67853927612305,
+    "lng": 10.031027793884277,
+    "kw": 13,
+    "title": "Waldbad Camping Isny (PowerGo)",
+    "address": "Lohbauerstraße 59,, 88316 Isny im Allgäu"
+  },
+  {
     "cpo": "x-unknown-operator",
     "name": "(Unknown Operator)",
     "lat": 52.98375961776338,
@@ -53989,14 +53998,5 @@
     "kw": 22,
     "title": "Lindenweg 1",
     "address": "Lindenweg 1, 01471 Radeburg"
-  },
-  {
-    "cpo": "x-unbekannt",
-    "name": "Unbekannter Anbieter",
-    "lat": 51.215127,
-    "lng": 7.00996,
-    "kw": 22,
-    "title": "Parkplatz des Bahnhofs Gruiten am Neandertalweg",
-    "address": "Parkplatz des Bahnhofs Gruiten am Neandertalweg, 42782 Haan"
   }
 ]
