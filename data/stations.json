@@ -1,5 +1,14 @@
 [
   {
+    "cpo": "ionity",
+    "name": "Ionity",
+    "lat": 48.14498032134702,
+    "lng": 11.790812089264364,
+    "kw": 400,
+    "title": "IONITY Parsdorf",
+    "address": "Von-Myra-Straße 6, 85599 Vaterstetten"
+  },
+  {
     "cpo": "x-inergia-de",
     "name": "Inergia (DE)",
     "lat": 48.4998228,
@@ -53989,14 +53998,5 @@
     "kw": 22,
     "title": "Goldene Ecke 8 Parkhaus (Parkpalette) Corneliusstr..",
     "address": "Goldene Ecke 8 Parkhaus (Parkpalette) Corneliusstr.., 58511 Lüdenscheid"
-  },
-  {
-    "cpo": "x-business-owner-at-location",
-    "name": "(Business Owner at Location)",
-    "lat": 51.215337,
-    "lng": 13.731066,
-    "kw": 22,
-    "title": "Lindenweg 1",
-    "address": "Lindenweg 1, 01471 Radeburg"
   }
 ]
