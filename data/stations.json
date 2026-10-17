@@ -1,5 +1,23 @@
 [
   {
+    "cpo": "enbw",
+    "name": "EnBW (D)",
+    "lat": 51.48838237123579,
+    "lng": 9.005781077246183,
+    "kw": 400,
+    "title": "Hellenberg",
+    "address": "Hellenberg, 34474"
+  },
+  {
+    "cpo": "enbw",
+    "name": "EnBW (D)",
+    "lat": 51.41127774057949,
+    "lng": 9.182400822935506,
+    "kw": 300,
+    "title": "Wolfhager Straße",
+    "address": "Wolfhager Straße, 34479"
+  },
+  {
     "cpo": "ionity",
     "name": "Ionity",
     "lat": 48.14498032134702,
@@ -53980,23 +53998,5 @@
     "kw": 22,
     "title": "Gurlittstraße 31",
     "address": "Gurlittstraße 31, 20099 Hamburg"
-  },
-  {
-    "cpo": "x-unbekannt",
-    "name": "Unbekannter Anbieter",
-    "lat": 51.394185,
-    "lng": 12.220331,
-    "kw": 22,
-    "title": "Markt 2",
-    "address": "Markt 2, 04435 Schkeuditz"
-  },
-  {
-    "cpo": "x-unbekannt",
-    "name": "Unbekannter Anbieter",
-    "lat": 51.216692,
-    "lng": 7.635815,
-    "kw": 22,
-    "title": "Goldene Ecke 8 Parkhaus (Parkpalette) Corneliusstr..",
-    "address": "Goldene Ecke 8 Parkhaus (Parkpalette) Corneliusstr.., 58511 Lüdenscheid"
   }
 ]
