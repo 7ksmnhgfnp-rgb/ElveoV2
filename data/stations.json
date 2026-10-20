@@ -1,5 +1,32 @@
 [
   {
+    "cpo": "x-unknown-operator",
+    "name": "(Unknown Operator)",
+    "lat": 53.89721644099626,
+    "lng": 10.683636771250917,
+    "kw": 22,
+    "title": "Broziat Ladestation",
+    "address": "Vorwerker Straße 64, 23554 Lübeck"
+  },
+  {
+    "cpo": "x-unknown-operator",
+    "name": "(Unknown Operator)",
+    "lat": 49.21280294224917,
+    "lng": 9.586045645746822,
+    "kw": 500,
+    "title": "PHcharge",
+    "address": "Robert Bosch Str. 1/1, 74632 Neuenstein"
+  },
+  {
+    "cpo": "x-unknown-operator",
+    "name": "(Unknown Operator)",
+    "lat": 49.21273984073849,
+    "lng": 9.586188244225696,
+    "kw": 500,
+    "title": "Robert-Bosch-Straße 1/1",
+    "address": "Robert-Bosch-Straße, 74632 Neuenstein"
+  },
+  {
     "cpo": "enbw",
     "name": "EnBW (D)",
     "lat": 51.48838237123579,
@@ -53971,32 +53998,5 @@
     "kw": 22,
     "title": "Nobelstraße",
     "address": "Nobelstraße, 92318 Neumarkt i.d.Opf."
-  },
-  {
-    "cpo": "allego",
-    "name": "Allego BV",
-    "lat": 52.429709,
-    "lng": 13.530916,
-    "kw": 11,
-    "title": "Rudower Chaussee 25",
-    "address": "Rudower Chaussee 25, 12489 Berlin"
-  },
-  {
-    "cpo": "x-innogy-se-rwe-emobility",
-    "name": "Innogy SE (RWE eMobility)",
-    "lat": 51.437257,
-    "lng": 7.005947,
-    "kw": 22,
-    "title": "Rüttenscheider Stern 2",
-    "address": "Rüttenscheider Stern 2, 45130 Essen"
-  },
-  {
-    "cpo": "x-stromnetz-hamburg",
-    "name": "Stromnetz Hamburg",
-    "lat": 53.55807,
-    "lng": 10.00985,
-    "kw": 22,
-    "title": "Gurlittstraße 31",
-    "address": "Gurlittstraße 31, 20099 Hamburg"
   }
 ]
