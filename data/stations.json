@@ -2,6 +2,15 @@
   {
     "cpo": "x-unknown-operator",
     "name": "(Unknown Operator)",
+    "lat": 50.11090412014545,
+    "lng": 8.666061094878614,
+    "kw": null,
+    "title": "Holiday Inn Frankfurt - Alte Oper",
+    "address": "Mainzer Landstraße 27, 60329, 60329 Frankfurt am Main"
+  },
+  {
+    "cpo": "x-unknown-operator",
+    "name": "(Unknown Operator)",
     "lat": 53.89721644099626,
     "lng": 10.683636771250917,
     "kw": 22,
@@ -869,7 +878,7 @@
     "lat": 50.9688254854575,
     "lng": 10.07850146107944,
     "kw": 11,
-    "title": "MB Wallbox",
+    "title": "Marienstraße 2",
     "address": "Marienstr. 2, 99834 Gerstungen"
   },
   {
@@ -53989,14 +53998,5 @@
     "kw": 22,
     "title": "Parkstraße 66",
     "address": "Parkstraße 66, 58509 Lüdenscheid"
-  },
-  {
-    "cpo": "x-unbekannt",
-    "name": "Unbekannter Anbieter",
-    "lat": 49.2668,
-    "lng": 11.4729,
-    "kw": 22,
-    "title": "Nobelstraße",
-    "address": "Nobelstraße, 92318 Neumarkt i.d.Opf."
   }
 ]
