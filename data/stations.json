@@ -1,5 +1,41 @@
 [
   {
+    "cpo": "x-evn-bulgaria",
+    "name": "EVN (Bulgaria)",
+    "lat": 49.32484389503301,
+    "lng": 11.032580560537554,
+    "kw": 400,
+    "title": "Angerstraße",
+    "address": "Angerstraße, 91126 Schwabach"
+  },
+  {
+    "cpo": "x-elli-volkswagen-group-charging-gmbh",
+    "name": "Elli (Volkswagen Group Charging GmbH)",
+    "lat": 49.32354703657282,
+    "lng": 11.040109380162903,
+    "kw": 400,
+    "title": "Rother Straße",
+    "address": "Rother Straße, 91126 Schwabach"
+  },
+  {
+    "cpo": "x-n-ergie",
+    "name": "N-ERGIE",
+    "lat": 49.32619489317739,
+    "lng": 11.022349903087843,
+    "kw": 22,
+    "title": "Albrecht-Achilles-Straße",
+    "address": "Albrecht-Achilles-Straße, 91126 Schwabach"
+  },
+  {
+    "cpo": "x-n-ergie",
+    "name": "N-ERGIE",
+    "lat": 49.31904755526995,
+    "lng": 11.02268275423478,
+    "kw": 22,
+    "title": "Haydnstraße",
+    "address": "Haydnstraße, 91126 Schwabach"
+  },
+  {
     "cpo": "x-unknown-operator",
     "name": "(Unknown Operator)",
     "lat": 50.11090412014545,
@@ -53962,41 +53998,5 @@
     "kw": 50,
     "title": "Dieselstraße 2",
     "address": "Dieselstraße 2, 23738 Lensahn"
-  },
-  {
-    "cpo": "x-unbekannt",
-    "name": "Unbekannter Anbieter",
-    "lat": 47.602727,
-    "lng": 9.883779,
-    "kw": 22,
-    "title": "Sedanstraße 19",
-    "address": "Sedanstraße 19, 88161 Lindenberg im Allgäu"
-  },
-  {
-    "cpo": "x-unbekannt",
-    "name": "Unbekannter Anbieter",
-    "lat": 51.220381,
-    "lng": 7.617024,
-    "kw": 22,
-    "title": "Frankenstr.",
-    "address": "Frankenstr., 58509 Lüdenscheid"
-  },
-  {
-    "cpo": "x-stadtwerke-dusseldorf-ag",
-    "name": "Stadtwerke Düsseldorf AG",
-    "lat": 51.22001,
-    "lng": 6.768436,
-    "kw": 22,
-    "title": "Horionplatz 1",
-    "address": "Horionplatz 1, 40213 Düsseldorf"
-  },
-  {
-    "cpo": "x-business-owner-at-location",
-    "name": "(Business Owner at Location)",
-    "lat": 51.2191038,
-    "lng": 7.63126,
-    "kw": 22,
-    "title": "Parkstraße 66",
-    "address": "Parkstraße 66, 58509 Lüdenscheid"
   }
 ]
