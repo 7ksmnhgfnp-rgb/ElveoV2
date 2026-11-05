@@ -1,5 +1,32 @@
 [
   {
+    "cpo": "enbw",
+    "name": "EnBW (D)",
+    "lat": 50.161878350790374,
+    "lng": 8.020462441436962,
+    "kw": 300,
+    "title": "EnBW Rewe Kemel",
+    "address": "Bäderstraße 2c, 65321 Heidenrod-Kemel"
+  },
+  {
+    "cpo": "ewe",
+    "name": "EWE",
+    "lat": 50.14819894519263,
+    "lng": 8.04030959605825,
+    "kw": 300,
+    "title": "EweGO Mc Donalds Bad Schwalbach",
+    "address": "Nikolaus-August-Otto-Straße 20, 65307 Bad Schwalbach"
+  },
+  {
+    "cpo": "enbw",
+    "name": "EnBW (D)",
+    "lat": 50.148793672365116,
+    "lng": 8.039095752158119,
+    "kw": 400,
+    "title": "EnBW Bad Schwalbach Nikolaus-August-Otto-Straße 27",
+    "address": "Nikolaus-August-Otto-Straße 27, 65307 Bad Schwalbach"
+  },
+  {
     "cpo": "x-evn-bulgaria",
     "name": "EVN (Bulgaria)",
     "lat": 49.32484389503301,
@@ -53971,32 +53998,5 @@
     "kw": 22,
     "title": "Höherweg 200",
     "address": "Höherweg 200, 40233 Düsseldorf"
-  },
-  {
-    "cpo": "x-pfalzwerke",
-    "name": "Pfalzwerke",
-    "lat": 49.556416,
-    "lng": 7.357917,
-    "kw": 22,
-    "title": "Burgstr. 12",
-    "address": "Burgstr. 12, 66871 Thallichtenberg"
-  },
-  {
-    "cpo": "x-innogy-se-rwe-emobility",
-    "name": "Innogy SE (RWE eMobility)",
-    "lat": 51.512761,
-    "lng": 7.468058,
-    "kw": 22,
-    "title": "Kleppingstraße 21",
-    "address": "Kleppingstraße 21, 44135 Dortmund"
-  },
-  {
-    "cpo": "x-e-on-drive",
-    "name": "E.ON Drive",
-    "lat": 54.217937,
-    "lng": 10.897398,
-    "kw": 50,
-    "title": "Dieselstraße 2",
-    "address": "Dieselstraße 2, 23738 Lensahn"
   }
 ]
