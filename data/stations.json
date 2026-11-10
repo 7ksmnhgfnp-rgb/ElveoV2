@@ -1,5 +1,14 @@
 [
   {
+    "cpo": "x-stadtwerke-rostock",
+    "name": "Stadtwerke Rostock",
+    "lat": 54.103749034827985,
+    "lng": 11.897630012934428,
+    "kw": 22,
+    "title": "Maxim-Gorki-Platz",
+    "address": "Maxim-Gorki-Platz 6, 18209 Bad Doberan"
+  },
+  {
     "cpo": "enbw",
     "name": "EnBW (D)",
     "lat": 50.161878350790374,
@@ -53989,14 +53998,5 @@
     "kw": 22,
     "title": "Am Pumpelberg 2",
     "address": "Am Pumpelberg 2, 27711 Osterholz-Scharmbeck"
-  },
-  {
-    "cpo": "x-stadtwerke-dusseldorf-ag",
-    "name": "Stadtwerke Düsseldorf AG",
-    "lat": 51.222505,
-    "lng": 6.818261,
-    "kw": 22,
-    "title": "Höherweg 200",
-    "address": "Höherweg 200, 40233 Düsseldorf"
   }
 ]
