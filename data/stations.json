@@ -1,5 +1,14 @@
 [
   {
+    "cpo": "x-unknown-operator",
+    "name": "(Unknown Operator)",
+    "lat": 49.42217809031038,
+    "lng": 12.136992992617365,
+    "kw": 22,
+    "title": "Gasthof Bodensteiner",
+    "address": "Hauptstraße 25, 92551 Stulln"
+  },
+  {
     "cpo": "x-stadtwerke-rostock",
     "name": "Stadtwerke Rostock",
     "lat": 54.103749034827985,
@@ -53989,14 +53998,5 @@
     "kw": 22,
     "title": "Zum Nagoldblick",
     "address": "Zum Nagoldblick, 75181 Pforzheim"
-  },
-  {
-    "cpo": "x-osterholzer-stadtwerke",
-    "name": "Osterholzer Stadtwerke",
-    "lat": 53.231227,
-    "lng": 8.777274,
-    "kw": 22,
-    "title": "Am Pumpelberg 2",
-    "address": "Am Pumpelberg 2, 27711 Osterholz-Scharmbeck"
   }
 ]
