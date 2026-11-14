@@ -2,6 +2,15 @@
   {
     "cpo": "x-unknown-operator",
     "name": "(Unknown Operator)",
+    "lat": 49.81878285444759,
+    "lng": 6.744077248747772,
+    "kw": 60,
+    "title": "ChargePoint-Ladestation LIDL Schweich",
+    "address": "In den Schlimmfuhren 7 , 54338 Schweich"
+  },
+  {
+    "cpo": "x-unknown-operator",
+    "name": "(Unknown Operator)",
     "lat": 49.42217809031038,
     "lng": 12.136992992617365,
     "kw": 22,
@@ -53989,14 +53998,5 @@
     "kw": 22,
     "title": "Auf dem Haarbau 3",
     "address": "Auf dem Haarbau 3, 65510 Hünstetten-Görsroth"
-  },
-  {
-    "cpo": "x-unbekannt",
-    "name": "Unbekannter Anbieter",
-    "lat": 48.858398,
-    "lng": 8.691979,
-    "kw": 22,
-    "title": "Zum Nagoldblick",
-    "address": "Zum Nagoldblick, 75181 Pforzheim"
   }
 ]
