@@ -1,5 +1,14 @@
 [
   {
+    "cpo": "x-tesla-including-non-tesla",
+    "name": "Tesla (including non-tesla)",
+    "lat": 47.58966878708472,
+    "lng": 7.593253237702811,
+    "kw": 250,
+    "title": "Zollstraße",
+    "address": "Zollstraße, 79576 Weil am Rhein"
+  },
+  {
     "cpo": "x-unknown-operator",
     "name": "(Unknown Operator)",
     "lat": 49.81878285444759,
@@ -53989,14 +53998,5 @@
     "kw": 22,
     "title": "Langendorfer Straße 94",
     "address": "Langendorfer Straße 94, 06667 Weißenfels"
-  },
-  {
-    "cpo": "x-unbekannt",
-    "name": "Unbekannter Anbieter",
-    "lat": 50.226853,
-    "lng": 8.202447,
-    "kw": 22,
-    "title": "Auf dem Haarbau 3",
-    "address": "Auf dem Haarbau 3, 65510 Hünstetten-Görsroth"
   }
 ]
