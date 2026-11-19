@@ -1,5 +1,14 @@
 [
   {
+    "cpo": "x-unknown-operator",
+    "name": "(Unknown Operator)",
+    "lat": 54.29822592445646,
+    "lng": 10.130298498476463,
+    "kw": 22,
+    "title": "Ladestation 22 KW GORLICKI-IT",
+    "address": "Hofteichstr. 23a, 24113 Kiel"
+  },
+  {
     "cpo": "x-tesla-including-non-tesla",
     "name": "Tesla (including non-tesla)",
     "lat": 47.58966878708472,
@@ -53989,14 +53998,5 @@
     "kw": 22,
     "title": "Aiterhofener Str. 222",
     "address": "Aiterhofener Str. 222, 94315 Straubing"
-  },
-  {
-    "cpo": "x-unbekannt",
-    "name": "Unbekannter Anbieter",
-    "lat": 51.191207,
-    "lng": 11.970367,
-    "kw": 22,
-    "title": "Langendorfer Straße 94",
-    "address": "Langendorfer Straße 94, 06667 Weißenfels"
   }
 ]
