@@ -1,5 +1,14 @@
 [
   {
+    "cpo": "enbw",
+    "name": "EnBW (D)",
+    "lat": 54.288525471976726,
+    "lng": 10.228726731255847,
+    "kw": 300,
+    "title": "EnBW Schwentinetal",
+    "address": "Klausdorfer Straße 28-32, 24223 Schwentinental"
+  },
+  {
     "cpo": "x-unknown-operator",
     "name": "(Unknown Operator)",
     "lat": 54.29822592445646,
@@ -53989,14 +53998,5 @@
     "kw": 11,
     "title": "Steegerstr. 14",
     "address": "Steegerstr. 14, 13359 Berlin"
-  },
-  {
-    "cpo": "x-e-on-drive",
-    "name": "E.ON Drive",
-    "lat": 48.86922,
-    "lng": 12.62928,
-    "kw": 22,
-    "title": "Aiterhofener Str. 222",
-    "address": "Aiterhofener Str. 222, 94315 Straubing"
   }
 ]
