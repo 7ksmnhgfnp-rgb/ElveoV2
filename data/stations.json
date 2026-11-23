@@ -1,5 +1,14 @@
 [
   {
+    "cpo": "x-business-owner-at-location",
+    "name": "(Business Owner at Location)",
+    "lat": 53.653312,
+    "lng": 9.792037,
+    "kw": 50,
+    "title": "EDEKA Meyers Frischemarkt Pinneberg",
+    "address": "Saarlandstraße 65, 25421 Pinneberg"
+  },
+  {
     "cpo": "enbw",
     "name": "EnBW (D)",
     "lat": 54.288525471976726,
@@ -53989,14 +53998,5 @@
     "kw": 22,
     "title": "Neckarstraße 30",
     "address": "Neckarstraße 30, 78056 Villingen-Schwenningen"
-  },
-  {
-    "cpo": "allego",
-    "name": "Allego BV",
-    "lat": 52.561813,
-    "lng": 13.394848,
-    "kw": 11,
-    "title": "Steegerstr. 14",
-    "address": "Steegerstr. 14, 13359 Berlin"
   }
 ]
