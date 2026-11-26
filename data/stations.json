@@ -1,5 +1,14 @@
 [
   {
+    "cpo": "x-unknown-operator",
+    "name": "(Unknown Operator)",
+    "lat": 37.415328,
+    "lng": -122.076575,
+    "kw": 11,
+    "title": "KERAMUNDO Nürnberg",
+    "address": "Witschelstraße 82-84, 90431 Nürnberg"
+  },
+  {
     "cpo": "x-business-owner-at-location",
     "name": "(Business Owner at Location)",
     "lat": 53.653312,
@@ -15498,8 +15507,8 @@
     "address": "Schloss 0, 39343 hundisburg"
   },
   {
-    "cpo": "x-total-be-plugtodrive",
-    "name": "TOTAL Be PlugToDrive",
+    "cpo": "x-totalenergies-be",
+    "name": "TotalEnergies (BE)",
     "lat": 52.247793,
     "lng": 12.249998,
     "kw": 175,
@@ -16452,8 +16461,8 @@
     "address": "Am Zollstock 6, 32816 Schieder-Schwalenberg"
   },
   {
-    "cpo": "x-total-be-plugtodrive",
-    "name": "TOTAL Be PlugToDrive",
+    "cpo": "x-totalenergies-be",
+    "name": "TotalEnergies (BE)",
     "lat": 51.888974,
     "lng": 12.403429,
     "kw": 175,
@@ -23805,8 +23814,8 @@
     "address": "Röntgenstr. 3, 69469 Weinheim"
   },
   {
-    "cpo": "x-total-be-plugtodrive",
-    "name": "TOTAL Be PlugToDrive",
+    "cpo": "x-totalenergies-be",
+    "name": "TotalEnergies (BE)",
     "lat": 49.545269,
     "lng": 11.030357,
     "kw": 175,
@@ -32103,8 +32112,8 @@
     "address": "Möncheplatz, 37574 Einbeck"
   },
   {
-    "cpo": "x-total-be-plugtodrive",
-    "name": "TOTAL Be PlugToDrive",
+    "cpo": "x-totalenergies-be",
+    "name": "TotalEnergies (BE)",
     "lat": 53.514264,
     "lng": 10.089733,
     "kw": 22,
@@ -53226,8 +53235,8 @@
     "address": "Großgörschenstr. Vor 1, 10827 Berlin"
   },
   {
-    "cpo": "x-total-be-plugtodrive",
-    "name": "TOTAL Be PlugToDrive",
+    "cpo": "x-totalenergies-be",
+    "name": "TotalEnergies (BE)",
     "lat": 51.268704,
     "lng": 11.978404,
     "kw": 175,
@@ -53989,14 +53998,5 @@
     "kw": 11,
     "title": "Alter Schützenplatz 17",
     "address": "Alter Schützenplatz 17, 33397 Rietberg"
-  },
-  {
-    "cpo": "x-ladenetz-de",
-    "name": "ladenetz.de",
-    "lat": 48.05992,
-    "lng": 8.537757,
-    "kw": 22,
-    "title": "Neckarstraße 30",
-    "address": "Neckarstraße 30, 78056 Villingen-Schwenningen"
   }
 ]
